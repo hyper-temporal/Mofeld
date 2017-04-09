@@ -1,0 +1,359 @@
+/* Customize any plain widget that is a child of a QMainWindow. */
+QMainWindow {
+ 
+}
+QMainWindow >.QWidget{
+    background-repeat: repeat-xy;
+    background-image: url(:/images/pagefold.png);
+}
+QWidget  {
+
+}
+QFrame  {
+    background-repeat: repeat-xy;
+    background-image: url(:/images/pagefold.png);
+}
+/* Provide a padding for the layout inside the frame. The frame
+   exists only to provide a padding for the top-right image, so we
+   explicitly disable the border. */
+#mainFrame {
+
+    padding-right: 30px;
+    border-style: none;
+    border-image: none; /* since we set a border-image below */
+}
+
+QGroupbox{
+	padding: 1px;
+	margin: 1px;
+	border: 1px;
+}
+
+/* mainFrame won't have this border-image since we have
+   explicitly set it to 'none' using a more specific selector. */
+QDial,QFrame, QLineEdit, QComboBox[editable="true"], QSpinBox {
+    border-image: url(:/images/frame.png) 4;
+    border-width: 3px;
+}
+
+QLabel {
+
+    min-height: 1em;
+    max-height: 2em;
+	min-width: 1em;
+	max-width: 5em;
+    border: 7px;
+    border-image: none;
+    padding: 0px;
+    margin: 0px;
+    background: white;
+}
+QDial {
+
+    min-width: 1em;
+    max-width: 5em;
+    border: none;
+    border-image: none;
+    padding: 0;
+    background-color: darkgray;
+}
+QComboBox{
+	max-width: 8em;
+}
+
+/* Make text in message boxes selectable. */
+QMessageBox {
+    /* LinksAccessibleByMouse | TextSelectableByMouse */
+    messagebox-text-interaction-flags: 5;
+}
+
+/* Set the selection colors for all widgets. */
+QWidget {
+    selection-color: black;
+    selection-background-color: Silver;
+    color: black;
+}
+
+/* Make the entire row selected in item views. */
+QAbstractItemView {
+    show-decoration-selected: 1;
+}
+
+/* Nice WindowsXP-style password character for password line edits. */
+QLineEdit[echoMode="2"] {
+    lineedit-password-character: 9679;
+}
+
+/* Customize tooltips. */
+QTableView {
+    selection-background-color: qlineargradient(x1: 0, y1: 0, x2: 0.5, y2: 0.5,
+                                stop: 0 #EECCBB, stop: 1 white);
+								
+}
+QTableView QTableCornerButton::section {
+    background: gray;
+    border: 2px outset red;
+}
+
+/* Customize radio buttons. */
+
+QRadioButton {
+    spacing: 5px;
+}
+
+QRadioButton::indicator {
+    width: 15px;
+}
+
+QRadioButton::indicator::unchecked {
+    image: url(:/images/radiobutton_unchecked.png);
+}
+
+QRadioButton::indicator:unchecked:hover {
+    image: url(:/images/radiobutton_unchecked_hover.png);
+}
+
+QRadioButton::indicator:unchecked:pressed {
+    image: url(:/images/radiobutton_unchecked_pressed.png);
+}
+
+QRadioButton::indicator::checked {
+    image: url(:/images/radiobutton_checked.png);
+}
+
+QRadioButton::indicator:checked:hover {
+    image: url(:/images/radiobutton_checked_hover.png);
+}
+
+QRadioButton::indicator:checked:pressed {
+    image: url(:/images/radiobutton_checked_pressed.png);
+}
+
+/* Customize arrows. */
+
+*::down-arrow, *::menu-indicator {
+    image: url(:/images/down_arrow.png);
+    width: 20px;
+    height: 1em;
+}
+
+*::down-arrow:disabled, *::down-arrow:off {
+   image: url(:/images/down_arrow_disabled.png);
+}
+
+*::up-arrow {
+    image: url(:/images/up_arrow.png);
+    width: 7px;
+    height: 7px;
+}
+
+*::up-arrow:disabled, *::up-arrow:off {
+   image: url(:/images/up_arrow_disabled.png);
+}
+
+/* Customize push buttons and comboboxes. Our read-only combobox
+   is very similar to a push button, so they share the same border image. */
+
+QPushButton {
+    min-width: 1em;
+    max-width: 4em;
+    max-height: 1em;
+}
+QSlider {
+	min-width: 0.2em;
+    max-width: 2em;
+    min-height: 64px;
+    max-height: 127px;
+    background-image: url(:/images/pagefold.png);
+
+}
+
+
+
+QPushButton, QComboBox[editable="false"],
+QComboBox[editable="true"]::drop-down {
+    border-image: url(:/images/pushbutton.png) 5;
+    border-width: 5;
+}
+
+QComboBox[editable="false"]{
+
+    max-height: 0.7em;
+    margin: 0px;
+}
+
+
+QPushButton:checked{
+    border-image: url(:/images/pushbutton_pressed.png) 5;
+	background-color: #888888;
+	font-weight :bold;
+}
+
+
+QPushButton:hover, QComboBox[editable="false"]:hover,
+QComboBox[editable="true"]::drop-down:hover, QMenuBar::item:hover {
+    border-image: url(:/images/pushbutton_hover.png) 5;
+	background-color: #ffffff;
+}
+
+QPushButton:pressed, QComboBox[editable="false"]:on,
+QComboBox[editable="true"]::drop-down:on, QMenuBar::item:on {
+    border-image: url(:/images/pushbutton_pressed.png) 5;
+	background: transparent;
+}
+
+/* Customize read-only comboboxes. */
+
+QComboBox[editable="false"] {
+    padding-left: 3px;
+    padding-right: 5px; /* space for the arrow */
+
+}
+
+QComboBox[editable="false"]::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    border-left-style: solid;
+    border-left-color: darkgray;
+    border-left-width: 1px;
+}
+
+QComboBox[editable="false"]::down-arrow {
+    subcontrol-origin: content;
+    subcontrol-position: center;
+    position: relative;
+    left: 1px; /* 1 pixel dropdown border */
+}
+
+/* The combobox arrow is on when the popup is open. */
+QComboBox[editable="false"]::down-arrow:on {
+	min-width:5px;
+    position: relative;
+    top: 1px;
+    left: 2px;
+}
+
+/* Customize editable comboboxes. */
+
+QComboBox[editable="true"] {
+    padding-right: 5px;
+}
+
+QComboBox[editable="true"]::drop-down {
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+
+
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 2px;
+}
+
+QComboBox[editable="true"]::drop-down,
+QComboBox[editable="true"]::drop-down:hover,
+QComboBox[editable="true"]::drop-down:on {
+	    min-width: 1em;
+	    max-width: 3em;
+    border-left-width: 3px; /* we need only left and center part */
+}
+
+/* Shift the arrow when it's open. */
+QComboBox[editable="true"]::down-arrow:on {
+    position: relative;
+    top: 1px;
+    left: 1px;
+}
+
+/* Customize check boxes. */
+QCheckBox {
+    spacing: 5px;
+}
+
+QCheckBox::indicator {
+    width: 13px;
+    height: 13px;
+}
+
+QCheckBox::indicator:unchecked {
+    image: url(:/images/checkbox_unchecked.png);
+}
+
+QCheckBox::indicator:unchecked:hover {
+    image: url(:/images/checkbox_unchecked_hover.png);
+}
+
+QCheckBox::indicator:unchecked:pressed {
+    image: url(:/images/checkbox_unchecked_pressed.png);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/images/checkbox_checked.png);
+}
+
+QCheckBox::indicator:checked:hover {
+    image: url(:/images/checkbox_checked_hover.png);
+}
+
+QCheckBox::indicator:checked:pressed {
+    image: url(:/images/checkbox_checked_pressed.png);
+}
+
+/* Customize the size grip. */
+QSizeGrip {
+    image: url(:/images/sizegrip.png);
+    width: 16px;
+    height: 16px;
+}
+
+/* Customize the menu bar. */
+QMenuBar {
+    border-image: none;
+    border-style: none;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: darkslategray;
+    padding: 2px;
+}
+
+/* Customize spin boxes. */
+
+QSpinBox {
+	max-width:2em;
+	max-height:0.8em;
+}
+
+QSpinBox::up-button {
+    subcontrol-origin: border;
+    subcontrol-position: top right;
+	width:5px;
+    border-image: url(:/images/spinup.png) 1;
+    border-width: 1px;
+    border-top-width: 0;
+}
+
+QSpinBox::up-button:hover {
+    border-image: url(:/images/spinup_hover.png) 1;
+}
+
+QSpinBox::up-button:pressed {
+    border-image: url(:/images/spinup_pressed.png) 1;
+}
+
+QSpinBox::down-button {
+    subcontrol-origin: border;
+    subcontrol-position: bottom right;
+
+	width:5px;
+    border-image: url(:/images/spindown.png) 1;
+    border-width: 1px;
+    border-top-width: 0;
+}
+
+QSpinBox::down-button:hover {
+    border-image: url(:/images/spindown_hover.png) 1;
+}
+
+QSpinBox::down-button:pressed {
+    border-image: url(:/images/spindown_pressed.png) 1;
+}
