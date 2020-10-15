@@ -55,7 +55,7 @@ BlofeldMultiSlice::BlofeldMultiSlice(const BlofeldReplica *synth,const DumpMulti
         pPGMCH=offset+i++;
     }
     else{
-        throw("la tranche de multi est mal défini");
+        throw("la tranche de multi est mal dÃ©fini");
     }
 
     addCtrl(new frmSynthCtrl_button( parent, synth, multimess->getParametre(pStatus)));
@@ -67,7 +67,6 @@ BlofeldMultiSlice::BlofeldMultiSlice(const BlofeldReplica *synth,const DumpMulti
     block1->addCtrl(new frmSynthCtrl_rotary( parent, synth, multimess->getParametre(pVol)));
     block1->addCtrl(new frmSynthCtrl_rotary( parent, synth, multimess->getParametre(ppan),-64));
     addCtrl(block1);
-
     addCtrl(new frmSynthCtrl_combobox( parent, synth, multimess->getParametre(pTRANSPOSE)));
     addCtrl(new frmSynthCtrl_combobox( parent, synth, multimess->getParametre(pDETUN)));
     ctrlComposite * block3 = new ctrlComposite(parent, QBoxLayout::TopToBottom );
@@ -94,5 +93,7 @@ BlofeldMultiSlice::BlofeldMultiSlice(const BlofeldReplica *synth,const DumpMulti
     block_btn3->addCtrl(new frmSynthCtrl_button( parent, synth, multimess->getParametre(pmodwhell),true,QBoxLayout::TopToBottom));
     block_btn3->addCtrl(new frmSynthCtrl_button( parent, synth, multimess->getParametre(ppitchBend),true,QBoxLayout::LeftToRight));
     addCtrl(block_btn3);
+
+
 
 }

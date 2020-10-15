@@ -4,11 +4,22 @@ using namespace OperationProps;
 BlofeldViews::BlofeldViews(QWidget *par):QWidget(par)
 {
 
+
     _synth = new BlofeldReplica();
-    _wtEditor = new UIWaveTableMgrVue(this);
+    _wtEditor = new UIWaveTableMgrVue(par);
 
     connect(_wtEditor,SIGNAL(sendTable(const BlofeldWaveTableModel*,int,QString)),
             _synth,SLOT(sendTable(const BlofeldWaveTableModel*,int,QString)));
+    connect(par,SIGNAL(k_Drawers4Phase()),
+            _wtEditor,SLOT(setDrawModePhase()));
+    connect(par,SIGNAL(k_Drawers4Mag()),
+            _wtEditor,SLOT(setDrawModeMagnitude()));
+    connect(par,SIGNAL(k_Drawers4RotationPH(bool)),
+            _wtEditor,SLOT(setDrawModeRotationPH(bool)));
+    connect(par,SIGNAL(k_Drawers4RotationMG(bool)),
+            _wtEditor,SLOT(setDrawModeRotationMG(bool)));
+    connect(par,SIGNAL(k_Drawers4RotationT(bool)),
+            _wtEditor,SLOT(setDrawModeRotationT(bool)));
 
     connect(_synth,SIGNAL(updateArrangement(const Arrangement *)),
             this, SLOT(updateView(const Arrangement *)));
@@ -18,6 +29,7 @@ BlofeldViews::BlofeldViews(QWidget *par):QWidget(par)
             this, SLOT(updateView(const Parametre * )));
     connect(_synth,SIGNAL(syncMulti()),
             this, SLOT(updateMultiView()));
+
 
 
     _OperationModel = new OperationModel(_synth);
@@ -55,8 +67,11 @@ BlofeldViews::BlofeldViews(QWidget *par):QWidget(par)
     QVBoxLayout *lyV5  = new QVBoxLayout;
     lyV5->addLayout(lyV3);
     lyV5->addLayout(lyV4);
-    _wTargetCtrl=new QWidget(this);
-    _wTargetCtrl->setLayout(lyV5);
+//    _wTargetCtrl=new QWidget(par);
+//    _wTargetCtrl->setLayout(lyV5);
+
+    setLayout(lyV5);
+//    setLayout(lyV5);
     QAction *quitAction = new QAction(tr("E&xit"), this);
     quitAction->setShortcuts(QKeySequence::Quit);
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
@@ -64,6 +79,15 @@ BlofeldViews::BlofeldViews(QWidget *par):QWidget(par)
 
     addAction(quitAction);
     _synth->importArrangement();
+//    _CommonVue->UpdateChannel(0);
+
+
+
+    installEventFilter(par);
+    _wtEditor->installEventFilter(par);
+//    _wTargetCtrl->installEventFilter(par);
+
+
 }
 BlofeldViews::~BlofeldViews()
 {
@@ -94,6 +118,8 @@ void BlofeldViews::updateView(const Instrument * i){
 void BlofeldViews::updatePElements()
 {
     const Propriete * prpch = _synth->getProprieteChannel();
+//    const Propriete * prpch = _synth->getChannel()->getProprieteChannel();
+//    _propsVue->editThat(prpch);
     _propsElementVue->setModel(prpch);
 }
 
@@ -110,13 +136,19 @@ void BlofeldViews::updateView(const Parametre * p)
 
 void BlofeldViews::updateView(const Propriete * p)
 {
+//    foreach (Parametre par, *p->getParametres()) {
+//       updateView(par.getID());
+//    }
+//    updatePElements();
     updateInstrumentView();
+
 }
 
 
 void BlofeldViews::updateInstrumentView()
 {
     Instrument * e = _synth->editInstrument();
+//    _instruVue->editThat(e);
     foreach(Parametre   pa , *e->getParametres()){
         _editor->updatethis(&pa);
     }
@@ -149,6 +181,7 @@ void BlofeldViews::UpdateChannel(int ch)
     _synth->ChangeEditedChannel(ch);
     _CommonVue->UpdateChannel();
     updateInstrumentView();
+    _patienteur.usleep(50000);
 }
 
 void BlofeldViews::Reimport(){
@@ -174,10 +207,10 @@ void BlofeldViews::SetInstrumentName(QString s){
 
 void BlofeldViews::recevoirTables(const BlofeldWaveTableMgrModel *m){
     int wnum =80;
-    foreach (BlofeldWaveTableModel wt, *m->getTables())
-    {
-        _synth->sendTable(&wt,wnum++,wt.getName());
-    }
+//    foreach (BlofeldWaveTableModel wt, *m->getTables())
+//    {
+//        _synth->sendTable(&wt,wnum++,wt.getName());
+//    }
 }
 
 void BlofeldViews::recevoirArrangement(const Arrangement *a)
@@ -202,6 +235,7 @@ void BlofeldViews::setParametre( int pid , int v)
     try {
         _synth->MixParametre(_synth->getChCurrent(),pid,v);
         updateView(pid);
+        _patienteur.usleep(5000);
     } catch (...) {
     }
 }

@@ -63,7 +63,7 @@ void BlofChannel::PrepareForProp(){
 
 
 const Propriete * BlofChannel::getProprieteChannel()const{
-    _instrument.getPropriete();
+    return _instrument.getPropriete();
 }
 
 
@@ -88,25 +88,4 @@ void  BlofChannel:: setMultiPars(const QVector<Parametre> *pars)
             setParametreValue(i, pars->at(i).getValue());
         }
     }
-}
-
-
-QDataStream & operator << (QDataStream & out, const BlofChannel & Valeur)
-{
-    out << Valeur._instrument
-        << Valeur._mixPars
-        << Valeur._multiPars
-           ;
-
-    return out;
-}
-
-QDataStream & operator >> (QDataStream & in, BlofChannel & Valeur)
-{
-    in  >> Valeur._instrument
-        >> Valeur._mixPars
-        >> Valeur._multiPars
-           ;
-
-    return in;
 }

@@ -63,32 +63,10 @@ void Parametre::setValue(int value){
 int Parametre::getValue(int v) const{
     return _type->getValue(v);
 }
-int Parametre::SetNewValue(int v) {
+void Parametre::SetNewValue(int v) {
     setValue(_type->getNewValue(v));
 }
-int Parametre::SetNewValue(int v,int min, int max) {
+void Parametre::SetNewValue(int v,int min, int max) {
     setValue(_type->getNewValue(v,min,max));
 
-}
-
-QDataStream & operator << (QDataStream & out, const Parametre & Valeur)
-{
-    out << Valeur._id
-        << Valeur._type->getValue()
-        << Valeur._contrainte
-        << Valeur._isProp
-            ;
-    return out;
-}
-QDataStream & operator >> (QDataStream & in, Parametre & Valeur)
-{
-    int i;
-    in  >> Valeur._id
-        >> i
-        >> Valeur._contrainte
-        >> Valeur._isProp
-           ;
-
-    Valeur._type->setValue(i);
-    return in;
 }

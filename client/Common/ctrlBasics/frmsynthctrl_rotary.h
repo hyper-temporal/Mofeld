@@ -2,28 +2,42 @@
 #define FRMSYNTHCTRL_ROTARY_H
 
 #include "../ctrlparamleaf.h"
+#include "./imageprovider.h"
 
 class DialMaison
         :public QDial
 {
     int _angle;
-    const QImage _im;
 public :
-    DialMaison(QWidget*w):QDial(w),_im(tr("C:/Users/geohn/Desktop/Rotary_255.png"))
-    {
-    }
+    DialMaison(QWidget*w):QDial(w)
+    {}
+//TODO: faire des controles cool...
+    /*
+controles resistants 3d
+balles
+bumpers
+elements
+velocite
+action reponse instancié ->cycles, modulations:
+*/
 
+    /*
+ dessin!
+rond triangle carrés , polygones ;.. pour donner des formes
+poussoirs aspirateur, découpeur, explosion(rerépartition )
+déplacement par liaison donnant l'éloignement mais soumises aux velocités adverses
+resulte de ces parametre et leur soumet une réponse(modification de leur etats selon )
+*/
     void paintEvent(QPaintEvent *)
     {
         int v= std::min(width(),height());
-        QImage image = _im.scaled(v,v,Qt::KeepAspectRatio,Qt::SmoothTransformation);
 
-        QPainter painter(this);
-        painter.setRenderHint(QPainter::Antialiasing, true);
-        painter.translate(width()/2,height()/2);
-        painter.rotate(value()*360/128);
-        painter.translate(-width()/2,-height()/2);
-        painter.drawImage( rect(),image);
+         QImage *image = imageProvider.getImageFromMIDIValue(value());
+         if(image !=NULL){
+             QPainter painter(this);
+             painter.setRenderHint(QPainter::Antialiasing, true);
+             painter.drawImage( rect(),image->scaled(v,v,Qt::KeepAspectRatio,Qt::SmoothTransformation));
+         }
     }
 
 

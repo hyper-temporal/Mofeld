@@ -1,10 +1,10 @@
-#include "Instrument.h"
+#include "instrument.h"
 #include "client/Models/operationModel.h"
 using namespace OperationProps;
 
 Instrument::Instrument()
 {
-    setName("°_°");
+    setName("Â°_Â°");
 }
 
 Instrument::Instrument(QString s, QVector<Parametre> lst)
@@ -171,24 +171,5 @@ void Instrument::setPropriete(int id, bool isprop){
     editParametre(id)->_isProp = isprop;
 }
 
-
-QDataStream & operator << (QDataStream & out, const Instrument & Valeur)
-{
-    out << Valeur._id
-        << Valeur._name
-        << Valeur._datecreation
-        << Valeur._parametre
-           ;
-    return out;
-}
-QDataStream & operator >> (QDataStream & in, Instrument & Valeur)
-{
-    in  >> Valeur._id
-        >> Valeur._name
-        >> Valeur._datecreation
-        >> Valeur._parametre
-           ;
-    return in;
-}
 
 

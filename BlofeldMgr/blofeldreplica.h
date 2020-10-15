@@ -17,7 +17,8 @@
 
 #include "BlofeldMgr/patienteur.h"
 #include "Midi/miomgr.h"
-
+//  classe de facade, les methodes publiques sont l'API offerte au monde exterieur.
+//
 #include "Messaging/requestmulti.h"
 #include "defs.h"
 
@@ -37,15 +38,15 @@ class BlofeldReplica
 
     DumpWave _waveTableSender;
 
-    BlofeldWaveTableMgrModel _waveTables;
+//    BlofeldWaveTableMgrModel _waveTables;
     Arrangement  *_Arrangement;
     //donnee par le dump machine
     QVector<Parametre> _paramGlobal;
     //autre classe se servant des capacite de persistance : represente les memoires persistance de la machine
     QVector<Instrument> _storeInstrument; //128*8
-    QVector<Instrument> _storeArrangement;//128. référence 16 instruments de storeinstrument
+    QVector<Instrument> _storeArrangement;//128. rÃ©fÃ©rence 16 instruments de storeinstrument
 //    QVector<BlofeldWaveTableMgrModel> _waveTables;//111 - 86
-//Toutes ces mémloires sont synchronisable , séparément, par groupe ou de manière globale
+//Toutes ces mÃ©mloires sont synchronisable , sÃ©parÃ©ment, par groupe ou de maniÃ¨re globale
 
     //  TODO : possedee une classe pour la gestion de l'actualisation de l'interface graphique et l'application de mediator
     //  sous qt ce sera par les signal/slot
@@ -102,7 +103,7 @@ public:
     void MixPropriete( const Propriete * p , int ch);
     //Lorsqu'on a une valeur a affecter
     void MixParametre( int ch,int pid, int val);
-    //Lorsqu'on reçoit un parametre entier(contrainte, prop, etc)
+    //Lorsqu'on reÃ§oit un parametre entier(contrainte, prop, etc)
     void MixParametre(const Parametre *pr, int ch);
     void MixArrangement(const Arrangement *);
     void MixInstrument(const Instrument *instr);

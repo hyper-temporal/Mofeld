@@ -62,13 +62,14 @@ void MIOMgr::sendSysex(std::vector<uchar> * syx)
         moutput->sendMessage(syx);
     }
     catch (const std::exception & e) {
-        throw std::runtime_error("Le message n'a pas été envoyé");
+        throw std::runtime_error("Le message n'a pas Ã©tÃ© envoyÃ©");
     }
 }
 
 
 
 void MIOMgr::ReceiveSysex(std::vector< uchar > * input){
+
     unsigned int nBytes = input->size();
     std::vector< uchar > * v  = new std::vector< uchar >;
     for( unsigned int i=0; i<nBytes;i++)

@@ -4,6 +4,7 @@
 #include "../ctrlparamleaf.h"
 
 
+//  -combobox
 class frmSynthCtrl_combobox
     :public CtrlParamLeaf
 {

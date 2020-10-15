@@ -69,6 +69,7 @@ void frmSynthCtrl_Slider::hide(){
 void frmSynthCtrl_Slider::ValueChanged(int p){
 
     try {
+//TODO: le parametre appartient a l'instance identifiée d'une structure de donnée
         emit(UpdateParametre( _paramId,p));
     } catch (...) {
     }

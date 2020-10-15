@@ -9,12 +9,19 @@ class MDrawerTime
 {
 public:
     MDrawerTime(SignalReal *m,QWidget * parent =0);
+    QVector<double> *editSamples();
 private:
 
-    double getSampleValue(int pos);
-    double getSampleValue(const QPoint &p);
-    DrawerSlice * createSlice(int i,QWidget *p);
-    void refresh();
+//    double getSampleValue(int pos);
+//    double getSampleValue(const QPoint &p);
+    void drawBars(QPainter &painter);
+    void drawLanczos(QPainter &painter);
+
+protected:
+    void paintDomain(QPainter &painter);
+    int getSampleCount(){return _model->countSamples();}
+    double transposeValue(double value);
+
 
 };
 

@@ -8,7 +8,9 @@ class Patienteur : QThread
 {
 public:
     Patienteur();
+
     static void usleep(unsigned long time);
+
 
 };
 

@@ -14,35 +14,33 @@ MDrawer::MDrawer( SignalReal *m, QWidget *p)
     fly->setContentsMargins(0,0,0,0);
     setLayout(fly);
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-}
 
-void MDrawer::UpdateAll(){
-    foreach(DrawerSlice *s,_slices){
-        s->update();
+    _locked= *(new QVector<bool>(_model->countSamples()));
+    foreach(int i,_locked){
+        *(&i)=false;
     }
 
+    installEventFilter(p);
 }
-void MDrawer::UpdateOne(int id)
-{
-    _slices.at(id)->update();
-}
+
 
 void MDrawer::setSignal(SignalReal *m)
 {
     _model=m;
-    refresh();
-    UpdateAll();
+    update();
 }
 
 
-void MDrawer::mousePressEvent(QMouseEvent *me){
+void MDrawer::mousePressEvent(QMouseEvent *me)
+{
     QPoint p = mapFromGlobal(QCursor::pos());
     emit startFollow(getSampleNumber(me),getSampleValue(p));
 
 }
 
 void MDrawer::mouseMoveEvent(QMouseEvent *me){
-    requestValue(me);
+    QPoint p = mapFromGlobal(QCursor::pos());
+    emit follow( getSampleNumber(me),getSampleValue(p));
 }
 
 void MDrawer::mouseReleaseEvent(QMouseEvent *me){
@@ -50,34 +48,90 @@ void MDrawer::mouseReleaseEvent(QMouseEvent *me){
     emit stopFollow( getSampleNumber(me),getSampleValue(p));
 }
 
-void MDrawer::requestValue(QMouseEvent *me)
+
+double MDrawer::getSampleValue(const QPoint &p)
 {
-    QPoint p = mapFromGlobal(QCursor::pos());
-    emit sendValue( getSampleNumber(me),getSampleValue(p));
+    double fvalue ;
+        if( p.y() > height()) fvalue = 0.0;
+        else if( p.y() < 0)fvalue= 1.0;
+        else return  fvalue =(1.0 - (double)p.y()/height());
+        return fvalue;
 }
+
+//double MDrawer::getSampleValue(const QPoint &p)
+//{
+//    double ret;
+
+//    if(height()<2) return 0.0;
+//    if(p.y()<0){
+//        return 1.0;
+//    }
+//    else if(p.y()>height())
+//    {
+//        return -1.0;
+//    }
+//    else
+//    {
+//        int offset = height()/2;
+//        int sansOffset;
+
+//        if(p.y()==offset)
+//        {
+//            return 0.0;
+//        }
+//        else if(p.y() > offset)
+//        {
+//            sansOffset = offset -p.y();
+//        }else{
+//            sansOffset = - (p.y()- offset);
+//        }
+//        ret = (double)2*sansOffset/height();
+//    }
+//    if(ret<-1.0){
+//        ret= -1.0;
+//    }
+//    else if(ret>1.0)
+//    {
+//        ret= 1.0;
+//    }
+//    else if(ret < 0.001 && ret>-0.001)return 0.0;
+//    return transposeValue( ret );
+//}
 
 int MDrawer::getSampleNumber(QMouseEvent *me)
 {
-
-    if(_slices.count()<1) throw("pas de slice");
+    int SamplesCount = getSampleCount();
     if(me->x() < 0  ) {
         return 0;
     }
-    else if( me->x() >width() ){
-        return _slices.count()-1;
+    else if( me->x() >=width() ){
+        return SamplesCount-1;
     }
 
-    double sliceWidth = (double)width()/_slices.count();
+    double sliceWidth = (double)width()/SamplesCount;
 
     if(sliceWidth==0)return 0;
     else{
-        int ret = _slices.count() *(double)me->x()/width();
-        if(ret>_slices.count()-1)return _slices.count()-1;
+        int ret = SamplesCount *(double)me->x()/width();
+        if(ret>SamplesCount-1)return SamplesCount-1;
         if(ret < 0 )return 0;
         return ret;
     }
+}
+QColor
+ColBacklite(230 ,240,245),
+ColBorder(150,190,230);
 
+void MDrawer::paintEvent(QPaintEvent * pe)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
 
+    painter.setPen(QPen(ColBorder));
+    painter.drawRect(QRect(0,0,width(),height()));
+    painter.fillRect(QRect(0,0,width()-1,height()-1),ColBacklite);
+    painter.setPen(QPen(QColor("#000000")));
+    paintDomain(painter);
 }
 
 

@@ -3,6 +3,7 @@
 SynthEnum::SynthEnum()
 {
     _nom="";
+    //MesElements = *new QList<SynthEnumElement>();
 }
 SynthEnum::SynthEnum(QList<QString> elts){
 
@@ -18,12 +19,12 @@ SynthEnum::SynthEnum(QList<QString> elts){
 SynthEnum::SynthEnum(QString s)
 {
     if(!s.length()){
-        throw std::logic_error("Lachaine ne peut pas être vide");
+        throw std::logic_error("Lachaine ne peut pas Ãªtre vide");
         return;
     }
 
     if(!s.trimmed().length()){
-         throw std::logic_error("Lachaine ne peut pas être constrituée d'espaces purs");
+         throw std::logic_error("Lachaine ne peut pas Ãªtre constrituÃ©e d'espaces purs");
         return;
     }
 
@@ -44,7 +45,7 @@ void SynthEnum::EnumValidation( SynthEnumElement * e){
 
         QString scomp = el->LaChaine.trimmed();
 
-        if(!QString::compare(scomp.toAscii(),s.toAscii(),Qt::CaseSensitive)){
+        if(!QString::compare(scomp,s,Qt::CaseSensitive)){
 
         throw std::logic_error( "Exemple d'exception" );
 
@@ -90,5 +91,3 @@ int SynthEnum::getNewValue(int input, int min, int max)const{
         result = min +(qrand()% (range+1));}
     return getClosestValue(result) ;
 }
-
-

@@ -19,17 +19,3 @@ BlofeldWaveTableModel::BlofeldWaveTableModel(const BlofeldWaveTableModel &other)
     }
 }
 
-
-
-QDataStream & operator << (QDataStream & out, const BlofeldWaveTableModel & Valeur)
-{
-    out << Valeur._wtName
-        << Valeur._signals;
-
-    return out;
-}
-QDataStream & operator >> (QDataStream & in, BlofeldWaveTableModel & Valeur)
-{
-    in  >> Valeur._wtName
-        >> Valeur._signals;
-}

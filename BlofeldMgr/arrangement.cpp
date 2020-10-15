@@ -5,7 +5,7 @@ Arrangement::Arrangement()
     init();
 }
 
-//constructeur appelé par la classe de serialisation lors de l'import
+//constructeur appelÃ© par la classe de serialisation lors de l'import
 Arrangement::Arrangement(const Arrangement *other, int id , QString nom)
     :Entity(id,nom)
 {
@@ -47,27 +47,5 @@ void Arrangement::setInstrument(const Instrument i, int ch)
 }
 void Arrangement::Regenerate(int ch){
     _BlofChannel[ch].Regenerate();
-}
-
-
-QDataStream & operator << (QDataStream & out, const Arrangement & Valeur)
-{
-    out << Valeur._id
-        << Valeur._name
-        << Valeur._datecreation
-        << Valeur._BlofChannel
-           ;
-    return out;
-}
-
-QDataStream & operator >> (QDataStream & in, Arrangement & Valeur)
-{
-
-    in  >> Valeur._id
-        >> Valeur._name
-        >> Valeur._datecreation
-        >> Valeur._BlofChannel
-           ;
-    return in;
 }
 

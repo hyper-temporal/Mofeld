@@ -25,6 +25,7 @@ public:
 
     Contrainte * editContrainte();
     const Contrainte * getContrainte() const;
+//    void copyContrainte(const Contrainte *c);
     void setContrainte(const Contrainte *c);
     void setMethode(int m);
     void setProp(bool isprop){_isProp=isprop;}
@@ -33,8 +34,8 @@ public:
     void setValue(int value);
     int getValue()const{return _type->getValue();}
     int getValue(int v)const;
-    int SetNewValue(int v);
-    int SetNewValue(int v,int min, int max);
+    void SetNewValue(int v);
+    void SetNewValue(int v,int min, int max);
 
 
     int getID()const{return _id;}
@@ -52,11 +53,8 @@ private:
     friend class ContrainteModel;
     friend class DumpInstrument;
     friend class Instrument;
-    friend QDataStream & operator << (QDataStream &, const Parametre &);
-    friend QDataStream & operator >> (QDataStream &, Parametre &);
+
 };
-Q_DECLARE_METATYPE(Parametre)
-QDataStream & operator << (QDataStream & out, const Parametre & Valeur);
-QDataStream & operator >> (QDataStream & in, Parametre & Valeur);
+
 
 #endif // PARAMETRE_H

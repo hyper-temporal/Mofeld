@@ -8,13 +8,17 @@ Blofable::Blofable(const int s,const int t):Sysexable(s){
     setType(t);
 }
 
+    //gerer par marque...
 void Blofable::setManufacturer(){
     appenWord(new WordConstante("MID",&_message[1],0x3E));
 }
 
+//gerer par model...
 void Blofable::setDeviceModel(){
     appenWord(new WordConstante("IDE",&_message[2],0x13));
 }
+//gerer par device... cette methode doit intitialiser la fonction d'obtention d'un pointeur sur un device
+//le device sera accessible en lecture et ecriture a l'adresse ou est implementer ce mot
 void Blofable::setDevice(){
     appenWord(new WordAny("DEV",&_message[3],0));
 }

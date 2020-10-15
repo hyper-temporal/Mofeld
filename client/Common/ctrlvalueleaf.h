@@ -24,6 +24,7 @@ protected:
 
     void addCtrl(ctrlComponent * l){}
     virtual void setLayout() =0;
+//    virtual void UpdatedValue(int value)=0;
     virtual void UpdatedValueDirect(int value)=0;
     void show();
     void hide();

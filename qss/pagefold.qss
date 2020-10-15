@@ -31,7 +31,7 @@ QGroupbox{
 
 /* mainFrame won't have this border-image since we have
    explicitly set it to 'none' using a more specific selector. */
-QDial,QFrame, QLineEdit, QComboBox[editable="true"], QSpinBox {
+QFrame, QLineEdit, QComboBox[editable="true"], QSpinBox {
     border-image: url(:/images/frame.png) 4;
     border-width: 3px;
 }

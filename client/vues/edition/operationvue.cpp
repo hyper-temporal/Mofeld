@@ -6,7 +6,7 @@ OperationVue::OperationVue(OperationModel *opMod,BlofeldReplica *synth,  QWidget
 {
 
     le_instrumentName = new  QLineEdit;
-    chb_importProp = new QCheckBox("Propriété");
+    chb_importProp = new QCheckBox("PropriÃ©tÃ©");
     chb_importStuff  =new QCheckBox("Stuff");
     chb_importContrainte = new QCheckBox("Contraintes");
     chb_importValues = new QCheckBox("Values");

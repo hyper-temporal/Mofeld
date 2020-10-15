@@ -7,12 +7,12 @@
 #include "genericity/valuerange.h"
 
 //Ecrit et de lit un entier a partir d'une serie d'octets
-//un mot partagé et un mot simple ne possedera qu'un ByteManager
+//un mot partagÃ© et un mot simple ne possedera qu'un ByteManager
 // un mot dont bitness > 8 instanciera plusieurs ByteMgr
 
 //lors de la construction d'un synthObject le mot fournit un parametre qui permet de recuperer le type du mot, d'en lire et modifier la valeur
 
-//est instancié par un messagewriter qui instancie egalement le vecteur dans lequel l'ecriture a lieu
+//est instanciÃ© par un messagewriter qui instancie egalement le vecteur dans lequel l'ecriture a lieu
 class WordWriter
 {
 protected:
@@ -33,7 +33,7 @@ public:
     int getValue(int v)const{return _valueMgr->getValue(v);}
     void setValue(int v){ _valueMgr->setValue(v);}
 
-    //met a jour sa valeur selon les octets du message, eux memes pointés par les bytesmgr
+    //met a jour sa valeur selon les octets du message, eux memes pointÃ©s par les bytesmgr
     virtual void parseBytes() ;
     //met a jour le message suivant sa valeur
     virtual void writeBytes() ;

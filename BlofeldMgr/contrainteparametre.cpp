@@ -118,22 +118,6 @@ Contrainte * Contrainte::getNewKeepMaxs(const Contrainte * cn)const
     int max = getTallestMax(this,cn);
     return new Contrainte(min,max);
 }
-QDataStream & operator << (QDataStream & out,const Contrainte &Valeur)
-{
-    out << Valeur._min
-        << Valeur._max
-           ;
-    return out;
-}
-
-QDataStream & operator >> (QDataStream & in, Contrainte & Valeur)
-{
-    in  >> Valeur._min
-        >> Valeur._max
-           ;
-    return in;
-}
-
 
 
 

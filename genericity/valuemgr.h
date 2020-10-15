@@ -38,6 +38,7 @@ protected:
     const int _mask;
 public:
 
+    //constructeur initial WWr
     ValueMgr(QString s,int b=7, int v=0)
         :_nom(s),
           _bitness(b),
@@ -105,6 +106,7 @@ public:
     int getNewValue(int v,int min, int max)const{return _enum->getNewValue(v,min,max);}
 
     int getValueOfElement(int p)const{return _enum->getElement(p)->Lentier;}
+//    QString getNameOfElement(int p)const{return _enum->getElement(p)->LaChaine;}
     const QString getNameOfElement(int v)const
     {
         foreach(SynthEnumElement *se,_enum->getElements() ){

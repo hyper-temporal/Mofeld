@@ -4,39 +4,42 @@
 
 #include <QVector>
 #include "blofeldwavetablemodel.h"
+#include "BlofeldMgr/itagable.h"
 #include "genericity/entitydao.h"
 
 class BlofeldWaveTableMgrModel
-        :public Entity
+        :public ITagable,public Entity
 {
-    //gère l'ensemble des wavetables éditables du blofeld
+    //gÃ¨re l'ensemble des wavetables Ã©ditables du blofeld
     QVector<BlofeldWaveTableModel> _waveTables;
 
 public:
     BlofeldWaveTableMgrModel();
+    int countSamples()const{return _waveTables.at(0).countSamples();}
+    int countAnalysis()const{return _waveTables.at(0).countAnalysis();}
+    int countWaves()const{return _waveTables.size();}
 
-    //constructeur appelé par la classe de serialisation lors de l'import
+    //constructeur appelÃ© par la classe de serialisation lors de l'import
     BlofeldWaveTableMgrModel(const BlofeldWaveTableMgrModel *other, int id , QString nom);
-
-    void setSignal(int tableNum, int waveNum, SignalReal sr);
-    const SignalReal * getSignal(int tableNum, int waveNum);
     SignalReal * editSignal(int tableNum, int waveNum);
+    const SignalReal * getSignal(int tableNum, int waveNum);
+
+
     const BlofeldWaveTableModel *getTable(int num)const ;
     void setTable(int num, const BlofeldWaveTableModel *table);
 
-    const QVector<BlofeldWaveTableModel>  *getTables()const{
-        return &_waveTables;
-    }
 
-private:
+    const QVector<BlofeldWaveTableModel>  *getTables()const{return &_waveTables;}
+//    QVector<BlofeldWaveTableModel>  *editTables(){return &_waveTables;}
+public slots:
+    void setSignal(int tableNum, int waveNum, int freq, double mgn, double phs);
     BlofeldWaveTableModel *editTable(int num);
 
-    friend QDataStream & operator << (QDataStream &, const BlofeldWaveTableMgrModel &);
-    friend QDataStream & operator >> (QDataStream &, BlofeldWaveTableMgrModel &);
+private:
+    //    void setSignal(int tableNum, int waveNum, SignalReal sr);
+
+
 };
-Q_DECLARE_METATYPE(BlofeldWaveTableMgrModel)
-QDataStream & operator << (QDataStream & out, const BlofeldWaveTableMgrModel & Valeur);
-QDataStream & operator >> (QDataStream & in, BlofeldWaveTableMgrModel & Valeur);
 
 
 #endif // BLOFELDWAVETABLEMGR_H

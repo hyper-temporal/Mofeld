@@ -18,6 +18,7 @@ void RequestMulti::setAdressContent(){
     appenWord (new WordAny("Multi Number",&_message[6]));
 }
 void RequestMulti::setDataContent(){
+    //null
 }
 
 void RequestMulti::setChecksum(){

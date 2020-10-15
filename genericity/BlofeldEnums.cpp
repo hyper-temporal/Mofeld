@@ -68,7 +68,7 @@ BlofeldTypesEnum::BlofeldTypesEnum(){
 
 const SynthEnum* BlofeldTypesEnum::GetEnum(int i)const{
     if(i<0 || LesEnums.count()==0 ||  i> LesEnums.count() ){
-        throw std::logic_error("L'énumération n'éxiste pas");
+        throw std::logic_error("L'Ã©numÃ©ration n'Ã©xiste pas");
     }
     return LesEnums[i];
 }
@@ -90,7 +90,7 @@ void BlofeldTypesEnum::AddEnum(const SynthEnum * se){
     {
         const SynthEnum * en = LesEnums.at(i);
         if(en->_nom.trimmed() == se->_nom.trimmed()){
-            throw std::logic_error("une énumération portant ce nom existe déja");
+            throw std::logic_error("une Ã©numÃ©ration portant ce nom existe dÃ©ja");
         }
     }
     LesEnums.append(se);
@@ -1081,7 +1081,7 @@ const SynthEnum * BlofeldTypesEnum::blotype_Phase() {
 
     for(int i(0);i<127;i++){
         int num = (((float)(i)*355)/126);
-        QString s = QString::number(num) + " °" ;
+        QString s = QString::number(num) + " Â°" ;
         se1 = new SynthEnumElement(s,i+1);
             monEnum->EnumValidation(se1);
     }

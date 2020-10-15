@@ -24,7 +24,9 @@ class EasyList
     Q_OBJECT
 
 protected:
+//    Ui::frmCollectionMgnt ui;
     ICategorizable * _modelEntity;
+//    QWidget * _parent;
     QSortFilterProxyModel * _proxy;
     QLabel *lbCollecMgrTitle;
     QVBoxLayout *   _layout;

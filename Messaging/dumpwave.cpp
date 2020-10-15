@@ -22,8 +22,8 @@ void DumpWave::setMessage(const SignalReal *sr)
 }
 
 void DumpWave::setAdressContent(){
-    appenWord(new WordAny ("WT n°",&_message[5] ));
-    appenWord(new WordAny ("Wave Number n°",&_message[6]));
+    appenWord(new WordRange ("WT nÂ°",&_message[5],WT_START,WT_END ));
+    appenWord(new WordRange ("Wave Number nÂ°",&_message[6],0,63));
 }
 
 void DumpWave::setDataContent(){
@@ -31,7 +31,7 @@ void DumpWave::setDataContent(){
     appenWord(new WordAny("FORMAT",&_message[cnt++] ));
 
     for(int snum(0);snum<_length;snum++){
-        WordWriter * w = new WordBig ("Sample n°%d",&_message[3*cnt++],21);
+        WordWriter * w = new WordBig ("Sample nÂ°%d",&_message[3*cnt++],21);
         appenWord(w);
     }
     int n = 392;
@@ -39,22 +39,19 @@ void DumpWave::setDataContent(){
     for(int cntName(0);cntName<14;cntName++)
     {
         QString s;
-        s.sprintf("char n°%d",cntName);
+        s.sprintf("char nÂ°%d",cntName);
         appenWord(new WordAny (s,&_message[cntName+n],33));
     }
 }
 
 void  DumpWave::setEmbeddedName(QString name){
     int offset=136;
-    for(int i=0; i<14 && name.length()>i;i++)
-    {
+    for(int i=0; i<14 && name.length()>i;i++){
         char c ;
         if(i >= name.length()){
-            c = (char)0x20;
-        }
+            c = (char)0x20;}
         else{
-            c = name.at(i).toAscii();
-        }
+            c = name.at(i).toLatin1();}
         const char res(c);
         setWordValue(i+offset,res);
     }
@@ -68,8 +65,8 @@ void DumpWave::setChecksum(){
 
 std::vector<uchar> * DumpWave::getMessage(int macid, int tableid, int waveid)
 {
-    replaceWord(5,new WordConstante("WT n°",&_message[5],tableid));
-    replaceWord(6,new WordConstante ("Wave Number n°",&_message[6],waveid));
+    replaceWord(5,new WordConstante("WT nÂ°",&_message[5],tableid));
+    replaceWord(6,new WordConstante ("Wave Number nÂ°",&_message[6],waveid));
     return Blofable::getMessage(macid);
 }
 

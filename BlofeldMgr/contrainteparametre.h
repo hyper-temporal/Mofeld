@@ -6,13 +6,13 @@
 #include <QDirIterator>
 #include <QSettings>
 #include <QAbstractTableModel>
+#include "itagable.h"
 #include "defs.h"
 
 #include "genericity/valuemgr.h"
 
 class Contrainte
 {
-
     int _min;
     int _max;
     ValueMgr *_valueMgr;
@@ -27,6 +27,8 @@ public:
 
     int getMinValue()const{return _min;}
     int getMaxValue()const{return _max;}
+//    void setMaxValue(int v);
+//    void setMinValue(int v);
     Contrainte * getNewRestricted(const Contrainte *) const;
     Contrainte * getNewExtended(const Contrainte *) const;
     Contrainte * getNewKeepMins(const Contrainte *) const;
@@ -44,13 +46,8 @@ private:
 
     friend class Parametre;
 
-    friend QDataStream & operator << (QDataStream &, const Contrainte &);
-    friend QDataStream & operator >> (QDataStream &, Contrainte &);
 };
 
-Q_DECLARE_METATYPE(Contrainte)
-QDataStream & operator << (QDataStream & out, const  Contrainte & Valeur);
-QDataStream & operator >> (QDataStream & in, Contrainte & Valeur);
 
 
 #endif // CONTRAINTEPARAMETRE_H

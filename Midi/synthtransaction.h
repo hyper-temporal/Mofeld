@@ -12,12 +12,12 @@ public:
     SynthTransaction();
 };
 
-// la taille du message recu est comparé a la taille des mots attendus (equivalent du switch sur la taille)
-//  si la taille correspond le message est parsé
-//  si pas Exception alors la structure est envoyé au sender
-//  si pas de sender la structure est adressé par la methode d'adressage de la transaction
+// la taille du message recu est comparÃ© a la taille des mots attendus (equivalent du switch sur la taille)
+//  si la taille correspond le message est parsÃ©
+//  si pas Exception alors la structure est envoyÃ© au sender
+//  si pas de sender la structure est adressÃ© par la methode d'adressage de la transaction
 //  message de parametre: transaction permanente, methode d'adressage particuliere
-//  message instrument: transaction initiée pour le canal d'un device particulier
+//  message instrument: transaction initiÃ©e pour le canal d'un device particulier
 //  le message correspondant a une position dans une banque doit avoir un sender
 /*
     la transaction fait intervenir un envoi de requete + dump retour compatible
@@ -33,7 +33,7 @@ public:
 /*
     gestion du temps :
     on a un thread permanent qui toutes les n ms vient decrementer le temps des transactions en cours
-    si une transaction non permanente est arrivée a expirtation elle est annulee
+    si une transaction non permanente est arrivÃ©e a expirtation elle est annulee
 
 */
 #endif // SYNTHTRANSACTION_H

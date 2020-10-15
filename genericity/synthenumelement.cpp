@@ -1,6 +1,8 @@
 #include "synthenumelement.h"
 #include "QString"
 
+//SynthEnumElement::SynthEnumElement(){
+//}
 
 SynthEnumElement::SynthEnumElement(QString s, int i )
     :
@@ -9,7 +11,7 @@ SynthEnumElement::SynthEnumElement(QString s, int i )
 {
 
     if(!s.length()){
-        throw std::logic_error("Lachaine ne peut pas être vide");
+        throw std::logic_error("Lachaine ne peut pas Ãªtre vide");
 
         return;
     }

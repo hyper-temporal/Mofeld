@@ -12,6 +12,9 @@ int MessageWriter::getWordValue(int p ){
     return _mots.at(p)->getValue();
 }
 
+
+//cette methode est appelée avant le parsing definitif
+//chaque mot
 QVector<WordWriter *> MessageWriter::checkWReplacers()
 {
     QVector<WordWriter *> vws;

@@ -17,6 +17,7 @@ class BlofeldMultiVue
     QLayout * mainLayout;
 
     QVector<CtrlParamLeaf *> _controles;
+    QVector<BlofeldMultiSlice * > _slices;
 public:
     BlofeldMultiVue(QWidget *parent, const BlofeldReplica *synth);
 
@@ -26,6 +27,7 @@ public:
 private slots:
     void multiRequest();
     void multiSend();
+    void ShowSlice(int);
 signals:
     void multiRequest(int);
     void multiSend(int);

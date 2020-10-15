@@ -1,0 +1,5 @@
+#ifndef CONSEQUENCE_H
+#define CONSEQUENCE_H
+
+
+#endif // CONSEQUENCE_H

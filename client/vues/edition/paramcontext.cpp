@@ -4,7 +4,7 @@ ParamContext::ParamContext(const Parametre *param)
     : _parametre(param)
 {
 
-    _restrict.setText("Restrict");
+    _restriction.setText("Restrict");
     _dmin.setOrientation(Qt::Vertical);
     _dmax.setOrientation(Qt::Vertical);
     _cbAddToProp.setText(tr("Add2Prop"));
@@ -39,9 +39,9 @@ ParamContext::ParamContext(const Parametre *param)
     lyContrainte->addLayout(lyH0);
     lyContrainte->addWidget(&_cbAddToProp);
     lyContrainte->addLayout(lyH1);
-    lyContrainte->addWidget(&_restrict);
+    lyContrainte->addWidget(&_restriction);
 
-    QGroupBox *_wContainer3   = new QGroupBox("Contrainte Paramètre");
+    QGroupBox *_wContainer3   = new QGroupBox("Contrainte ParamÃ¨tre");
     _wContainer3->setLayout(lyContrainte);
 
     _layout  = new QVBoxLayout;
@@ -52,7 +52,7 @@ ParamContext::ParamContext(const Parametre *param)
     connect(&_cbAddToProp,SIGNAL(toggled(bool)),this,SLOT(setPropriete(bool)));
     connect(&_dmin,SIGNAL(valueChanged(int)),this,SLOT(setMin(int)));
     connect(&_dmax,SIGNAL(valueChanged(int)),this,SLOT(setMax(int)));
-    connect(&_restrict,SIGNAL(clicked()),this,SLOT(restrict2Value()));
+    connect(&_restriction,SIGNAL(clicked()),this,SLOT(restrict2Value()));
 
     updateForm(_parametre);
 //    emit updateMe(pid,this);

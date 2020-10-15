@@ -35,6 +35,7 @@ private:
     void setAdressContent();
     void setDataContent();
     void setChecksum();
+    //pour construire une interface sur les mots d'un message
     void addParametre(WordWriter *w );
     Parametre *getParametre(int id)const{
         return new Parametre((ValueEnum*)_mots.at(id)->getValueMgr(),id);

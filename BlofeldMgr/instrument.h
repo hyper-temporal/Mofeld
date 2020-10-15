@@ -7,12 +7,15 @@
 #include <QVector>
 #include <QSettings>
 #include <QAbstractTableModel>
+
 #include "genericity/entitydao.h"
 #include "propriete.h"
+#include "itagable.h"
+
 #include "mixpropparams.h"
 
 class Instrument
-        :public Entity
+        :public ITagable,public Entity
 {
     QVector<Parametre> _parametre;
 public:
@@ -51,13 +54,8 @@ private:
 
 
     friend class InstrumentModel;
-    friend QDataStream & operator << (QDataStream &, const Instrument &);
-    friend QDataStream & operator >> (QDataStream &, Instrument &);
 
 };
 
-Q_DECLARE_METATYPE(Instrument)
-QDataStream & operator << (QDataStream & out, const Instrument & Valeur);
-QDataStream & operator >> (QDataStream & in, Instrument & Valeur);
 
 #endif // INSTRUMENT_H

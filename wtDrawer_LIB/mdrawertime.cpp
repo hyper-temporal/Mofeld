@@ -1,73 +1,32 @@
 #include "mdrawertime.h"
-#include "sliceotime.h"
 
 using namespace std;
 
 MDrawerTime::MDrawerTime(SignalReal *m, QWidget *p)
     :MDrawer(m,p)
+{}
+
+
+void MDrawerTime::paintDomain(QPainter &painter)
 {
-    _name ="Samples";
-
-    for(int i(0);i<_model->countSamples();i++)
-    {
-        _slices.append( new SliceOTime( _model->editSample(i),this));
-        layout()->addWidget(_slices.last());
+    auto datas = _model->getSamples();
+    int nbsegments = datas->size();
+    QPoint pav(0.0, height()*(1.0-( 0.5+ 0.5 * datas->at(0))));
+    double tseg_d = (double)width()/(nbsegments);
+    double dwidth(0.0);
+    for(int inx(1);inx <= nbsegments;inx++){
+        dwidth += tseg_d;
+        double vp = 0.5+ 0.5* datas->at(inx-1);
+        double h =  height()*(1.0-vp);
+        QPoint npo(pav);
+        npo.setY(h);
+        painter.drawLine( QLine(pav,npo));
+        QPoint npv(dwidth,h);
+        painter.drawLine( QLine(npo,npv));
+        pav = npv;
     }
+
+
+
 }
-
-void MDrawerTime::refresh()
-{
-    for(int i(0);i<_model->countSamples();i++)
-    {
-        SliceOTime*slice = static_cast< SliceOTime*>( _slices.at(i));
-        slice->setModel( _model->editSample(i));
-    }
-}
-
-
-double MDrawerTime::getSampleValue(int pos){
-    return _model->getSample(pos);
-}
-
-double MDrawerTime::getSampleValue(const QPoint &p)
-{
-    double ret;
-
-    if(height()<2) return 0.0;
-    if(p.y()<0){
-        return 1.0;
-    }
-    else if(p.y()>height())
-    {
-        return -1.0;
-    }
-    else
-    {
-        int offset = height()/2;
-        int sansOffset;
-
-        if(p.y()==offset)
-        {
-            return 0.0;
-        }
-        else if(p.y() > offset)
-        {
-            sansOffset = offset -p.y();
-        }else{
-            sansOffset = - (p.y()- offset);
-        }
-        ret = (double)2*sansOffset/height();
-    }
-    if(ret<-1.0){
-        ret= -1.0;
-    }
-    else if(ret>1.0)
-    {
-        ret= 1.0;
-    }
-    else if(ret < 0.001 && ret>-0.001)return 0.0;
-    return ret;
-}
-
-
 

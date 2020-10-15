@@ -4,7 +4,7 @@
 #include "BlofeldMgr/blofeldreplica.h"
 
 #include "defs.h"
-
+//sert a la visualisation des contraintes
 class OperationModel
 {
     BlofeldReplica * _synth;

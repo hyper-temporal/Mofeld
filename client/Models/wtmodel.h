@@ -13,8 +13,11 @@ class WTModel
 {
     Q_OBJECT
     BlofeldWaveTableMgrModel *_edited;
+//    BlofeldReplica *_synth;
 public:
+//    WTModel(BlofeldReplica *r);
     WTModel( BlofeldWaveTableMgrModel *edited);
+
     void ajouter(QString nom );
 private:
 

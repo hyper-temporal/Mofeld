@@ -56,7 +56,9 @@ void frmSynthCtrl_combobox::setLayout()
 
 void frmSynthCtrl_combobox::UpdatedValueDirect(int value)
 {
-    ((QComboBox*)_controle)->setCurrentIndex(((QComboBox*)_controle)->findData(value));
+    int ind = ((QComboBox*)_controle)->findData(value);
+    if(ind == -1 )return;
+    ((QComboBox*)_controle)->setCurrentIndex(ind);
 }
 
 

@@ -7,6 +7,8 @@
 #include <QGridLayout>
 
 
+//un client construit une interface en passant des ctrlcomposite a cette classe
+//ceux ci sont
 class ctrlComponent:
         public QWidget
  {
@@ -16,6 +18,7 @@ protected:
     QLayout * _layout;
 public:
 
+    //pour ajouter des ctrl en ligne H ou V
     ctrlComponent(QWidget * parent, QBoxLayout::Direction d)
         :QWidget(parent), _direction(d)
     {}

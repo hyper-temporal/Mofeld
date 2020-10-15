@@ -7,8 +7,13 @@
 #include "BlofeldMgr/instrument.h"
 #include "wordchecksum.h"
 
+
+//Class Mutualisable pour parser et ecrire des messages
+// TODO : une classe dont les parametres sont eux meme adressables implement les methodes dr'adressage de ses sous structures
+// dumpinstrument
 class DumpInstrument: public Blofable
 {
+    //Contient la reference vers les writer + l'adresse
     QVector<ParametreCom*> _Parametres;
 
 public:

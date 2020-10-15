@@ -16,6 +16,7 @@
 
 
 
+//persistance et gestion des collection generique
 template<class T>
 class EntityDAO
         : public ICategorizable
@@ -142,6 +143,7 @@ protected:
 
             const T * e = _objects.at(row);
             if (index.column() == 0)
+//                e->_name = value.toString();
                 return false;
             _objects.replace(row,e);
             emit(dataChanged(index, index));
@@ -250,28 +252,30 @@ public:
 
     void saveEntity( T a){
 
-        QDir dir = QDir(_path+ *_catName +"/");
-        if(!dir.exists()){
-            QDir().mkdir(dir.absolutePath());
-        }
-        QSettings fichier_ecrire(_path+ *_catName +"/" + a._name+ "." + _extension, QSettings::IniFormat);
-        fichier_ecrire.setValue( _className , qVariantFromValue(a));
-        fichier_ecrire.sync();
+//        QDir dir = QDir(_path+ *_catName +"/");
+//        if(!dir.exists()){
+//            QDir().mkdir(dir.absolutePath());
+//        }
+//        QSettings fichier_ecrire(_path+ *_catName +"/" + a._name+ "." + _extension, QSettings::IniFormat);
+//        fichier_ecrire.setValue( _className , qVariantFromValue(a));
+//        fichier_ecrire.sync();
     }
 
     QList<const T*> loadEntities(QString path)
     {
-        QDir dir = QDir(_path+ *_catName +"/");
-        if(!dir.exists()){
-            QDir().mkdir(dir.absolutePath());
-        }
-        QDirIterator it(path, QStringList() << "*." + _extension , QDir::Files, QDirIterator::Subdirectories);
+//        QDir dir = QDir(_path+ *_catName +"/");
+//        if(!dir.exists()){
+//            QDir().mkdir(dir.absolutePath());
+//        }
+//        QDirIterator it(path, QStringList() << "*." + _extension , QDir::Files, QDirIterator::Subdirectories);
         QList<const T*> lst;
-        while (it.hasNext()){
-            QSettings fichier_lire( it.next(), QSettings::IniFormat);
-            T t(qvariant_cast<T>(fichier_lire.value(_className, qVariantFromValue(T()))));
-            lst.append(new T(t));
-        }
+//        while (it.hasNext()){
+//            QSettings fichier_lire( it.next(), QSettings::IniFormat);
+//            T t(qvariant_cast<T>(fichier_lire.value(_className, qVariantFromValue(T()))));
+//            //La on fait new pour creer des instances persistantes,
+//            //l'objet qui les utilise doit les detruire
+//            lst.append(new T(t));
+//        }
         return lst;
     }
 

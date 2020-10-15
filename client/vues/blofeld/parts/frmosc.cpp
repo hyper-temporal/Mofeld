@@ -43,7 +43,7 @@ frmOsc123::frmOsc123(const BlofeldReplica *synth,Instrument * instru, int oscnum
         bal=48+ oscnum*2;
     }
     else{
-        throw("l'enveloppe est mal précisée");
+        throw("l'enveloppe est mal prÃ©cisÃ©e");
     }
 
     ctrlComposite * fc0 = new ctrlComposite(parent,QBoxLayout::TopToBottom);

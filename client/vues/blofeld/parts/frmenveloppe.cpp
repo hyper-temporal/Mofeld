@@ -30,7 +30,7 @@ frmEnveloppe::frmEnveloppe(const BlofeldReplica *synth, Instrument *instru, int 
         envrel=157+ offset;
     }
     else{
-        throw("l'enveloppe est mal précisée");
+        throw("l'enveloppe est mal prÃ©cisÃ©e");
     }
 
     ctrlComposite * fsc1 = new ctrlComposite(parent,QBoxLayout::TopToBottom);
@@ -57,4 +57,5 @@ frmEnveloppe::frmEnveloppe(const BlofeldReplica *synth, Instrument *instru, int 
     addCtrl(fsc1);
     addCtrl(fsc4);
 
+//    AfterConstructor();
 }

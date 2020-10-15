@@ -1,33 +1,42 @@
 #include "dspcontrol.h"
 
+#include <math.h>
 DSPControl::DSPControl(QWidget *parent, SignalReal *sig)
     : QWidget(parent)
+    ,_rotatePH(false)
+    ,_rotateMG(false)
+    ,_rotateT(false)
 {
     _signal = sig;
-
+//    _normalise=false;
     _lastSample = -1;
     _currentSample = -1;
 
-    _mode = SignalReal::DrawMagnitude;
-    _frequencyDomain = new MDrawerFrequency(_signal,this);
+    _mode = DrawMagnitude;
+    _frequencyDomain = new MDrawerFrequency(_signal,parent);
     _timeDomain  = new MDrawerTime(_signal,this);
 
 
-    connect( _frequencyDomain, SIGNAL(sendValue(int,double)),
-             this, SLOT(sentFromDomainF(int,double)));
-    connect( _timeDomain, SIGNAL(sendValue(int,double)),
-             this, SLOT(sentFromDomainT(int,double)));
-
+    connect( _timeDomain, SIGNAL(follow(int,double)),
+             this, SLOT(FollowT(int,double)));
     connect( _timeDomain, SIGNAL(startFollow(int,double)),
              this, SLOT(startDomainT(int,double)));
-    connect( _frequencyDomain, SIGNAL(startFollow(int,double)),
-             this, SLOT(startDomainF(int,double)));
-
-
     connect( _timeDomain, SIGNAL(stopFollow(int,double)),
              this, SLOT(stopFollowT(int,double)));
+
+    connect( _frequencyDomain, SIGNAL(follow(int,double)),
+             this, SLOT(followF(int,double)));
+    connect( _frequencyDomain, SIGNAL(startFollow(int,double)),
+             this, SLOT(startDomainF(int,double)));
     connect( _frequencyDomain, SIGNAL(stopFollow(int,double)),
              this, SLOT(stopFollowF(int,double)));
+
+
+
+//    QGroupBox *gbTimeD = new QGroupBox("Time Domain");
+//    gbTimeD->setLayout(_timeDomain->layout());
+//    QGroupBox *gbFreqD = new QGroupBox("Frequency Domain");
+//    gbFreqD->setLayout(_frequencyDomain->layout());
 
     QVBoxLayout *lyDrawingPanel  = new QVBoxLayout;
     lyDrawingPanel->addWidget(_timeDomain);
@@ -45,79 +54,231 @@ void DSPControl::setSignal(SignalReal * sig){
 }
 
 
+void DSPControl::setSample(int pos,double v){
+    _signal->setSample(pos,transposeValueSample(v));
+//    _signal->dft();
+//    _timeDomain->UpdateOne(pos);
+//    _frequencyDomain->UpdateAll();
+//    emit everythingHasChanged();
+
+}
+
+void DSPControl::setPhase(int pos,double v)
+{
+    _signal->setPhase(pos,transposeValuePhase(v));
+//    _signal->idft();
+//    _signal->normalisePeaks();
+//    _signal->dft();
+//    _frequencyDomain->UpdateOne(pos);
+//    _timeDomain->UpdateAll();
+//    emit everythingHasChanged();
+
+}
+void DSPControl::setMagnitude(int pos,double v)
+{
+    _signal->setMagnitude(pos,transposeValueMag(v));
+//    _signal->idft();
+//    _signal->normalisePeaks();
+//    _signal->dft();
+//    _frequencyDomain->UpdateOne(pos);
+//    _timeDomain->UpdateAll();
+//    emit everythingHasChanged();
+
+}
+
+QVector<double> *DSPControl::getEditedValues(DrawMode type){
+
+    if(type==DrawTime){
+        return _signal->editSamples();
+    }
+    else if(type == DrawMagnitude)
+    {
+        return _signal->editMagnitude();
+    }
+    else if(type == DrawPhase){
+        return _signal->editPhase();
+    }
+
+    return NULL;
+
+}
+void DSPControl::rotateT(int pos0){
+    _signal->rotateT(pos0);
+
+}
+void DSPControl::rotateMG(int pos0){
+    _signal->rotateMG(pos0);
+}
+void DSPControl::rotatePH(int pos0){
+    _signal->rotatePH(pos0);
+}
+
+void DSPControl::morphAndUpdate(DrawMode type, int from, int to)
+{
+
+     QVector<double> *tomorph = getEditedValues(type);
+     if(tomorph==NULL)return;
+
+
+    _signal->linearMorphing(tomorph,from,to);
+
+    switch(type){
+    case DrawTime:
+        updateAllF();
+        break;
+    case DrawPhase:
+        updateAllT();
+        break;
+    case DrawMagnitude:
+        updateAllT();
+        break;
+    default:
+        break;
+    }
+}
+
+
+void DSPControl::fillSignal(QVector<double> sig,int f)
+{
+   _signal->fillSignal(sig,f);
+    updateAllF();
+}
+
+
+void DSPControl::updateAllT()
+{
+    _signal->idft();
+    emit everythingHasChanged();
+
+}
+void DSPControl::updateAllF()
+{
+    _signal->dft();
+    emit everythingHasChanged();
+}
+
+
+void DSPControl::stopFollowT(int pos, double v )
+{
+    valueDesintegration();
+    emit  updateAndJump();
+}
+
+void DSPControl::stopFollowF(int pos, double v )
+{
+    valueDesintegration();
+    emit  updateAndJump();
+}
+
+
+double DSPControl::transposeValueSample(double value){
+
+    return  -1.0+2*value;
+}
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+double DSPControl::transposeValuePhase(double value){
+    return 2*M_PI*(value);
+
+}
+double DSPControl::transposeValueMag(double value){
+    return  value;
+}
+
+void DSPControl::startDomainF(int pos, double v)
+{
+    followF(pos,v);
+}
+
+void DSPControl::startDomainT(int pos, double v)
+{
+    FollowT(pos,v);
+}
+
+void DSPControl::followF(int pos, double v)
+{
+    valueIntegration(pos);
+    try {
+        if(!(_rotatePH || _rotateMG)){
+            if(_mode==DrawMagnitude){
+                setMagnitude(pos,v);
+            }
+            else if(_mode==DrawPhase){
+                setPhase(pos,v);
+            }
+
+        }else{
+            from = getMin();
+            to = getMax();
+        }
+        if(_rotatePH)
+        {
+            if(_currentSample>_lastSample){
+                _signal->rotatePH(to-from);
+            }else if(_lastSample>_currentSample){
+                _signal->rotatePH(from-to);
+            }
+        }
+        if( _rotateMG)
+        {
+            if(_currentSample>_lastSample){
+                _signal->rotateMG(to-from);
+            }else if(_lastSample>_currentSample){
+                _signal->rotateMG(from-to);
+            }
+        }
+        updateFromTo();
+
+        if(!(_rotatePH || _rotateMG))
+        {
+            morphAndUpdate(_mode,from,to);
+        }else{
+            updateAllT();
+        }
+
+    } catch (...) {
+    }
+}
+
+void DSPControl::FollowT(int pos, double v){
+    valueIntegration(pos);
+    try {
+
+        if(! _rotateT)
+        {
+            setSample(pos,v);
+            updateFromTo();
+            morphAndUpdate(DrawTime,from,to);
+        }
+        else
+        {
+            from = getMin();
+            to = getMax();
+            if(_currentSample>_lastSample){
+                _signal->rotateT(to-from);
+            }else if(_lastSample>_currentSample){
+                _signal->rotateT(from-to);
+            }
+            updateAllF();
+        }
+
+    } catch (...) {
+    }
+}
+
+
+
 void DSPControl::valueIntegration(int pos )
 {
     _lastSample = _currentSample;
     _currentSample = pos;
 }
 
-void DSPControl::setSample(int pos,double v){
-    _signal->setSample(pos,v);
-    _signal->dft();
-//    _timeDomain->UpdateOne(pos);
-//    _frequencyDomain->UpdateAll();
-    emit everythingHasChanged();
 
-}
-
-void DSPControl::setPhase(int pos,double v)
-{
-    _signal->setPhase(pos,v * M_PI);
-    _signal->idft();
-    _signal->normalisePeaks();
-    _signal->dft();
-//    _frequencyDomain->UpdateOne(pos);
-//    _timeDomain->UpdateAll();
-    emit everythingHasChanged();
-
-}
-void DSPControl::setMagnitude(int pos,double v)
-{
-    _signal->setMagnitude(pos,v);
-    _signal->idft();
-    _signal->normalisePeaks();
-    _signal->dft();
-//    _frequencyDomain->UpdateOne(pos);
-//    _timeDomain->UpdateAll();
-    emit everythingHasChanged();
-
-}
-
-void DSPControl::morphAndUpdate(int type)
-{
-    int from,to;
-    from = getMin();
-    to = getMax();
-
-    if(to==-1 && from ==-1)return;
-    else if (from == -1)
-    {
-        from = to;
-    }
-    else if (to == -1){
-        to = from;
-    }
-
-    _signal->linearMorphing(type,from,to);
-
-    switch(type){
-    case SignalReal::DrawTime:
-//        for(int i=from;i<to;i++)
-//        {
-//            _timeDomain->UpdateOne(i);
-//        }
-        _signal->dft();
-//        _frequencyDomain->UpdateAll();
-        break;
-    default:
-//        for(int i=from;i<to;i++)
-//        {
-//            _frequencyDomain->UpdateOne(i);
-//        }
-        _signal->idft();
-//        _timeDomain->UpdateAll();
-        break;
-    }
+void DSPControl::valueDesintegration(){
+    _lastSample = -1;
+    _currentSample =-1;
 }
 
 int DSPControl::getMin()
@@ -147,113 +308,21 @@ int DSPControl::getMax(){
 }
 
 
-void DSPControl::drawSine(int f)
-{
-   _signal->fillSignal(_signal->getSinus(),f);
-    updateAllT();
-}
-void DSPControl::drawSquare(int ratio,int f)
-{
-   _signal->fillSignal(_signal->getSquare(ratio),f);
-    updateAllT();
-}
-void DSPControl::drawTriangle(int f)
-{
-   _signal->fillSignal(_signal->getTriangle(),f);
-    updateAllT();
-}
-void DSPControl::drawRamp(int f)
-{
-   _signal->fillSignal(_signal->getRamp(),f);
-    updateAllT();
-}
-void DSPControl::drawRandom(int f)
-{
-   _signal->fillSignal(_signal->getRandom(),f);
-    updateAllT();
-}
+void DSPControl::updateFromTo(){
+    from = getMin();
+    to = getMax();
+    if(to==-1 && from ==-1)return ;
 
-void DSPControl::valueDesintegration(){
-    _lastSample = -1;
-    _currentSample =-1;
-}
-
-
-void DSPControl::updateAllT()
-{
-//    _timeDomain->UpdateAll();
-    _signal->dft();
-//    _frequencyDomain->UpdateAll();
-    emit everythingHasChanged();
-
-}
-void DSPControl::updateAllF()
-{
-//    _frequencyDomain->UpdateAll();
-    _signal->idft();
-//    _timeDomain->UpdateAll();
-    emit everythingHasChanged();
-}
-
-
-void DSPControl::stopFollowT(int pos, double v )
-{
-    valueDesintegration();
-
-}
-
-void DSPControl::stopFollowF(int pos, double v )
-{
-    valueDesintegration();
-
-    _signal->dft();
-    _frequencyDomain->UpdateAll();
-
-}
-
-void DSPControl::startDomainF(int pos, double v)
-{
-    valueIntegration(pos);
-    if(_mode==SignalReal::DrawMagnitude){
-        setMagnitude(pos,v);
-
-    }else if(_mode==SignalReal::DrawPhase){
-        setPhase(pos,v);
+    else if (from == -1)
+    {
+        from = to;
+    }
+    else if (to == -1){
+        to = from;
     }
 
-}
-void DSPControl::startDomainT(int pos, double v)
-{
-    valueIntegration(pos);
-    setSample(pos,v);
-
-}
-
-void DSPControl::sentFromDomainF(int pos, double v)
-{
-    valueIntegration(pos);
-    try {
-        if(_mode==SignalReal::DrawMagnitude){
-            setMagnitude(pos,v);
-
-        }else if(_mode==SignalReal::DrawPhase){
-            setPhase(pos,v);
-        }
-        morphAndUpdate(_mode);
-
-
-    } catch (...) {
-
+    if(to<from || from<0){
+        throw("bad input min<=max");
     }
 }
 
-void DSPControl::sentFromDomainT(int pos, double v){
-    valueIntegration(pos);
-    try {
-        setSample(pos,v);
-        morphAndUpdate(SignalReal::DrawTime);
-
-    } catch (...) {
-
-    }
-}

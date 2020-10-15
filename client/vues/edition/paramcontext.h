@@ -34,7 +34,7 @@ class ParamContext
     QLabel  _lbValue;
 
     QSlider _dmin,_dmax;
-    QPushButton _restrict;
+    QPushButton _restriction;
 
     const Parametre *_parametre;
 

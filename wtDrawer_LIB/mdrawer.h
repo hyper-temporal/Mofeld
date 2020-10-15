@@ -7,53 +7,66 @@
 #include <QDial>
 #include <QGroupBox>
 #include <QHBoxLayout>
-
-#include "wavedrawerslice.h"
+#include <QPainter>
 #include "signalreal.h"
+#include "mcolorhelper.h"
 
 class MDrawer
-        :public QWidget
+        :public QWidget, public MColorHelper
 {
     Q_OBJECT
 
+    QVector<bool> _locked;
     bool _ctrl,_alt,_left,_right;
 protected:
     SignalReal * _model;
-    QVector<DrawerSlice*> _slices;
     QString _name ;
 
 public:
+    enum DrawMode{
+        DM_PHASE=0,
+        DM_MAGNI=1
+    };
+    enum DrawType{
+        DM_VALUES=0,
+        DM_TRANSLATE=1
+    };
     MDrawer(SignalReal *m, QWidget * parent =0 );
+    void mouseToValue();
+
+private:
+
+    void mouseToValue(const QPoint &);
+    double getPhase(const QPoint &);
+
+    void requestValue(QMouseEvent *);
+    int getSampleNumber(QMouseEvent *me);
 
 public slots:
-    void UpdateAll();
-    void UpdateOne(int id);
-    int getSliceCount(){return _slices.count();}
-    void setSignal(SignalReal *m);
+     void setSignal(SignalReal *m);
 signals:
-    void sendValue(int,double);
+    void follow(int,double);
     void stopFollow(int,double);
     void startFollow(int,double);
 private slots:
     void mousePressEvent(QMouseEvent *me);
     void mouseMoveEvent(QMouseEvent *me);
     void mouseReleaseEvent(QMouseEvent *me);
-private:
-    void requestValue(QMouseEvent *);
-    double mouseToValue();
-    int getSampleNumber(QMouseEvent *me);
-protected:
-    virtual double getSampleValue(const QPoint &p)=0;
-    virtual void refresh()=0;
-//    void setValue(int id,double value);
 
+protected:
+    double getSampleValue(const QPoint &p);
+    virtual int getSampleCount()=0;
+    void paintEvent(QPaintEvent *);
+    virtual void paintDomain(QPainter &painter)=0;
 
     QSize minimumSizeHint() const
     {   return QSize(4, 84);    }
 
     QSize sizeHint() const
-    {   return QSize(4, 127*3);    }
+    {   return QSize(4, 128);    }
 
 };
+
+
 
 #endif // MDRAWER_H

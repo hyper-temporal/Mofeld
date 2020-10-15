@@ -10,8 +10,8 @@ class WaveTableSelectVue
 {
 Q_OBJECT
     WTModel * _model;
-
-public:
+    //    QWidget * _parent;
+    public:
     WaveTableSelectVue( WTModel * m,QWidget *parent )
     :EasyList("TABLES D'ONDE",m,parent), _model(m)
     {

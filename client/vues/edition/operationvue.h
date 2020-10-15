@@ -42,6 +42,7 @@ class OperationVue:
 
     QLineEdit *le_qssPath;
     QPushButton *btn_layoutUpdate;
+    //TODO a implementer
     QLabel * lb_InstrumentName;
     QLineEdit *le_InstrumentNameEdit;
     QPushButton *pb_reImport,

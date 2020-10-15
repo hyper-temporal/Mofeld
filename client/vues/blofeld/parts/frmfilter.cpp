@@ -54,6 +54,7 @@ frmFilter::frmFilter(const BlofeldReplica *synth, Instrument *instru,int filtern
     addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(modam),-64));
     addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(panamo),-64));
     addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(pan)));
+//    AfterConstructor();
 }
 
 

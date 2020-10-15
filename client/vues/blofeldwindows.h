@@ -5,7 +5,7 @@
 #include <QTabWidget>
 #include <QToolButton>
 
-#include "blofeldVue.h"
+#include "blofeldEditorVue.h"
 
 #include "client/vues/edition/operationvue.h"
 #include "client/vues/edition/arrangementvue.h"
@@ -29,15 +29,12 @@ class BlofeldViews
     Q_OBJECT
 
     Patienteur _patienteur;
-
-
     UIWaveTableMgrVue *_wtEditor;
-
 
     BlofeldMultiVue *_multi;
     BlofeldEditorVue *_editor;
     OperationVue *_CommonVue;
-    QWidget *_wTargetCtrl;
+//    QWidget *_wTargetCtrl;
     QWidget *_wMulti,*_wToolBar;
 
     WaveTableSelectVue *_wtVue;
@@ -63,9 +60,11 @@ public:
 
     QWidget *getMultiView(){return _multi;}
     QWidget *getEditorWidget(){return _editor;}
-    QWidget *getTargetWidget(){return  _wTargetCtrl;}
+//    QWidget *getTargetWidget(){return  _wTargetCtrl;}
     QWidget *geOperationView(){return  _CommonVue;}
     QWidget *getWaveTableEditor(){return _wtEditor;}
+
+
 private:
     void updatePElements();
     void updateInstrumentView();
@@ -88,6 +87,27 @@ public slots:
     void recevoirPropriete(const Propriete * p);
     void setParametre(int pid, int v);
 
+
+
+   void k_generate(){ }
+   void k_onModifyStretch(){ }
+    void k_onModifyRestrict(){ }
+    void k_CopyWave(){ }
+    void k_PasteWave(){ }
+
+void k_prevWaveTable(){ }
+void k_nextWaveTable(){ }
+void k_NextFrequency(){ }
+    void k_PrevFrequency(){ }
+    void k_NextTable(){ }
+    void k_PrevTable(){ }
+    void k_nextWave(){ }
+    void k_prevWave(){ }
+    void k_Drawers4Rotation(){ }
+    void k_Drawer4Phase(){ }
+
+
+    //TODO IMPLEMENTER MEDIATOR (avec signaux et slots)
     void updateView(const Arrangement * a);
     void updateView(const Instrument * i);
     void updateView(const Parametre * p);

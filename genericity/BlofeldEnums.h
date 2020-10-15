@@ -1,10 +1,9 @@
 #ifndef BLOFENUMS_H
 #define BLOFENUMS_H
 
-
 #include "synthenum.h"
 #include <stdlib.h>
-#include <QDomDocument>
+//#include <QDomDocument>
 #include <QFile>
 #include <QMessageBox>
 

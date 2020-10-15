@@ -14,7 +14,10 @@ BlofeldMultiVue::BlofeldMultiVue(QWidget *parent,const BlofeldReplica *synth)
     ctrlComposite * block2 = new ctrlComposite(parent, QBoxLayout::LeftToRight );
     for(int i(0);i<16;i++){
         QString s =  "part "+ QString::number(i+1);
-        block2->addCtrl(new BlofeldMultiSlice(synth,_multiblob,i,s,parent));
+        auto slice = new BlofeldMultiSlice(synth,_multiblob,i,s,parent);
+        slice->hide();
+        _slices.append(slice);
+        block2->addCtrl(slice);
     }
     block1->setLayout();
     block2->setLayout();
@@ -58,6 +61,9 @@ BlofeldMultiVue::BlofeldMultiVue(QWidget *parent,const BlofeldReplica *synth)
 
     setLayout(mainLayout);
     connection(parent);
+    hide();
+
+    connect( _cbbMultiNum , SIGNAL( currentIndexChanged(int)), this , SLOT(ShowSlice(int)));
 }
 
 
@@ -83,6 +89,18 @@ void BlofeldMultiVue::multiRequest()
 void BlofeldMultiVue::multiSend()
 {
     emit multiSend(_cbbMultiNum->currentIndex());
+}
+
+void BlofeldMultiVue::ShowSlice(int sn)
+{
+    foreach (BlofeldMultiSlice * comp , _slices) {
+        comp->hide();
+    }
+    if(sn<_slices.count())
+        _slices[sn]->show();
+    else
+        qInfo("bunk");
+
 }
 
 

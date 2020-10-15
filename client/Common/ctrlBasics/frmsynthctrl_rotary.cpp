@@ -72,7 +72,7 @@ void frmSynthCtrl_rotary::directConnect(){
 void frmSynthCtrl_rotary::UpdatedValueDirect(int value)
 {
     try {
-        ((DialMaison*)_controle)->setValue(value);
+        ((QDial*)_controle)->setValue(value);
         _sbValeur.setValue(value+_offset);
     } catch (...) {
     }

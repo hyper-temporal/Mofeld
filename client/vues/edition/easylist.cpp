@@ -34,7 +34,7 @@ int EasyList::getId()
         i = _modelEntity->index(row, 2, QModelIndex());
         QVariant varName = _modelEntity->data(i, Qt::DisplayRole);
         id = varName.toInt();
-        //retourner le premier trouvé
+        //retourner le premier trouvÃ©
         return id;
     }
     return (-1);

@@ -6,14 +6,12 @@
 #include <QTime>
 #include <QThread>
 #include <RtMidi.h>
-#include <RtError.h>
-//QElapsedTimer::PerformanceCounter
+
 class MinMgr;
 class MoutMgr;
 
 class MIOMgr
     : public QObject
-//        : public QThread
 {
     Q_OBJECT
 private:
@@ -21,8 +19,6 @@ private:
     MinMgr * minput;
     MoutMgr * moutput;
 public:
-
-//    explicit MIOMgr(QObject *);
     MIOMgr();
     void setMidiInput(QString inputName);
     void setMidiOutput(QString outputName);
@@ -33,7 +29,8 @@ public:
 
     void ReceiveSysex(std::vector< uchar > * input);
 
-
+    void writeMessage(QString path,std::vector< uchar > * content);
+    std::vector< uchar > * readMessage(QString path);
 signals:
     void SysexChanged(std::vector< uchar > * sxMess );
 protected:

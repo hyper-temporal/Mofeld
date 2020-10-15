@@ -11,6 +11,8 @@ class BlofChannel
 private:
     int _channelNum;
     Instrument _instrument;
+//parametres communs, figés pour le canal afin de conserver les proprietes d'un type d'instrument...
+//pour modifier ces reglages on ecrasera les mods en cours
     MixPropParams _mixPars;
     QVector<Parametre> _multiPars;
 
@@ -56,14 +58,9 @@ private:
         return _multiPars[pid].getValue();
     }
 
-    friend QDataStream & operator << (QDataStream &, const BlofChannel &);
-    friend QDataStream & operator >> (QDataStream &, BlofChannel &);
 
     friend class DumpMulti;
 
 };
-Q_DECLARE_METATYPE(BlofChannel)
-QDataStream & operator << (QDataStream & out, const BlofChannel & Valeur);
-QDataStream & operator >> (QDataStream & in, BlofChannel & Valeur);
 
 #endif // BLOFCHANNEL_H

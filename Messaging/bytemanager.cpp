@@ -12,8 +12,11 @@ ByteManager::ByteManager(uchar *octet, int b, int o)
 
 uchar ByteManager::extractValue(){
     uchar init = *_octet;
+    //j'ecrase les bits a gauche
     uchar mask0 = init<<(8-_bitness-_offset);
+    //je cale a droite
     uchar mask1 = mask0>>(8-_bitness);
+    //La valeur est parsée
     return mask1;
 }
 

@@ -36,7 +36,7 @@ void  DumpMulti::setMultiName(QString name){
             c = (char)0x20;
         }
         else{
-            c = name.at(i).toAscii();
+            c = name.at(i).toLatin1();
         }
         const char res(c);
         setWordValue(i+offset,res);
@@ -111,15 +111,20 @@ void DumpMulti::setAdressContent()
 
 void DumpMulti::setDataContent()
 {
+
+    //5 ad1
+    //6 ad2
+    //
     for(int i(0);i<16;i++){
         QString s;
         s.sprintf("CHAR%2d",i);
-        addParametre(new WordEnum(s,&_message[7+i], BLOT_CHARZ));
+/*7 à 22*/    addParametre(new WordEnum(s,&_message[7+i], BLOT_CHARZ));
     }
-    addParametre(new WordEnum("GLOBAL VOL.",&_message[24], BLOT_STANDARD));
-    addParametre(new WordEnum("TEMPO",&_message[25], BLOT_TEMPO));
+/*23*/    addParametre(new WordEnum("GLOBAL VOL.",&_message[24], BLOT_STANDARD));
+/*24*/    addParametre(new WordEnum("TEMPO",&_message[25], BLOT_TEMPO));
     for(int i(0);i<16;i++)
     {
+/*25 à 45  + ch*21*/
         int offset = 24*i;
         addParametre(new WordEnum("Banknum"   ,&_message[39+offset], BLOT_BANK));
         addParametre(new WordEnum("PgmNum"    ,&_message[40+offset], BLOT_STANDARD));

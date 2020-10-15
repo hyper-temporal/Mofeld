@@ -22,13 +22,19 @@ BlofeldWaveTableMgrModel::BlofeldWaveTableMgrModel(const BlofeldWaveTableMgrMode
         _waveTables.append(wt );
     }
 }
-
-
-void BlofeldWaveTableMgrModel::setSignal(int tableNum, int waveNum, SignalReal sr)
+void BlofeldWaveTableMgrModel::setSignal(int tableNum, int waveNum, int freq, double mgn, double phs)
 {
-    BlofeldWaveTableModel * t = editTable(tableNum);
-    t->setSignal(waveNum,sr);
+    SignalReal *s =editSignal(tableNum,waveNum);
+    s->setPhase(freq,phs);
+    s->setMagnitude(freq,mgn);
 }
+
+
+//void BlofeldWaveTableMgrModel::setSignal(int tableNum, int waveNum, SignalReal sr)
+//{
+//    BlofeldWaveTableModel * t = editTable(tableNum);
+//    t->setSignal(waveNum,sr);
+//}
 
 const SignalReal * BlofeldWaveTableMgrModel::getSignal(int tableNum, int waveNum)
 {
@@ -51,21 +57,22 @@ const BlofeldWaveTableModel *BlofeldWaveTableMgrModel::getTable(int num)const
     }
 }
 
- BlofeldWaveTableModel *BlofeldWaveTableMgrModel::editTable(int num)
+ BlofeldWaveTableModel *BlofeldWaveTableMgrModel::editTable(int pos)
 {
-    if(num<_waveTables.count() && num>=0)
+//     int pos = num - WT_START;
+    if(pos<_waveTables.count() && pos>=0)
     {
-        return &_waveTables[num];
+        return &_waveTables[pos];
     }else{
         throw ("la table est hors limites");
     }
 }
-void BlofeldWaveTableMgrModel::setTable(int num,const BlofeldWaveTableModel * table)
+void BlofeldWaveTableMgrModel::setTable(int pos,const BlofeldWaveTableModel * table)
 {
-    BlofeldWaveTableModel *t =editTable(num);
+    BlofeldWaveTableModel *t =editTable(pos);
     if(table->getSignals()->count() != t->getSignals()->count())
     {
-        throw ("les tables sont de taille différentes");
+        throw ("les tables sont de taille diffÃ©rentes");
     }
     int count(0);
     foreach(SignalReal s, *table->getSignals())
@@ -74,22 +81,4 @@ void BlofeldWaveTableMgrModel::setTable(int num,const BlofeldWaveTableModel * ta
     }
 }
 
-QDataStream & operator << (QDataStream & out, const BlofeldWaveTableMgrModel & Valeur)
-{
-    out << Valeur._id
-        << Valeur._name
-        << Valeur._datecreation
-        << Valeur._waveTables
 
-           ;
-    return out;
-}
-QDataStream & operator >> (QDataStream & in, BlofeldWaveTableMgrModel & Valeur)
-{
-    in  >> Valeur._id
-        >> Valeur._name
-        >> Valeur._datecreation
-        >> Valeur._waveTables
-           ;
-    return in;
-}

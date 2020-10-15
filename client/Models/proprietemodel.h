@@ -19,6 +19,7 @@ public:
     ProprieteModel(BlofeldReplica * r);
     void ajouter(QString nom );
 private:
+//    QStringList GetTags(Propriete a);
  };
 
 

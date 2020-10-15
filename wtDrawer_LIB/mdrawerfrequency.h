@@ -3,7 +3,7 @@
 
 
 #include "mdrawer.h"
-#include "sliceofrequency.h"
+#include "mcolorhelper.h"
 
 class MDrawerFrequency
         :public MDrawer
@@ -12,15 +12,23 @@ class MDrawerFrequency
 
 public:
 
+DrawMode _mode;
     MDrawerFrequency(SignalReal *s,QWidget * parent =0);
     void setDrawModePhase();
     void setDrawModeMAgnitude();
+    QVector<double> *editPhase(){return _model->editPhase();}
+    QVector<double> *editMag();
 
 private:
-    double getSampleValue(int p);
-    double getSampleValue(const QPoint &p);
-    DrawerSlice * createSlice(int i,QWidget *p);
-    void refresh();
+//    double getSampleValue(int p);
+//    double getSampleValue(const QPoint &p);
+//    QColor getColorPhase(double phase);
+
+protected:
+    void paintDomain(QPainter &painter);
+    int getSampleCount(){return _model->countAnalysis();}
+    double transposeValue(double value);
+
 
 };
 #endif // MDRAWERFREQUENCY_H

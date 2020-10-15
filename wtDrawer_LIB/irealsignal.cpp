@@ -8,6 +8,7 @@ IRealSignal::IRealSignal(int size)
 
 void IRealSignal::setSize(int size)
 {
+    //La taille du vecteur est positive et paire
     if(size%2){
         throw ("le buffer doit posseder un nombre d'echantillons pair!!!");
     }

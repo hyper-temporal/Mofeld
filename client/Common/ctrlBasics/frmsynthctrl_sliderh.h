@@ -30,6 +30,8 @@ private:
 
 protected slots:
     void ValueChanged(int v);
+//    void ValueChangedOffset(int v);
+//    void ValueChangedOffsetDirect(int v);
 };
 
 

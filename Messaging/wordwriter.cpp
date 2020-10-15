@@ -8,6 +8,7 @@ WordWriter::WordWriter( ValueMgr * vm,  uchar *  octetRef,  int bitness , int of
     _byteMgrs.append(*bm);
 }
 
+//single shared byte
 WordWriter::WordWriter( WordWriter * w,  uchar *  octetRef)
     : _valueMgr(w->getValueMgr())
 {
@@ -38,6 +39,7 @@ void WordBig::setValue(int v){
 }
 
 
+//multi byteWr instanciation, la bitness precisee en argument permet la decoupe de la valeur contenue par le Valuemgr
 WordWriter::WordWriter( ValueMgr * vm,  uchar *  octetRef,  int bitness  )
     : _valueMgr(vm)
 {
@@ -77,7 +79,7 @@ WordConstante::WordConstante(QString s,  uchar * oct ,int cst)
 WordAny::WordAny(QString s,  uchar * oct )
     :WordWriter(new ValueAny7b(s),oct,7 )
 {}
-
+//any
 WordAny::WordAny(QString s,  uchar * oct, int v )
     :WordWriter(new ValueAny7b(s,v),oct,7 )
 {}

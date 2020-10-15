@@ -47,4 +47,6 @@ frmCommon::frmCommon(const BlofeldReplica *synth, Instrument *instru, QWidget *p
     section5->addCtrl(new frmSynthCtrl_rotary( parent , synth, instru->editParametre(55),-64));
     addCtrl(section5);
 
+
+//    AfterConstructor();
 }

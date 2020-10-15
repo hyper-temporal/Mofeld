@@ -14,7 +14,7 @@ protected:
     void setChecksum(){}
 public:
     RequestInstrument();
-    //en plus de la methode heritée
+    //en plus de la methode heritÃ©e
     std::vector<uchar> * getMessage(int macid,int chid);
     std::vector<uchar> * getMessage(int macid,int bankid, int pgmid);
     std::vector<uchar> * getAllSounds(int macid);

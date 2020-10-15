@@ -7,6 +7,7 @@
 class DSPHelper
         :public IRealSignal
 {
+    int _lanczosCoreSize;
     //LUTs
     int _ratio;
     int    _sinusPrecision;
@@ -20,9 +21,12 @@ public:
     QVector<double> getTriangle();
     void fillSignal (QVector<double>, QVector<double>*, int);
 
+    QVector<double> getLanczosCore (int sampleCount)const;
+    QVector<double>  getLanckosz (const QVector<double> *src,int width)const;
+
 protected:
-    double sin_x(double);
-    double cos_x(double);
+    double sin_x(double) const;
+    double cos_x(double) const;
 private:
     void sinus();
 };

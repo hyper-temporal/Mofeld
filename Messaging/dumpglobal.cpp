@@ -2,7 +2,9 @@
 
 DumpGlobal::DumpGlobal()
     :Blofable(80,0x14)
-{}
+{
+
+}
 
 void DumpGlobal::setChecksum()
 {
@@ -17,17 +19,19 @@ void DumpGlobal::addParametre(WordWriter * w)
 
 void DumpGlobal::setDataContent()
 {
-    addParametre(new WordEnum("MULTI SWITCH"   ,&_message[6], BLOT_SWITCH));
+/*00*/    addParametre(new WordEnum("MULTI SWITCH"   ,&_message[6], BLOT_SWITCH));
     for(int i(0);i<16;i++)
     {
         int offset = 2 * i;
         addParametre(new WordEnum("BANK"   ,&_message[7+offset], BLOT_BANK));
         addParametre(new WordEnum("PRGM"   ,&_message[8+offset], BLOT_STANDARD));
     }
-    addParametre(new WordEnum("MULTI NUM"   ,&_message[39], BLOT_STANDARD));
-    addParametre(new WordEnum("Auto Edit"   ,&_message[40], BLOT_SWITCH));
-    addParametre(new WordEnum("Midi Channel"   ,&_message[41], BLOT_CHANNEL));
-    addParametre(new WordEnum("Device ID"   ,&_message[42], BLOT_STANDARD));
+/*33*/    addParametre(new WordEnum("MULTI NUM"   ,&_message[39], BLOT_STANDARD));
+/*34*/    addParametre(new WordEnum("Auto Edit"   ,&_message[40], BLOT_SWITCH));
+/*35*/    addParametre(new WordEnum("Midi Channel"   ,&_message[41], BLOT_CHANNEL));
+/*36*/    addParametre(new WordEnum("Device ID"   ,&_message[42], BLOT_STANDARD));
+
+
     addParametre(new WordEnum("Popup Time  "   ,&_message[43], BLOT_STANDARD));
     addParametre(new WordEnum("Contrast    "   ,&_message[44], BLOT_STANDARD));
     addParametre(new WordEnum("Master Tune "   ,&_message[45], BLOT_OSC_SEMITONE));

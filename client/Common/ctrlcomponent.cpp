@@ -11,7 +11,14 @@ void ctrlComponent::CompactLayout(QBoxLayout * layout)
         spacer->setAlignment(Qt::AlignTop);
         layout->addSpacerItem(spacer);
     }
-
+//    else if(
+//                _direction == QBoxLayout::LeftToRight
+//            ||  _direction == QBoxLayout::RightToLeft
+//            )
+//    {
+//        spacer->setAlignment(Qt::AlignLeft);
+//        layout->addSpacerItem(spacer);
+//    }
     layout->setSpacing(1);
     layout->setContentsMargins(0,0,0,0);
 }

@@ -14,8 +14,11 @@ class SignalReal
     QVector<double> _magnitude;
     QVector<double> _phase;
 public:
-    enum DrawMode {
-        DrawTime=0,DrawPhase=1, DrawMagnitude=2
+
+    enum SIG_Operation{
+        OP_add= 0,
+        OP_min = 1,
+        OP_mul = 2
     };
     SignalReal(QVector<double>);
     SignalReal(QVector<double>,QVector<double>);
@@ -23,16 +26,22 @@ public:
     SignalReal();
     SignalReal(const SignalReal &other);
 
+    void addSignal(QVector<double>  v );
     void normalisePeaks();
-    int countSamples(){return _size;}
-    int countAnalysis(){return 1+_size/2;}
-    void setSignal(QVector<double>);
-    void setSignal(QVector<double>,QVector<double>);
+    int countSamples()const{return _timeDomain.size();}
+    int countAnalysis()const{return _magnitude.size();}
+
+    void transform(SignalReal *other,SIG_Operation op);
+    void setMagnitude(const QVector<double> *);
+    void setPhase(const QVector<double> *);
+    void setSamples(const QVector<double> *);
 
     void setMagnitude(int p,double v);
     void setPhase(int p,double v);
 
     void setSample(int sn, double sv);
+    const QVector<double> *getValuesPh()const{return &_phase;}
+    const QVector<double> *getValuesMg()const{return &_magnitude;}
     const QVector<double> *getSamples()const{return &_timeDomain;}
     double getSample(int p)const{return _timeDomain[p];}
     const double *editSample(int p){return &_timeDomain[p];}
@@ -40,13 +49,20 @@ public:
     const double *editPhase(int p){return &_phase[p];}
     double getMagnitude(int p){return _magnitude[p];}
     double getPhase(int p){return _phase[p];}
-
+    QVector<double> *editSamples(){return &_timeDomain;}
+    QVector<double> *editMagnitude(){return &_magnitude;}
+    QVector<double> *editPhase(){return &_phase;}
     void    dft();
     void    idft();
-    void linearMorphing(int type, int from, int to);
+    void linearMorphing(QVector<double> *_toMorpg, int from, int to);
     void fillSignal(QVector<double> sig, int freq);
 
-    void rotate(int );
+
+    void rotateMG(int samples);
+    void rotatePH(int samples);
+    void rotateT(int samples);
+    void rotate(QVector<double> *values,int samples);
+    void normalise();
 private:
 
     void    Pol2RectInPlace(double* Magn2Real, double* Phase2Imag);
@@ -61,11 +77,14 @@ private:
     void clearTimeDomain();
     void clearAnalysis();
 
-    friend QDataStream & operator << (QDataStream &, const SignalReal &);
-    friend QDataStream & operator >> (QDataStream &, SignalReal &);
+    void multiplySignal(QVector<double>  v );
+    void setGain(double v );
+
+
+    friend class BlofeldWaveTableModel;
+
+
 };
-Q_DECLARE_METATYPE(SignalReal)
-QDataStream & operator << (QDataStream & out, const SignalReal & Valeur);
-QDataStream & operator >> (QDataStream & in, SignalReal & Valeur);
+
 
 #endif // SIGNALREAL_H

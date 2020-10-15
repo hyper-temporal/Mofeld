@@ -3,11 +3,11 @@
 #include "runguard.h"
 #include "defs.h"
 
+//QSharedMemory sharedMemory(AppConstants::UUID);
+
 int main(int argc, char *argv[])
 {
-
     QApplication a(argc, argv);
-
     RunGuard guard( "DontHurtYourBack" );
     if ( guard.tryToRun() )
     {

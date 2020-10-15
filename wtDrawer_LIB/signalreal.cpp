@@ -20,9 +20,10 @@ SignalReal::SignalReal(int sampleNum)
 SignalReal::SignalReal(QVector<double> v)
     :DSPHelper(v.size())
 {
-    clearAnalysis();
-    clearTimeDomain();
-    _timeDomain = (v);
+//    clearAnalysis();
+//    clearTimeDomain();
+//    _timeDomain = (v);
+    setSamples(&v);
     dft();
 }
 
@@ -33,8 +34,10 @@ SignalReal::SignalReal(QVector<double> mg,QVector<double> ph)
     if(     mg.size()!=ph.size()
         ||  mg.size()<= 0 )
     {
-        throw("Les vecteurs sont mal initialisés");
+        throw("Les vecteurs sont mal initialisÃ©s");
     }
+    setMagnitude(&mg);
+    setPhase(&ph);
     idft();
 }
 
@@ -65,6 +68,9 @@ void SignalReal::clearAnalysis(){
     _phase.fill(0.0);
 }
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+#include <cmath>
 
 void SignalReal::dft()
 {
@@ -102,13 +108,14 @@ void SignalReal::idft()
 
     QVector<double> cmg ;
     QVector<double> cph ;
-    _magnitude[0]/= 2;
-    _magnitude[fSize]/= 2;
+
 
     for(int i(0);i< fSize+1;i++){
         cmg.append(_magnitude[i]);
         cph.append(_phase[i]);
     }
+    cmg[0]/= 2;
+    cmg[fSize]/= 2;
 
     for(cnt_k=0;cnt_k<= fSize;cnt_k++)
     {
@@ -124,8 +131,6 @@ void SignalReal::idft()
             _timeDomain[cnt_n]+= cph[cnt_k]*sin_x(2*M_PI*cnt_k*cnt_n/tSize);
         }
     }
-    _magnitude[0]*= 2;
-    _magnitude[fSize] *= 2;
 }
 
 void SignalReal::Pol2RectInPlace(double* Magn2Real, double* Phase2Imag)//reference...
@@ -151,9 +156,9 @@ double SignalReal::polarPhase(double  real, double  imag)
     if (real == 0.0)
     {
         if (imag > 0.0)
-        {phase = M_PI/2;}
+        {phase = M_PI_2;}
         else
-        {phase = -M_PI/2;}
+        {phase = -M_PI_2;}
     }
     else
     {phase = atanf(imag / real);}
@@ -181,12 +186,12 @@ void SignalReal::Rect2PolInPlace(double* Real2Magn, double* Imag2Phase)
     double   Realcpy= *Real2Magn;
     double   Imagcpy= *Imag2Phase;
     *Real2Magn=polarMagnitude( Realcpy, Imagcpy );
-    if(*Real2Magn<0.00001)
-    {*Imag2Phase=0;}
-    else
-    {
+//    if(*Real2Magn<0.00001)
+//    {*Imag2Phase=0;}
+//    else
+//    {
         *Imag2Phase=polarPhase( Realcpy, Imagcpy );
-    }
+//    }
 
 }
 
@@ -196,17 +201,24 @@ void SignalReal::NormalisePolar(double* Magn, double* Phase)
 //
 #define CONSIDER0 0.001
 
-    *Phase=  *Phase/M_PI ; //pour ramener entre -1 1
-    if(*Phase>1){*Phase=1;}
-    if(*Phase<-1){*Phase=-1;}
-    if(*Magn>1){*Magn=1;}
-    if(*Magn<-1){*Magn=-1;}
-
+//    *Phase=  *Phase/(M_PI) ; //pour ramener entre -1 1
+//    if(*Phase>1){*Phase=1;}
+//    if(*Phase<-1){*Phase=-1;}
+//    if(*Magn>1){*Magn=1;}
+//    if(*Magn<-1){*Magn=-1;}
+    while( *Phase < 0){
+        *Phase+=(2*M_PI) ; //pour ramener entre -1 1
+    }
+    while( *Phase > (2*M_PI)){
+        *Phase-=(2*M_PI) ; //pour ramener entre -1 1
+    }
     if(*Magn<CONSIDER0)
     {
-        *Phase= 0.5;
-        *Magn = 0;
+        *Magn = 0.0;
     }
+//    if(Phase<CONSIDER0){
+//        *Phase= 0.5;
+//    }
 
 }
 
@@ -214,7 +226,7 @@ void SignalReal::NormalisePolar(double* Magn, double* Phase)
 void SignalReal::iir_narrowband(int periode, int bandwidth, int filterType)
 {
     ushort cnt_n=0;
-    double speedupcst=cos(2*M_PI*periode/_size );
+    double speedupcst=cos_x(2*M_PI*periode/_size );
 
     QVector<double> copy_input;
     QVector<double> temp_output;
@@ -282,7 +294,9 @@ double castSample(double sv){
         return sv;
     }
 }
-void SignalReal::normalisePeaks(){
+void SignalReal::normalisePeaks()
+{
+
     for(int i(0);i<_timeDomain.size();i++)
     {
         if(_timeDomain[i]>1){
@@ -291,41 +305,73 @@ void SignalReal::normalisePeaks(){
             _timeDomain[i]=-1.0;
         }
     }
+
 }
 
+
+void SignalReal::normalise()
+{
+    double dm(0.0),d0 = 0.0;
+    for(int i(0);i<_timeDomain.size();i++)
+    {
+        d0=_timeDomain[i];
+        if(d0<0){d0=-d0;}
+        if(d0>dm){dm=d0;}
+    }
+    if(dm>0.0)
+    {
+       double fact = 1.0/dm;
+       for(int pos(0);pos<_timeDomain.size();pos++)
+       {
+           _timeDomain[pos]*=fact;
+       }
+    }
+
+}
+
+void SignalReal::setMagnitude(const QVector<double> *vs)
+{
+    if(vs->size()<0 || vs->size() >_magnitude.size())return;
+    int cnt=0;
+    foreach(double d,*vs){
+        setMagnitude(cnt++,d);
+    }
+}
+void SignalReal::setPhase(const QVector<double> *vs)
+{
+    if(vs->size()<0 || vs->size() >_phase.size())return;
+    int cnt=0;
+    foreach(double d,*vs){
+        setPhase(cnt++,d);
+    }
+}
+void SignalReal::setSamples(const QVector<double> *vs)
+{
+    if(vs->size()<0 || vs->size() >_timeDomain.size())return;
+    int cnt=0;
+    foreach(double d,*vs){
+        setSample(cnt++,d);
+    }
+}
 void SignalReal::setMagnitude(int pos,double v)
 {
     if(pos<0 || pos >_magnitude.size())return;
-    _magnitude[pos]=castPhaseMag(v);
+    _magnitude[pos]=(v);
 }
 void SignalReal::setPhase(int pos,double v)
 {
     if(pos<0 || pos >_phase.size())return;
-    _phase[pos]=castPhaseMag(v);
+    _phase[pos]=(v);
 }
 void SignalReal::setSample(int pos, double sv)
 {
     if(pos<0 || pos >_timeDomain.size())return;
     else
-        _timeDomain[pos] =castSample(sv);
+        _timeDomain[pos] =(sv);
 }
 
-void SignalReal::linearMorphing(int type, int from, int to)
+void SignalReal::linearMorphing(QVector<double> *_toMorpg, int from, int to)
 {
-    if(to<from || from<0){
-        throw("bad input min<=max");
-    }
-    QVector<double> *_toMorpg;
-    if(type==DrawTime){
-        _toMorpg = &_timeDomain;
-    }
-    else if(type == DrawMagnitude)
-    {
-        _toMorpg = &_magnitude;
-    }
-    else{
-        _toMorpg = &_phase;
-    }
 
     if(_toMorpg->size()<to)return;
     try {
@@ -344,34 +390,67 @@ void SignalReal::linearMorphing(int type, int from, int to)
     }
 }
 
-void SignalReal::rotate(int samples)
+void SignalReal::rotateMG(int samples){
+    rotate(editMagnitude(),samples);
+}
+
+void SignalReal::rotatePH(int samples){
+    rotate(editPhase(),samples);
+}
+void SignalReal::rotateT(int samples)
 {
-    int sam = samples%_timeDomain.count();
+    rotate(editSamples(),samples);
+}
+
+
+void SignalReal::rotate(QVector<double> *values,int samples)
+{
+    int sam = samples%values->count();
     if(sam>0){
         for(int i(0);i<sam;i++)
         {
-            float d = _timeDomain.last();
-            _timeDomain.push_front(d);
-            _timeDomain.pop_back();
+            double d = values->last();
+            values->push_front(d);
+            values->pop_back();
         }
     }else{
         for(int i(0);i<-sam;i++){
-            float d = _timeDomain.last();
-            _timeDomain.push_back(d);
-            _timeDomain.pop_front();
+            double d = values->first();
+            values->push_back(d);
+            values->pop_front();
         }
     }
 }
 
-QDataStream & operator << (QDataStream & out, const SignalReal & Valeur)
+
+
+void SignalReal::addSignal(QVector<double>  v )
 {
-    out << Valeur._timeDomain
-            ;
-    return out;
+    int cnt =0;
+    foreach(double d , *getSamples()){
+        d+=_timeDomain.at(cnt);
+        setSample(cnt++,d);
+    }
 }
-QDataStream & operator >> (QDataStream & in, SignalReal & Valeur)
+
+void SignalReal::multiplySignal(QVector<double>  v )
 {
-    in  >> Valeur._timeDomain
-           ;
-    return in;
+    int cnt =0;
+    foreach(double d , *getSamples()){
+        d*=_timeDomain.at(cnt);
+        setSample(cnt++,d);
+    }
 }
+
+void SignalReal::setGain(double v )
+{
+    int cnt(0);
+    foreach(double d , *getSamples()){
+        d*=v;
+        setSample(cnt++,d);
+    }
+}
+
+
+
+

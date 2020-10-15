@@ -26,7 +26,12 @@ public:
     }
 
     void setName(QString n){ _name=n;}
+    //    void setID(int i){ _id=i;}
 };
+
+//Q_DECLARE_METATYPE(Entity)
+//QDataStream & operator << (QDataStream & out, const Entity & Valeur);
+//QDataStream & operator >> (QDataStream & in, Entity & Valeur);
 
 
 

@@ -56,6 +56,7 @@ void BlofeldReplica::setMidiEnvironment(){
 void BlofeldReplica::newMessageReceived(std::vector< uchar > * sxMess)
 {
     int siz = sxMess->size();
+    qInfo()<< "rcv:" <<siz;
     switch(siz)
     {
         case(10):
@@ -72,7 +73,10 @@ void BlofeldReplica::newMessageReceived(std::vector< uchar > * sxMess)
         }
         break;
         case(392):{
+        //c'est le role de la transaction de router un message vers un canal particulier
+        //si le channel est -1 alors evaluer tr
             _instruParser.parseMessage(sxMess);
+//            QVector<WordWriter *> vws = _instruParser.checkWReplacers();
             Instrument i = _instruParser.createInstrument();
             int ch =_instruParser.getChannel();
             if(ch>=0 && ch < 16){
@@ -80,6 +84,11 @@ void BlofeldReplica::newMessageReceived(std::vector< uchar > * sxMess)
             }else{
                 setInstrument(i,_editedChannel);
             }
+        }
+        break;
+        case(80):{
+
+//        saveRawData("GLBD.txt", sxMess);
         }
         break;
         case(425):
@@ -95,8 +104,15 @@ void BlofeldReplica::newMessageReceived(std::vector< uchar > * sxMess)
             emit syncMulti();
         }
         break;
+        case(15):{
+//        saveRawData("ID1.txt", sxMess);
+        }
         break;
         default:
+//        try {
+//            saveRawData(QString::number(sxMess->at(0))+ "__.txt", sxMess);
+//        } catch (...) {
+//        }
         break;
     }
     delete sxMess;
@@ -161,9 +177,11 @@ void BlofeldReplica::exportParametre(int chid ,const Parametre * par)
     }
 }
 
+//method appelee par la vue pour synchroniser l'action (envoyer au device + eventuellement attacher a la propriete)
 void BlofeldReplica::syncParametre(int ch, int pid)
 {
     try{
+//        _Arrangement->setParametre(ch,pid,v);
         exportParametre(ch,getparametre(ch,pid));
 
     }catch(...){
@@ -199,6 +217,8 @@ void BlofeldReplica::MixPropriete(const Propriete * pr )
 }
 void BlofeldReplica::MixPropriete(const Propriete * pr, int ch )
 {
+    //Dans ce cas on n'a pas tous les parametres
+    //donc en cas de REPLACE il faut initialiser tous les indicateurs de propriété
     editChannel(ch)->PrepareForProp();
     MixParametres( pr->getParametres(), ch);
 }
@@ -241,6 +261,7 @@ void BlofeldReplica::setInstrument(Instrument i,int ch ){
         emit(updateInstrument(_Arrangement->getInstrument(ch)));
     }
     _instruParser.setInstrument(_Arrangement->editInstrument(ch));
+    //reemission apres eventuel modification dues aux proprietes
     try{
         _connecta->sendSysex(_instruParser.getMessage(_id,ch));
     } catch (std::runtime_error & e) {
@@ -279,9 +300,10 @@ void BlofeldReplica::multiSend(int num)
 
 void BlofeldReplica::sendTable(const BlofeldWaveTableModel *table, int wtnum, QString wtName)
 {
-    _waveTables.setTable(wtnum-WT_START,table);
+    //actualisation du modele
+//    _waveTables.setTable(wtnum-WT_START,table);
 
-    for (int cnt(0);cnt<64;cnt++)
+    for (int cnt(0);cnt<table->countWaves();cnt++)
     {
         const SignalReal *s = table->getSignal(cnt);
         _waveTableSender.setMessage(s);

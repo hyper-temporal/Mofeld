@@ -113,6 +113,6 @@ void CtrlParamLeaf::forMulti(){
     directConnect();
 }
 
-void CtrlParamLeaf::synchronise(){
-     UpdatedValueDirect(_valueMgr->getValue());
+void CtrlParamLeaf::synchronise(){    
+    UpdatedValueDirect(_valueMgr->getValue());
 }

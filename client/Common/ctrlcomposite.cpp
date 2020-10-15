@@ -10,6 +10,9 @@ ctrlComposite::ctrlComposite(QWidget * p,
 
 
 ctrlComposite::~ctrlComposite(){
+//    foreach(ctrlComponent * fsc,_ctrls){
+//        delete fsc;
+//    }
 }
 
 
@@ -17,6 +20,7 @@ void ctrlComposite::addCtrl(ctrlComponent *c){
     _ctrls.append(c);
 }
 
+//retourne un layout (h ou v) qui contient les layouts de chaque controle
 void ctrlComposite::setLayout(){
 
     QBoxLayout * layout = new QBoxLayout(_direction);
@@ -68,6 +72,7 @@ void ctrlSection::setLayout(){
     QGroupBox *gb = new QGroupBox;
     gb->setLayout(layout());
     gb->setTitle(_nom);
+//    gb->setSizePolicy(QSizePolicy::Preferred , QSizePolicy::Preferred);
     QBoxLayout * bl = new QBoxLayout(QBoxLayout::TopToBottom);
     bl->setSizeConstraint(QLayout::SetMinimumSize);
     bl->addWidget(gb);

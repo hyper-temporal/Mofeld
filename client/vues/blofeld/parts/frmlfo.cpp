@@ -27,7 +27,7 @@ frmLFO::frmLFO(const BlofeldReplica *synth,  Instrument *instru, int lfonum, QSt
         pktrkid=132+offset;
     }
     else{
-        throw("le lfo est mal précisé");
+        throw("le lfo est mal prÃ©cisÃ©");
     }
     ctrlComposite * fsc1 = new ctrlComposite(parent,QBoxLayout::TopToBottom);
     fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(pshapeid)));

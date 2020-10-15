@@ -11,7 +11,7 @@
 
 class BlofeldWaveTableModel
 {
-    //gère une table d'onde soit une succession de 64 signaux
+    //gÃ¨re une table d'onde soit une succession de 64 signaux
     QVector<SignalReal> _signals;
     QString _wtName;
 public:
@@ -22,14 +22,14 @@ public:
     SignalReal *editSignal(int waveNum) {return &_signals[waveNum];}
     const QVector<SignalReal> * getSignals() const{ return &_signals;}
     QString getName(){return _wtName;}
-    friend QDataStream & operator << (QDataStream &, const BlofeldWaveTableModel &);
-    friend QDataStream & operator >> (QDataStream &, BlofeldWaveTableModel &);
+
+    int countSamples()const{return _signals.at(0).countSamples();}
+    int countAnalysis()const{return _signals.at(0).countAnalysis();}
+    int countWaves()const{return _signals.size();}
+
 
 };
 
-Q_DECLARE_METATYPE(BlofeldWaveTableModel)
-QDataStream & operator << (QDataStream & out, const BlofeldWaveTableModel & Valeur);
-QDataStream & operator >> (QDataStream & in, BlofeldWaveTableModel & Valeur);
 
 
 #endif // BLOFELDWAVETABLESMODEL_H
