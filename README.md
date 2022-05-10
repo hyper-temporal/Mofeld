@@ -9,6 +9,9 @@ It offers a bunch of features  like:
 - global state management, parameter constraints , pseudo random
 - Save/ recall  operations for:  Arrangement > Instrument > Group_of_parameters (differentials)  
 
+![image](https://user-images.githubusercontent.com/26134511/167637437-4f4563ad-7bba-45b8-b927-08537a119da2.png)
+
+
 ![envelope screenshot](https://github.com/camillebassuel/Mofeld/blob/master/Screenshot%20mofeld%20enveloppes.png "mofeld - instrument design - envelope editor ")
 
 ![matrix screenshot](https://github.com/camillebassuel/Mofeld/blob/master/Screenshot%20mofeld%20matrix.png "mofeld - instrument design - matrix editor ")
