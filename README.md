@@ -13,4 +13,4 @@ It offers a bunch of features  like:
 
 ![matrix screenshot](https://github.com/camillebassuel/Mofeld/blob/master/Screenshot%20mofeld%20matrix.png "mofeld - instrument design - matrix editor ")
 
-![matrix screenshot](./blob/master/Screenshot%20mofeld%20propriete.png "mofeld - instrument design - matrix editor ")
+![matrix screenshot](https://github.com/camillebassuel/Mofeld/blob/master/Screenshot%20mofeld%20propriete.png "mofeld - instrument design - matrix editor ")
