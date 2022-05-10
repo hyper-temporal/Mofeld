@@ -10,3 +10,7 @@ It offers a bunch of features  like:
 - Save/ recall  operations for:  Arrangement > Instrument > Group_of_parameters (differentials)  
 
 ![envelope screenshot](https://github.com/camillebassuel/Mofeld/blob/master/Screenshot%20mofeld%20enveloppes.png "mofeld - instrument design - envelope editor ")
+
+![matrix screenshot](https://github.com/camillebassuel/Mofeld/blob/master/Screenshot%20mofeld%20matrix.png "mofeld - instrument design - matrix editor ")
+
+![matrix screenshot](./blob/master/Screenshot%20mofeld%20propriete.png "mofeld - instrument design - matrix editor ")
