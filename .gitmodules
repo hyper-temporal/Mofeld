@@ -1,15 +1,17 @@
 [submodule "thirdparty/exprtk"]
 	path = thirdparty/exprtk
 	url = https://github.com/ArashPartow/exprtk
-[submodule "rtaudio"]
-	path = rtaudio
-	url = https://github.com/hyper-temporal/rtaudio
-[submodule "rtmidi"]
-	path = rtmidi
-	url = https://github.com/hyper-temporal/rtmidi
 [submodule "third_party/rtmidi"]
 	path = third_party/rtmidi
 	url = https://github.com/hyper-temporal/rtmidi
 [submodule "third_party/rtaudio"]
 	path = third_party/rtaudio
 	url = https://github.com/hyper-temporal/rtaudio
+[submodule "rtmidi"]
+	path = rtmidi
+	url = https://github.com/hyper-temporal/rtmidi
+	branch = master
+[submodule "rtaudio"]
+	path = rtaudio
+	url = https://github.com/hyper-temporal/rtaudio
+	branch = master
