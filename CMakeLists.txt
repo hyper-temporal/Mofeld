@@ -16,6 +16,7 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 add_subdirectory(third_party/rtmidi)
+add_subdirectory(third_party/rtaudio)
 
 include_directories(
     MOFELD_PORTABLE/include
@@ -272,7 +273,10 @@ endif()
 
 target_link_libraries(MofeldApp PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    rtmidi)
+    rtmidi
+    rtaudio
+)
+
 
 
 set_target_properties(MofeldApp PROPERTIES
