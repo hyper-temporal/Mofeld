@@ -2,16 +2,16 @@
 
 void InstrumentVue::connectAll(QWidget * _parent)
 {
-    connect(_btnEntityAdd, SIGNAL(clicked()),
+    connect(&_btnEntityAdd, SIGNAL(clicked()),
             this, SLOT(ajouterInstrument()));
 
-    connect(_btnEntityRemove, SIGNAL(clicked()),
+    connect(&_btnEntityRemove, SIGNAL(clicked()),
             this, SLOT(effacerInstrument()));
 
-    connect(_tvEntity,SIGNAL(doubleClicked(QModelIndex)),
+    connect(&_tvEntity,SIGNAL(doubleClicked(QModelIndex)),
         this,SLOT (envoyerInstrument(QModelIndex)));
 
-    connect(this,SIGNAL(envoyerInstrument(const Instrument*)),
+    connect(this,SIGNAL(sendInstrument(const Instrument*)),
             _parent,SLOT (recevoirInstrument(const Instrument*)));
 
     connectEList();
@@ -21,25 +21,20 @@ void InstrumentVue::connectAll(QWidget * _parent)
 
 void InstrumentVue::ajouterInstrument()
 {
-    _model->ajouter(_leEntity->text());
+    _model->ajouter(_leEntity.text());
 }
 
 void InstrumentVue::envoyerInstrument(QModelIndex index ){
     int id = getId();
     const Instrument * a = _model->getEntity(id);
     if(a!=NULL){
-        _leEntity->setText(a->getName());
-        emit envoyerInstrument(a);
+        _leEntity.setText(a->getName());
+        emit sendInstrument(a);
     }
 }
 
 void InstrumentVue::effacerInstrument(){
-
-    try{
-        _model->deleteEntity(getSelectedRow());
-    }catch(...){
-
-    }
+    _model->deleteEntity(getSelectedRow());
 }
 
 

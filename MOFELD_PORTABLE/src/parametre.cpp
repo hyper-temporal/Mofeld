@@ -14,12 +14,12 @@ Parametre::Parametre(const Parametre &p)
         _isProp(p._isProp)
 {}
 
-Parametre::Parametre(ValueEnum * w ,int i)
-    :_type(new ValueEnum(*w)),_id(i),_isProp(false)
+Parametre::Parametre(ValueMgr * w ,int i)
+    :_type(w),_id(i),_isProp(false)
 {}
 
-Parametre::Parametre(ValueEnum * w ,int i,int mi, int ma)
-    :_type(new ValueEnum(*w)),_id(i),_contrainte(mi,ma),_isProp(false)
+Parametre::Parametre(ValueMgr * w ,int i,int mi, int ma)
+    :_type(w),_id(i),_contrainte(mi,ma),_isProp(false)
 {}
 
 
@@ -69,4 +69,26 @@ void Parametre::SetNewValue(int v) {
 void Parametre::SetNewValue(int v,int min, int max) {
     setValue(_type->getNewValue(v,min,max));
 
+}
+
+QDataStream & operator << (QDataStream & out, const Parametre & Valeur)
+{
+    out << Valeur._id
+        << Valeur._type->getValue()
+        << Valeur._contrainte
+        << Valeur._isProp
+            ;
+    return out;
+}
+QDataStream & operator >> (QDataStream & in, Parametre & Valeur)
+{
+    int i;
+    in  >> Valeur._id
+        >> i
+        >> Valeur._contrainte
+        >> Valeur._isProp
+           ;
+
+    Valeur._type->setValue(i);
+    return in;
 }

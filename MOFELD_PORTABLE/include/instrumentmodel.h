@@ -4,16 +4,16 @@
 
 #include <QAbstractTableModel>
 #include "instrument.h"
-#include "blofeldreplica.h"
+#include "targetprovider.h"
 
 class InstrumentModel :
         public EntityDAO<Instrument>
 {
     Q_OBJECT
-    BlofeldReplica *_synth;
+    TargetProvider *_synth;
 
 public:
-    InstrumentModel(BlofeldReplica *r);
+    InstrumentModel(TargetProvider *r);
     void ajouter(QString nom );
 private:
  };

@@ -27,12 +27,12 @@ public:
 
     void setName(QString n){ _name=n;}
     //    void setID(int i){ _id=i;}
+    friend QDataStream & operator << (QDataStream & out, const Entity & Valeur);
+    friend QDataStream & operator >> (QDataStream & in, Entity & Valeur);
+
 };
 
-//Q_DECLARE_METATYPE(Entity)
-//QDataStream & operator << (QDataStream & out, const Entity & Valeur);
-//QDataStream & operator >> (QDataStream & in, Entity & Valeur);
-
+Q_DECLARE_METATYPE(Entity)
 
 
 

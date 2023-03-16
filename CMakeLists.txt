@@ -11,11 +11,19 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-include_directories(MOFELD_PORTABLE/include)
+add_subdirectory(third_party/rtmidi)
+
+include_directories(
+    MOFELD_PORTABLE/include
+)
+
+
 set(PROJECT_SOURCES
+
     MOFELD_PORTABLE/src/main.cpp
     MOFELD_PORTABLE/src/arpeggio.cpp
     MOFELD_PORTABLE/src/arpeggioslice.cpp
@@ -90,8 +98,6 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/src/miomgr.cpp
     MOFELD_PORTABLE/src/mixpropparams.cpp
     MOFELD_PORTABLE/src/msoundprintervue.cpp
-    MOFELD_PORTABLE/src/mwavetableeditor.cpp
-    MOFELD_PORTABLE/src/mwteditorcommonview.cpp
     MOFELD_PORTABLE/src/operationvue.cpp
     MOFELD_PORTABLE/src/paramcontext.cpp
     MOFELD_PORTABLE/src/parametre.cpp
@@ -106,7 +112,6 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/src/requestinstrument.cpp
     MOFELD_PORTABLE/src/requestmulti.cpp
     MOFELD_PORTABLE/src/requestwave.cpp
-    MOFELD_PORTABLE/src/RtMidi.cpp
     MOFELD_PORTABLE/src/runguard.cpp
     MOFELD_PORTABLE/src/signalreal.cpp
     MOFELD_PORTABLE/src/synthenum.cpp
@@ -120,7 +125,6 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/src/valuemgr.cpp
     MOFELD_PORTABLE/src/valuerange.cpp
     MOFELD_PORTABLE/src/wavetableselectvue.cpp
-    MOFELD_PORTABLE/src/window.cpp
     MOFELD_PORTABLE/src/wordchecksum.cpp
     MOFELD_PORTABLE/src/wordwriter.cpp
     MOFELD_PORTABLE/src/wtmodel.cpp
@@ -204,8 +208,7 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/include/miomgr.h
     MOFELD_PORTABLE/include/mixpropparams.h
     MOFELD_PORTABLE/include/msoundprintervue.h
-    MOFELD_PORTABLE/include/mwavetableeditor.h
-    MOFELD_PORTABLE/include/mwteditorcommonview.h
+    MOFELD_PORTABLE/include/targetprovider.h
     MOFELD_PORTABLE/include/operationModel.h
     MOFELD_PORTABLE/include/operationvue.h
     MOFELD_PORTABLE/include/paramcontext.h
@@ -222,7 +225,6 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/include/requestinstrument.h
     MOFELD_PORTABLE/include/requestmulti.h
     MOFELD_PORTABLE/include/requestwave.h
-    MOFELD_PORTABLE/include/RtMidi.h
     MOFELD_PORTABLE/include/runguard.h
     MOFELD_PORTABLE/include/signalreal.h
     MOFELD_PORTABLE/include/synthenum.h
@@ -236,11 +238,14 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/include/valuemgr.h
     MOFELD_PORTABLE/include/valuerange.h
     MOFELD_PORTABLE/include/wavetableselectvue.h
-    MOFELD_PORTABLE/include/window.h
     MOFELD_PORTABLE/include/wordchecksum.h
     MOFELD_PORTABLE/include/wordwriter.h
     MOFELD_PORTABLE/include/wtmodel.h
+
+
 )
+
+
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(MofeldApp
@@ -265,7 +270,10 @@ else()
     endif()
 endif()
 
-target_link_libraries(MofeldApp PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(MofeldApp PRIVATE
+    Qt${QT_VERSION_MAJOR}::Widgets
+    rtmidi)
+
 
 set_target_properties(MofeldApp PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -278,6 +286,8 @@ set_target_properties(MofeldApp PROPERTIES
 install(TARGETS MofeldApp
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(MofeldApp)

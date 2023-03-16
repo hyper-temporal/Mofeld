@@ -2,13 +2,14 @@
 
 
 
-frmSynthCtrl_Slider::frmSynthCtrl_Slider(   QWidget * parent,
-                                            const BlofeldReplica *synth,
-                                            Parametre *param,
+frmSynthCtrl_Slider::frmSynthCtrl_Slider(QWidget * parent,
+                                            TargetProvider *synth,
+                                            int pnum,
+                                         VAccessor accessor,
                                             Qt::Orientation o,
                                             QBoxLayout::Direction d
                                             )
-    :CtrlParamLeaf(parent ,new QSlider(o,parent),synth,param,d)
+    :CtrlParamLeaf(parent ,new QSlider(o,parent),pnum,d,synth,accessor)
 {
     InitData();
 }

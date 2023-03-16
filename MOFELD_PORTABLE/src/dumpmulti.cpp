@@ -1,4 +1,5 @@
 #include "dumpmulti.h"
+#include "blofchannel.h"
 
 DumpMulti::DumpMulti():Blofable(425,0x11)
 {
@@ -60,7 +61,6 @@ void DumpMulti::setMultiVolume(int value){
     _mots.at(23)->setValue(value);
 }
 
-#include "blofchannel.h"
 
 void DumpMulti::fromChannel(BlofChannel *ch, int chid)
 {
@@ -101,6 +101,11 @@ void DumpMulti::setChecksum()
 void DumpMulti::addParametre(WordWriter * w)
 {
     appenWord(w);
+    _Parametres.append(
+                new Parametre(
+                    dynamic_cast<ValueEnum*>(w->getValueMgr()),
+                    _Parametres.count()));
+
 }
 
 void DumpMulti::setAdressContent()
@@ -125,26 +130,26 @@ void DumpMulti::setDataContent()
     {
 /*25 à 45  + ch*21*/
         int offset = 24*i;
-        addParametre(new WordEnum("Banknum"   ,&_message[39+offset], BLOT_BANK));
-        addParametre(new WordEnum("PgmNum"    ,&_message[40+offset], BLOT_STANDARD));
-        addParametre(new WordEnum("Vol."      ,&_message[41+offset], BLOT_STANDARD));
-        addParametre(new WordEnum("pan."      ,&_message[42+offset], BLOT_PAN));
-        addParametre(new WordEnum("TRANSPOSE" ,&_message[44+offset], BLOT_GLOB_TRANSPOSE));
-        addParametre(new WordEnum("DETUNE"    ,&_message[45+offset], BLOT_CENTERED));
-        addParametre(new WordEnum("CHANNEL"   ,&_message[46+offset], BLOT_MULTI_CHANNEL));
-        addParametre(new WordEnum("Low Note"  ,&_message[47+offset], BLOT_MULTI_NOTE));
-        addParametre(new WordEnum("High Note" ,&_message[48+offset], BLOT_MULTI_NOTE));
-        addParametre(new WordEnum("low Vel"   ,&_message[49+offset], BLOT_VOLFROM1));
-        addParametre(new WordEnum("high Vel"  ,&_message[50+offset], BLOT_VOLFROM1));
-        addParametre(new WordEnum("Status"    ,&_message[51+offset], BLOT_SWITCH,1,6));
-        addParametre(new WordEnum("MIDI"      ,&_message[51+offset], BLOT_SWITCH,1,0));
-        addParametre(new WordEnum("USB"       ,&_message[51+offset], BLOT_SWITCH,1,1));
-        addParametre(new WordEnum("LOCAL"     ,&_message[51+offset], BLOT_SWITCH,1,2));
-        addParametre(new WordEnum("pitchBend" ,&_message[52+offset], BLOT_SWITCH,1,0));
-        addParametre(new WordEnum("modwhell"  ,&_message[52+offset], BLOT_SWITCH,1,1));
-        addParametre(new WordEnum("pressure"  ,&_message[52+offset], BLOT_SWITCH,1,2));
-        addParametre(new WordEnum("sustain"   ,&_message[52+offset], BLOT_SWITCH,1,3));
-        addParametre(new WordEnum("edits"     ,&_message[52+offset], BLOT_SWITCH,1,4));
-        addParametre(new WordEnum("PGMCH"     ,&_message[52+offset], BLOT_SWITCH,1,5));
+/*00*/       addParametre(new WordEnum("Banknum"   ,&_message[39+offset], BLOT_BANK));
+/*01*/       addParametre(new WordEnum("PgmNum"    ,&_message[40+offset], BLOT_STANDARD));
+/*02*/       addParametre(new WordEnum("Vol."      ,&_message[41+offset], BLOT_STANDARD));
+/*03*/       addParametre(new WordEnum("pan."      ,&_message[42+offset], BLOT_PAN));
+/*04*/       addParametre(new WordEnum("TRANSPOSE" ,&_message[44+offset], BLOT_GLOB_TRANSPOSE));
+/*05*/       addParametre(new WordEnum("DETUNE"    ,&_message[45+offset], BLOT_CENTERED));
+/*06*/       addParametre(new WordEnum("CHANNEL"   ,&_message[46+offset], BLOT_MULTI_CHANNEL));
+/*07*/       addParametre(new WordEnum("Low Note"  ,&_message[47+offset], BLOT_MULTI_NOTE));
+/*08*/       addParametre(new WordEnum("High Note" ,&_message[48+offset], BLOT_MULTI_NOTE));
+/*09*/       addParametre(new WordEnum("low Vel"   ,&_message[49+offset], BLOT_VOLFROM1));
+/*10*/       addParametre(new WordEnum("high Vel"  ,&_message[50+offset], BLOT_VOLFROM1));
+/*11*/       addParametre(new WordEnum("Status"    ,&_message[51+offset], BLOT_SWITCH,1,6));
+/*12*/       addParametre(new WordEnum("MIDI"      ,&_message[51+offset], BLOT_SWITCH,1,0));
+/*13*/       addParametre(new WordEnum("USB"       ,&_message[51+offset], BLOT_SWITCH,1,1));
+/*14*/       addParametre(new WordEnum("LOCAL"     ,&_message[51+offset], BLOT_SWITCH,1,2));
+/*15*/       addParametre(new WordEnum("pitchBend" ,&_message[52+offset], BLOT_SWITCH,1,0));
+/*16*/       addParametre(new WordEnum("modwhell"  ,&_message[52+offset], BLOT_SWITCH,1,1));
+/*17*/       addParametre(new WordEnum("pressure"  ,&_message[52+offset], BLOT_SWITCH,1,2));
+/*18*/       addParametre(new WordEnum("sustain"   ,&_message[52+offset], BLOT_SWITCH,1,3));
+/*19*/       addParametre(new WordEnum("edits"     ,&_message[52+offset], BLOT_SWITCH,1,4));
+/*20*/       addParametre(new WordEnum("PGMCH"     ,&_message[52+offset], BLOT_SWITCH,1,5));
     }
 }

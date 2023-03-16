@@ -7,7 +7,8 @@
 /*
     l'instanciation d'un dumpinstrument provoque l'instanciation de n parametreCom qui partage le ww avec le dumpinstrument
 */
-class Sysexable: public MessageWriter
+class Sysexable
+        : public MessageWriter
 {
 public:
     Sysexable(const int s);
@@ -16,8 +17,7 @@ public:
 
 protected:
     void  sysexEndCheck();
-private:
-     virtual void setDataContent()=0;
+
 };
 
 #endif // MESSAGESYSEX_H

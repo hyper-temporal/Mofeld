@@ -1,34 +1,43 @@
 #include "ctrlvalueleaf.h"
+#include "valuemgr.h"
+#include "parametre.h"
 
-CtrlValueLeaf::CtrlValueLeaf(
-        QWidget * parent,
+CtrlValueLeaf::CtrlValueLeaf(QWidget * parent,
         QWidget *enfant,
-        const BlofeldReplica *synth,
-        ValueMgr *value,
-        QBoxLayout::Direction direction)
+        int pid,
+        QBoxLayout::Direction direction,
+        TargetProvider* tp,
+        VAccessor accessor
+        )
     :ctrlleaf(parent,enfant,direction),
-        _valueMgr(value),
-        _synth(synth)
+        _pid(pid),
+        _accessor(accessor),
+        _target(tp)
 {
     init();
 }
 
 void CtrlValueLeaf::init(void)
 {
-    if(_valueMgr==NULL)
+    if(_target->getTarget() == nullptr
+    || _target->getTarget()->vaccessor(_pid,_accessor) == nullptr)
     {
         _lbTitre.setText("not set");
     }
     else{
-        _lbTitre.setText(*_valueMgr->getName());
+        _lbTitre.setText(*_target->getTarget()->vaccessor(_pid,_accessor)->getName());
     }
 }
 
 void CtrlValueLeaf::ValueChanged(int p){
 
     try {
-        _valueMgr->setValue(_valueMgr->getValueOfElement(p));
-        UpdatedValueDirect(_valueMgr->getValue());
+        _target->getTarget()->vaccessor(_pid,_accessor)
+                ->setValue(
+                    _target->getTarget()->vaccessor(_pid,_accessor)
+                    ->getValueOfElement(p));
+        UpdatedValueDirect(
+                    _target->getTarget()->vaccessor(_pid,_accessor)->getValue());
     } catch (...){
     }
 }
@@ -37,7 +46,10 @@ void CtrlValueLeaf::ValueChanged(int p){
 void CtrlValueLeaf::ValueChanged(bool p)
 {
     try {
-        _valueMgr->setValue(_valueMgr->getValueOfElement((int)p));
+        _target->getTarget()->vaccessor(_pid,_accessor)
+                ->setValue(
+                    _target->getTarget()->vaccessor(_pid,_accessor)
+                    ->getValueOfElement((int)p));
         UpdatedValue(p);
     } catch (...) {
     }

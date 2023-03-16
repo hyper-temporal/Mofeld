@@ -1,10 +1,12 @@
 #include "frmfilter.h"
-#include "blofeldreplica.h"
-#include "instrument.h"
 #include "frmsynthctrl_rotary.h"
 #include "frmsynthctrl_combobox.h"
 
-frmFilter::frmFilter(const BlofeldReplica *synth, Instrument *instru,int filternum, QString n, QWidget *parent)
+frmFilter::frmFilter(
+        TargetProvider *synth,
+        int filternum,
+        QString n,
+        QWidget *parent)
     :ctrlSection(n, parent, QBoxLayout::LeftToRight )
 {
     int offset;
@@ -33,31 +35,31 @@ frmFilter::frmFilter(const BlofeldReplica *synth, Instrument *instru,int filtern
         throw ("bad filter number");
     }
 
-    addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(typ)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(cuto)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(res)));
-    addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(keyt)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(envam),-64));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(enveloc),-64));
+    addCtrl(new frmSynthCtrl_combobox( parent ,synth, (typ),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (cuto),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (res),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_combobox( parent ,synth, (keyt),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (envam),VAccessor::accessInstrument,-64));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (enveloc),VAccessor::accessInstrument,-64));
 
     ctrlComposite * fsc = new ctrlComposite(parent,QBoxLayout::TopToBottom);
-    fsc->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(curve)));
-    fsc->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(fmsrc)));
+    fsc->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (curve),VAccessor::accessInstrument));
+    fsc->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (fmsrc),VAccessor::accessInstrument));
 
     addCtrl(fsc);
 
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(driv)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fmam)));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (driv),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fmam),VAccessor::accessInstrument));
 
 
     ctrlComposite * fsc2 = new ctrlComposite(parent,QBoxLayout::TopToBottom);
-    fsc2->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(modsrc)));
-    fsc2->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(pansrc)));
+    fsc2->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (modsrc),VAccessor::accessInstrument));
+    fsc2->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (pansrc),VAccessor::accessInstrument));
     addCtrl(fsc2);
 
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(modam),-64));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(panamo),-64));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(pan)));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (modam),VAccessor::accessInstrument,-64));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (panamo),VAccessor::accessInstrument,-64));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (pan),VAccessor::accessInstrument));
 //    AfterConstructor();
 }
 

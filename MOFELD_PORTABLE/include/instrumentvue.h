@@ -4,7 +4,6 @@
 #include "instrument.h"
 #include "instrumentmodel.h"
 #include "easylist.h"
-#include "blofeldreplica.h"
 
 class InstrumentVue:public EasyList
 {
@@ -15,17 +14,14 @@ class InstrumentVue:public EasyList
 public:
     InstrumentVue( InstrumentModel * m ,QWidget *parent)
         :EasyList("INSTRUMENT",m,parent), _model(m)
-    {
-        setupModel();
-        setLayout(_layout);
-    }
+    {}
     void connectAll(QWidget *);
 public slots:
     void ajouterInstrument();
     void effacerInstrument();
     void envoyerInstrument(QModelIndex index );
 signals:
-    void envoyerInstrument(const Instrument * a);
+    void sendInstrument(const Instrument * a);
 
 };
 

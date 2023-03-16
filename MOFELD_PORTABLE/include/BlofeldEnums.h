@@ -8,6 +8,13 @@
 
 #include <midiutility.h>
 
+enum  class VAccessor
+{
+    accessnone  = 0,
+    accessMulti  = 1,
+    accessInstrument  = 2,
+    accessGlobal  = 3,
+};
 #define BLOT_STANDARD           (0)
 #define BLOT_OSC_SHAPES12        (1)
 #define BLOT_OSC_SHAPES3         (2)
@@ -160,10 +167,9 @@ private:
 /*54*/    const SynthEnum * blotype_glob_curve();
 /*55*/    const SynthEnum * blotype_glob_ctrlnum();
 /*56*/    const SynthEnum * blotype_glob_freebutton();
-    /*57*/    const SynthEnum * blotype_glob_centered();
-    /*58*/    const SynthEnum * blotype_glob_pan();
-    /*59*/    const SynthEnum * blotype_glob_vol();
-
+/*57*/    const SynthEnum * blotype_glob_centered();
+/*58*/    const SynthEnum * blotype_glob_pan();
+/*59*/    const SynthEnum * blotype_glob_vol();
 
 /*48*/    const SynthEnum * blotype_MessageType();
 /*49*/    const SynthEnum * blotype_MessageStructureType();

@@ -1,26 +1,15 @@
 #include "blofeldwavetablemgrmodel.h"
 
 BlofeldWaveTableMgrModel::BlofeldWaveTableMgrModel()
+    :_waveTables(WT_COUNT)
 {
-    int c = WT_COUNT;
-    _waveTables.reserve(c);
-    for (int i(0);i<c;i++)
-    {
-        BlofeldWaveTableModel *wt = new BlofeldWaveTableModel ;
-        _waveTables.append(*wt );
-    }
+
 }
 
 BlofeldWaveTableMgrModel::BlofeldWaveTableMgrModel(const BlofeldWaveTableMgrModel *other, int id , QString nom)
-    :Entity(id,nom)
+    :_waveTables(WT_COUNT)
+    ,Entity(id,nom)
 {
-    int c = WT_COUNT;
-    _waveTables.reserve(c);
-    for (int i(0);i<c;i++)
-    {
-        const BlofeldWaveTableModel wt (*other->getTable(i)) ;
-        _waveTables.append(wt );
-    }
 }
 void BlofeldWaveTableMgrModel::setSignal(int tableNum, int waveNum, int freq, double mgn, double phs)
 {

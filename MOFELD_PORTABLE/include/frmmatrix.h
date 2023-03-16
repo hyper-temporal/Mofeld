@@ -10,7 +10,7 @@ class frmMatrix:
         public ctrlComposite
 {
 public:
-    frmMatrix(const BlofeldReplica *synth,Instrument *instru, QWidget *parent);
+    frmMatrix(TargetProvider *synth, QWidget *parent);
 };
 
 

@@ -3,7 +3,6 @@
 
 #include <QPushButton>
 #include <QComboBox>
-#include "ctrlcomposite.h"
 #include "blofeldmultislice.h"
 
 class BlofeldMultiVue
@@ -21,11 +20,13 @@ class BlofeldMultiVue
     QVector<CtrlParamLeaf *> _controles;
     QVector<BlofeldMultiSlice * > _slices;
 public:
-    BlofeldMultiVue(QWidget *parent, const BlofeldReplica *synth);
+    BlofeldMultiVue(QWidget *parent,  TargetProvider *synth);
 
     void synchronise();
     void SetCBBMultiNum();
     void connection(QWidget *parent);
+    ValueMgr* accessor(TargetProvider *, int) ;
+
 private slots:
     void multiRequest();
     void multiSend();

@@ -1,11 +1,15 @@
 #include "frmsynthctrl_latchbutton.h"
 
-frmSynthCtrl_button::frmSynthCtrl_button(
-        QWidget * parent,
-        const BlofeldReplica *_synth,
-        Parametre *param,
+frmSynthCtrl_button::frmSynthCtrl_button(QWidget * parent,
+        TargetProvider *_synth,
+        int pnum, VAccessor accessor,
         bool toggleIfTrue, QBoxLayout::Direction d)
-    :CtrlParamLeaf(parent, new QPushButton(parent),_synth, param, d )
+    :CtrlParamLeaf(
+         parent,
+         new QPushButton(parent),
+         pnum,
+         d,
+         _synth,accessor )
     ,_toggleIfTrue(toggleIfTrue)
 {
     InitData();
@@ -14,11 +18,14 @@ frmSynthCtrl_button::frmSynthCtrl_button(
 
 void frmSynthCtrl_button::InitData()
 {
+    auto tgt = _target->getTarget();
+    if( tgt == nullptr)
+        return;
     QPushButton * pb = dynamic_cast<QPushButton *>(_controle);
     if(pb!=NULL){
         pb->setCheckable(_toggleIfTrue);
 //        pb->setText(_valueMgr->getNameOfElement(_valueMgr->getValue()));
-        pb->setText(*_valueMgr->getName());
+        pb->setText(*tgt->vaccessor(_pid,_accessor)->getName());
     }
 //    setLayout(getLayout());
 }

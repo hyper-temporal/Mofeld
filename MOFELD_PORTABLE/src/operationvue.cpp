@@ -1,10 +1,13 @@
 #include "operationvue.h"
-using namespace OperationProps;
 
-OperationVue::OperationVue(OperationModel *opMod,BlofeldReplica *synth,  QWidget * parent):
+
+OperationVue::OperationVue(OperationModel *opMod,
+        QWidget * parent,
+        std::vector<std::pair<QString, int> > &bids):
     QWidget(parent),_model(opMod)
 {
 
+    SetCbbBlofeldIds(bids);
     le_instrumentName = new  QLineEdit;
     chb_importProp = new QCheckBox("Propriété");
     chb_importStuff  =new QCheckBox("Stuff");
@@ -19,13 +22,6 @@ OperationVue::OperationVue(OperationModel *opMod,BlofeldReplica *synth,  QWidget
     pb_reGenerate = new QPushButton("Generate");
     pb_sendMultiState = new QPushButton("Multi Tx");
 
-    le_qssPath = new QLineEdit();
-    btn_layoutUpdate = new QPushButton("8=<(o_o)>");
-
-//    _contrainteVue = new ContrainteVue(synth,parent);
-//    connect(_contrainteVue,SIGNAL(updateProprietes(const Propriete*)),
-//            parent,SLOT(updateView(const Propriete*)));
-
     SetCbbChannel();
     SetCbbBank();
     SetCbbProgram();
@@ -33,6 +29,7 @@ OperationVue::OperationVue(OperationModel *opMod,BlofeldReplica *synth,  QWidget
     _layout  = new QHBoxLayout;
 
     QHBoxLayout *lySelectCh  = new QHBoxLayout;
+    lySelectCh->addWidget(cbb_bids);
     lySelectCh->addWidget(cbb_channel);
     lySelectCh->addWidget(cbb_Bank);
     lySelectCh->addWidget(cbb_Program);
@@ -75,37 +72,55 @@ OperationVue::OperationVue(OperationModel *opMod,BlofeldReplica *synth,  QWidget
     lyAuthorize->addWidget(gb_PropAndStuff);
     lyAuthorize->addWidget(gb_PropertyMethod_ch);
 
-    QHBoxLayout *lyStyle = new QHBoxLayout;
-    lyStyle->addWidget(btn_layoutUpdate);
-    lyStyle->addWidget(le_qssPath);
+//    QHBoxLayout *lyStyle = new QHBoxLayout;
+//    lyStyle->addWidget(btn_layoutUpdate);
+//    lyStyle->addWidget(le_qssPath);
 
     _layout->addWidget(gb_GlobalCtrl);
     _layout->addLayout(lyAuthorize);
 //    _layout->addWidget(_contrainteVue);
-    _layout->addLayout(lyStyle);
+//    _layout->addLayout(lyStyle);
 
     _layout->setSpacing(1);
     _layout->setContentsMargins(1,0,0,0);
 
     setLayout(_layout);
+    connect(cbb_bids,SIGNAL(currentIndexChanged(int))
+            ,parent,SLOT(setSynthId(int)));
 
-    connect (le_instrumentName,SIGNAL(textChanged(QString)),parent,SLOT(SetInstrumentName(QString)));
-    connect(cbb_channel,SIGNAL(currentIndexChanged(int)),parent,SLOT(UpdateChannel(int)));
-    connect(this,SIGNAL(importInstrument(int,int)),parent,SLOT(ImportInstrument(int,int)));
-    connect(pb_reImport,SIGNAL(clicked()),parent,SLOT(Reimport()));
-    connect(pb_reGenerate,SIGNAL(clicked()),parent,SLOT(ReGenerate()));
-    connect(this,SIGNAL(updateStyle(QString)),parent,SIGNAL(updateStyle(QString)));
-    connect(btn_layoutUpdate,SIGNAL(clicked()),this,SLOT(on_pbStyle_clicked()));
-    connect(cbb_Bank,SIGNAL(currentIndexChanged(int)),this,SLOT(on_cbBank_currentIndexChanged(int)));
-    connect(cbb_Program,SIGNAL(currentIndexChanged(int)),this,SLOT(on_cbPrgm_currentIndexChanged(int)));
-    connect(rb_force,SIGNAL(clicked()),this,SLOT(SetCurrentOp_ch_Force()));
-    connect(rb_replace,SIGNAL(clicked()),this,SLOT(SetCurrentOp_ch_Replace()));
-    connect(rb_weak,SIGNAL(clicked()),this,SLOT(SetCurrentOp_ch_Weak()));
+    connect (le_instrumentName,SIGNAL(textChanged(QString)),
+             parent,SLOT(SetInstrumentName(QString)));
+    connect(cbb_channel,SIGNAL(currentIndexChanged(int)),
+            parent,SLOT(UpdateChannel(int)));
+    connect(this,SIGNAL(importInstrument(int,int)),
+            parent,SLOT(ImportInstrument(int,int)));
+    connect(pb_reImport,SIGNAL(clicked()),
+            parent,SLOT(Reimport()));
+    connect(pb_reGenerate,SIGNAL(clicked()),
+            parent,SLOT(ReGenerate()));
+//    connect(this,SIGNAL(updateStyle(QString)),
+//            parent,SIGNAL(updateStyle(QString)));
+//    connect(btn_layoutUpdate,SIGNAL(clicked()),
+//            this,SLOT(on_pbStyle_clicked()));
+    connect(cbb_Bank,SIGNAL(currentIndexChanged(int)),
+            this,SLOT(on_cbBank_currentIndexChanged(int)));
+    connect(cbb_Program,SIGNAL(currentIndexChanged(int)),
+            this,SLOT(on_cbPrgm_currentIndexChanged(int)));
+    connect(rb_force,SIGNAL(clicked()),
+            this,SLOT(SetCurrentOp_ch_Force()));
+    connect(rb_replace,SIGNAL(clicked()),
+            this,SLOT(SetCurrentOp_ch_Replace()));
+    connect(rb_weak,SIGNAL(clicked()),
+            this,SLOT(SetCurrentOp_ch_Weak()));
 
-    connect(chb_importProp,SIGNAL(clicked()),this,SLOT(setAuthProp()));
-    connect(chb_importStuff,SIGNAL(clicked()),this,SLOT(setAuthStuff()));
-    connect(chb_importValues,SIGNAL(clicked()),this,SLOT(setAuthValue()));
-    connect(chb_importContrainte,SIGNAL(clicked()),this,SLOT(setAuthContrainte()));
+    connect(chb_importProp,SIGNAL(clicked()),
+            this,SLOT(setAuthProp()));
+    connect(chb_importStuff,SIGNAL(clicked()),
+            this,SLOT(setAuthStuff()));
+    connect(chb_importValues,SIGNAL(clicked()),
+            this,SLOT(setAuthValue()));
+    connect(chb_importContrainte,SIGNAL(clicked()),
+            this,SLOT(setAuthContrainte()));
     //    connect(pb_sendMultiState,SIGNAL(clicked()),parent,SLOT(SendMulti()));
 
 }
@@ -114,9 +129,16 @@ OperationVue::~OperationVue(){
     delete cbb_channel;
     delete cbb_Bank;
     delete cbb_Program;
+    delete cbb_bids;
 //    delete _contrainteVue;
 }
-
+void OperationVue::SetCbbBlofeldIds(std::vector<std::pair<QString,int>> &ids){
+    cbb_bids = new QComboBox(this);
+    disconnect(cbb_bids,SIGNAL(currentIndexChanged(int)),0,0);
+    for(auto id : ids){
+        cbb_bids->addItem(std::get<0>(id),std::get<1>(id));
+    }
+}
 void OperationVue::SetCbbChannel(){
     cbb_channel = new QComboBox(this);
     disconnect(cbb_channel,SIGNAL(currentIndexChanged(int)),0,0);
@@ -148,19 +170,19 @@ void OperationVue::on_cbPrgm_currentIndexChanged(int index)
     emit importInstrument(cbb_Bank->currentIndex(),index);
 }
 
-void OperationVue::on_pbStyle_clicked()
-{
-    emit updateStyle(le_qssPath->text());
-}
+//void OperationVue::on_pbStyle_clicked()
+//{
+//    emit updateStyle(le_qssPath->text());
+//}
 
 void OperationVue::SetCurrentOp_ch_Force(){
-    _model->setFlex(meth_Force);
+    _model->setFlex(Meth_flexibility::meth_Force);
 }
 void OperationVue::SetCurrentOp_ch_Replace(){
-    _model->setFlex(meth_Replace);
+    _model->setFlex(Meth_flexibility::meth_Replace);
 }
 void OperationVue::SetCurrentOp_ch_Weak(){
-    _model->setFlex(meth_Weak);
+    _model->setFlex(Meth_flexibility::meth_Weak);
 }
 
 void OperationVue::setAuthProp(){
@@ -186,13 +208,13 @@ void OperationVue::UpdateChannel(){
 
     switch(mp->_meth_flex)
     {
-        case meth_Replace:
+        case Meth_flexibility::meth_Replace:
             rb_replace->setChecked(true);
             break;
-        case meth_Force:
+        case Meth_flexibility::meth_Force:
             rb_force->setChecked(true);
             break;
-        case meth_Weak:
+        case Meth_flexibility::meth_Weak:
             rb_weak->setChecked(true);
             break;
         default:break;

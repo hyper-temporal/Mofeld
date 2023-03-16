@@ -6,20 +6,19 @@
 #include "easylist.h"
 
 class WaveTableSelectVue
-    :public EasyList
+        :public EasyList
 {
-Q_OBJECT
+    Q_OBJECT
     WTModel * _model;
-    //    QWidget * _parent;
-    public:
+public:
     WaveTableSelectVue( WTModel * m,QWidget *parent )
-    :EasyList("TABLES D'ONDE",m,parent), _model(m)
+        :EasyList("TABLES D'ONDE",m,parent)
+        , _model(m)
     {
-        setupModel();
-        setLayout(_layout);
     }
+    void disconnectAll();
     void connectAll(QWidget *p);
-    QLayout * getLayout(){return _layout;}
+    QLayout * getLayout(){return &_layout;}
 
 public slots:
     void ajouterTables();

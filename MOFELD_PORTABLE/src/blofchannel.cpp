@@ -1,5 +1,4 @@
 #include "blofchannel.h"
-using namespace OperationProps;
 
 
 #define NB_MULTISLICE_PARAMETRE 21
@@ -45,21 +44,6 @@ void BlofChannel::setParamValue(int pid,int v){
 }
 
 
-void BlofChannel::PrepareForProp(){
-    if(_mixPars._modify_Props == true)
-    {
-        if(_mixPars._meth_flex == meth_Replace)
-        {
-            foreach(Parametre p, *_instrument.getParametres())
-            {
-                if(p.getProp())
-                {
-                    _instrument.setPropriete(p.getID(),false);
-                }
-            }
-        }
-    }
-}
 
 
 const Propriete * BlofChannel::getProprieteChannel()const{
@@ -88,4 +72,24 @@ void  BlofChannel:: setMultiPars(const QVector<Parametre> *pars)
             setParametreValue(i, pars->at(i).getValue());
         }
     }
+}
+
+QDataStream & operator << (QDataStream & out, const BlofChannel & Valeur)
+{
+    out << Valeur._instrument
+        << Valeur._mixPars
+        << Valeur._multiPars
+           ;
+
+    return out;
+}
+
+QDataStream & operator >> (QDataStream & in, BlofChannel & Valeur)
+{
+    in  >> Valeur._instrument
+        >> Valeur._mixPars
+        >> Valeur._multiPars
+           ;
+
+    return in;
 }

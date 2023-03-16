@@ -1,20 +1,17 @@
 #include "proprietevue.h"
 
-
-
-
 void ProprieteVue::connectAll(QWidget * parent){
 
-    connect(_btnEntityAdd, SIGNAL(clicked()),
+    connect(&_btnEntityAdd, SIGNAL(clicked()),
             this, SLOT(ajouterPropriete()));
 
-    connect(_btnEntityRemove, SIGNAL(clicked()),
+    connect(&_btnEntityRemove, SIGNAL(clicked()),
             this, SLOT(effacerPropriete()));
 
-    connect(_tvEntity,SIGNAL(doubleClicked(QModelIndex)),
+    connect(&_tvEntity,SIGNAL(doubleClicked(QModelIndex)),
         this,SLOT (envoyerPropriete(QModelIndex)));
 
-    connect(this,SIGNAL(envoyerPropriete(const Propriete*)),
+    connect(this,SIGNAL(sendPropriete(const Propriete*)),
             parent,SLOT (recevoirPropriete(const Propriete*)));
 
     connectEList();
@@ -23,7 +20,7 @@ void ProprieteVue::connectAll(QWidget * parent){
 }
 
 void ProprieteVue::ajouterPropriete(){
-    _model->ajouter(_leEntity->text());
+    _model->ajouter(_leEntity.text());
 }
 
 
@@ -33,8 +30,8 @@ void ProprieteVue::envoyerPropriete(QModelIndex index ){
     const Propriete * a = _model->getEntity(i);
     if(a!=NULL)
     {
-        _leEntity->setText(a->getName());
-        emit envoyerPropriete(a);
+        _leEntity.setText(a->getName());
+        emit sendPropriete(a);
     }
 }
 

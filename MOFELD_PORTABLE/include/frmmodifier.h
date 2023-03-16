@@ -8,7 +8,7 @@ class frmModifier:
         public ctrlSection
 {
 public:
-    frmModifier(const BlofeldReplica *synth, Instrument * instru,int modNum, QString nom,QWidget *parent);
+    frmModifier(TargetProvider *synth,int modNum, QString nom,QWidget *parent);
 };
 
 #endif // FRMMODIFIER_H

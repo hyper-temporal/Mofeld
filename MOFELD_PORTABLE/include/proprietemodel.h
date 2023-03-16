@@ -7,16 +7,17 @@
 #include "entitydao.h"
 #include "propriete.h"
 #include "parametre.h"
-#include "blofeldreplica.h"
+#include "targetprovider.h"
+
 
 class ProprieteModel
         : public EntityDAO<Propriete>
 {
     Q_OBJECT
-    BlofeldReplica *_synth;
+    TargetProvider *_synth;
 
 public:
-    ProprieteModel(BlofeldReplica * r);
+    ProprieteModel(TargetProvider * r);
     void ajouter(QString nom );
 private:
 //    QStringList GetTags(Propriete a);

@@ -1,8 +1,11 @@
 #include "frmgenerators.h"
 
-frmGenerators::frmGenerators(const BlofeldReplica *synth,Instrument *instru, QWidget *parent)
+#include "frmosc.h"
+
+
+frmGenerators::frmGenerators(TargetProvider *synth, QWidget *parent)
     :ctrlComposite(parent, QBoxLayout::LeftToRight )
 {
-    addCtrl(new frmOscillators(synth,instru,parent));
+    addCtrl(new frmOscillators(synth,parent));
     setLayout();
 }

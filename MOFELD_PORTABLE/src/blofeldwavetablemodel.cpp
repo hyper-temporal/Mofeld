@@ -1,5 +1,8 @@
 #include "blofeldwavetablemodel.h"
 
+
+
+
 BlofeldWaveTableModel::BlofeldWaveTableModel()
 {
     _signals.reserve(WT_WAVEMAX);

@@ -1,17 +1,8 @@
 #include "blofeldpersistencevue.h"
 
-BlofeldPersistenceVue::BlofeldPersistenceVue(BlofeldReplica *blofeld)
+BlofeldPersistenceVue::BlofeldPersistenceVue(TargetProvider *blofeld)
     :_synth(blofeld)
 {
-
-    connect(_synth,SIGNAL(updateArrangement(const Arrangement *)),
-            this, SLOT(updateView(const Arrangement *)));
-    connect(_synth,SIGNAL(updateInstrument(const Instrument*)),
-            this, SLOT(updateView(const Instrument *)));
-    connect(_synth,SIGNAL(updateParametre(const Parametre*)),
-            this, SLOT(updateView(const Parametre * )));
-    connect(_synth,SIGNAL(syncMulti()),
-            this, SLOT(updateMultiView()));
 
     _arrModel = new ArrangementModel(_synth);
     _instruModel = new InstrumentModel(_synth);
@@ -42,20 +33,9 @@ BlofeldPersistenceVue::BlofeldPersistenceVue(BlofeldReplica *blofeld)
 }
 
 
-void BlofeldPersistenceVue::updateView(const Arrangement * a)
-{
-
-}
-
-void BlofeldPersistenceVue::updateView(const Instrument * i)
-{
-}
-
-
-
 void BlofeldPersistenceVue::updateView(int pid)
 {
-    updateView(_synth->getparametre(pid));
+    updateView(_synth->getTarget()->getparametre(pid));
 }
 
 void BlofeldPersistenceVue::updateView(const Parametre * p)
@@ -63,7 +43,7 @@ void BlofeldPersistenceVue::updateView(const Parametre * p)
     updatePElements();
 }
 void BlofeldPersistenceVue::updatePElements(){
-    const Propriete * prpch = _synth->getChannel()->getProprieteChannel();
+    const Propriete * prpch = _synth->getTarget()->getChannel()->getProprieteChannel();
 //    _propsVue->editThat(prpch);
     _propsElementVue->setModel(prpch);
 }

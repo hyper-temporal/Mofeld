@@ -8,7 +8,7 @@ class frmModifiers:
         public ctrlComposite
 {
 public:
-    frmModifiers(const BlofeldReplica *synth ,Instrument *instru, QWidget *parent);
+    frmModifiers(TargetProvider *synth , QWidget *parent);
 };
 
 #endif // FRMMODIFIERS_H

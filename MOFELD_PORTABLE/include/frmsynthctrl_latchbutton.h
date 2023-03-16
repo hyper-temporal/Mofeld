@@ -13,8 +13,9 @@ class frmSynthCtrl_button
 public:
     frmSynthCtrl_button(
             QWidget * parent,
-            const BlofeldReplica *_synth,
-            Parametre *param,
+            TargetProvider *_synth,
+            int pnum,
+            VAccessor accessor,
             bool toggleIfTrue=true,
             QBoxLayout::Direction d = QBoxLayout::LeftToRight
             );

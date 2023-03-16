@@ -1,126 +1,155 @@
 #include "miomgr.h"
 
-//MIOMgr::MIOMgr(QObject * par)
-//    :QThread(par)
+
+
 MIOMgr::MIOMgr()
 {
-    minput=new MinMgr(this);
-    moutput=new MoutMgr();
+    RtMidiIn mis ;
+    for(int i = 0; i< mis.getPortCount(); ++i){
+        minputs.push_back(new Minput(i));
+    }
+    RtMidiOut mos ;
+    for(int i = 0; i< mos.getPortCount(); ++i){
+        moutputs.push_back(new Moutput(i));
+    }
 }
-void MIOMgr::setMidiInput(QString inputName){
+
+MIOMgr::~MIOMgr(){
+    for(auto d : minputs){
+        delete d;
+    }
+    for(auto d : moutputs){
+        delete d;
+    }
+    moutputs.clear();
+    minputs.clear();
+}
+
+
+std::vector<std::pair<QString,int>> MIOMgr::getPortsIn(std::string name ){
     RtMidiIn tempin;
+    std::vector<std::pair<QString,int>> ret;
+    ret.reserve(tempin.getPortCount());
+    auto qstr = QString::fromStdString(name);
     for(unsigned int i=0;i<tempin.getPortCount();i++){
-        QString s = QString::fromStdString(tempin.getPortName(i));
-        //if(s==inputName)
-        if( s.contains(inputName,Qt::CaseInsensitive)){
-            setMidiInput(i);
-            break;
+        auto pstr = QString::fromStdString(tempin.getPortName(i));
+        if(pstr.contains(qstr,Qt::CaseInsensitive)){
+            ret.push_back({pstr,i});
         }
     }
+    return ret;
 }
-void MIOMgr::setMidiOutput(QString outputName){
-    RtMidiOut tempOut;
-    for(unsigned int i=0;i<tempOut.getPortCount();i++){
-        QString s = QString::fromStdString(tempOut.getPortName(i));
 
-//        if(QString::fromStdString(tempOut.getPortName(i))==outputName)
-        if( s.contains(outputName,Qt::CaseInsensitive)){
-            setMidiOutput(i);
-            break;
+std::vector<std::pair<QString,int>> MIOMgr::getPortsOut(std::string name ){
+    RtMidiOut tempout;
+    std::vector<std::pair<QString,int>> ret;
+    ret.reserve(tempout.getPortCount());
+    auto qstr = QString::fromStdString(name);
+    for(unsigned int i=0;i<tempout.getPortCount();i++){
+        auto pstr = QString::fromStdString(tempout.getPortName(i));
+        if(pstr.contains(qstr,Qt::CaseInsensitive)){
+            ret.push_back({pstr,i});
         }
     }
-}
-
-
-void MIOMgr::setMidiInput(int inputNum)
-{
-
-    try{
-        minput->ChangeInput(inputNum);
-    }
-    catch(const std::runtime_error & e){
-        //throw std::runtime_error("erreur peripherique midi");
-    }
-}
-void MIOMgr::setMidiOutput(int outputNum)
-{
-    try{
-            moutput->ChangeOutpput(outputNum);
-    }
-    catch(const std::runtime_error & e)
-    {
-        //throw std::runtime_error("erreur peripherique midi");
-    }
+    return ret;
 }
 
 
 
 
-void MIOMgr::sendSysex(std::vector<uchar> * syx)
-{
-    try{
-        moutput->sendMessage(syx);
-    }
-    catch (const std::exception & e) {
-        throw std::runtime_error("Le message n'a pas été envoyé");
-    }
-}
-
-
-
-void MIOMgr::ReceiveSysex(std::vector< uchar > * input){
-
-    unsigned int nBytes = input->size();
-    std::vector< uchar > * v  = new std::vector< uchar >;
-    for( unsigned int i=0; i<nBytes;i++)
-    {
-        v->push_back( input->at(i));
-    }
-    emit SysexChanged(v);
-}
-
-
-void MinMgr::mycallback( double deltatime, std::vector< uchar > * message, void *userData )
+void Minput::mycallback( double deltatime, std::vector< uchar > * message, void *userData )
 {
     unsigned int nBytes = message->size();
 
     if ( nBytes > 0 )
     {
-        MIOMgr * temp = (MIOMgr*)userData;
-        temp->ReceiveSysex(message);
+        MidiReceiver * temp = (MidiReceiver*)userData;
+        temp->receive(message);
     }
 }
 
-MinMgr::MinMgr( MIOMgr * pnt ):RtMidiIn()
+Minput::Minput(  int port )
+    :_port(port)
 {
-    ignoreTypes( false, false, false );
-    setCallback( mycallback,(void*)pnt );
 }
 
-void MinMgr::ChangeInput(int portnum )
+
+Minput::Minput(const Minput &&o )
+    :Minput(o._port)
 {
-    try{
+}
+
+Minput::Minput( const Minput& o )
+    :Minput(o._port)
+{
+}
+
+Minput::~Minput()
+{
+    closePort();
+}
+
+void Minput::openPort( MidiReceiver * pnt)
+{
+    _receiver = pnt;
+    reopenPort();
+
+}
+void Minput::reopenPort()
+{
+    try {
         closePort();
-        openPort(portnum);
+        _api.openPort(_port);
+        _api.ignoreTypes( false, true, true );
+        _api.setCallback( mycallback,(void*)_receiver );
+    } catch (...) {
+        std::cerr << "input couldn' t be opened check if another app is using it" << std::endl;
     }
-    catch(const std::exception & e)
-    {
-        throw std::runtime_error("erreur peripherique midi");
+
+}
+
+void Minput::closePort( )
+{
+    if(_api.isPortOpen()){
+        _api.cancelCallback();
+        _api.closePort();
     }
 }
 
-MoutMgr::MoutMgr( ):RtMidiOut()
+
+
+Moutput::Moutput( int port)
+    :_port(port)
+{
+
+}
+Moutput::~Moutput()
+{
+    if(_api.isPortOpen()){
+        _api.closePort();
+    }
+}
+void Moutput::send(const std::vector<uchar> *v ){
+    _api.sendMessage(v);
+}
+
+void Moutput::openPort(){
+    try {
+        if(_api.isPortOpen()){
+            _api.closePort();
+        }
+        _api.openPort(_port);
+    }catch (...) {
+        std::cerr << "MIDI output couldn' t be opened! check if another app is using it" << std::endl;
+    }
+}
+
+Moutput::Moutput(const Moutput&& o )
+    :Moutput(o._port)
 {
 }
 
-void MoutMgr::ChangeOutpput(int portnum )
+Moutput::Moutput(const Moutput& o )
+    :Moutput(o._port)
 {
-    try{
-        closePort();
-        openPort(portnum);
-    }
-    catch(const std::runtime_error & e)
-    {
-        throw std::runtime_error("erreur peripherique midi");
-    }
 }

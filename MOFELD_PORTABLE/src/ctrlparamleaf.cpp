@@ -1,16 +1,21 @@
 #include "ctrlparamleaf.h"
 #include "parametrereaction.h"
 
-#include "blofeldreplica.h"
 
-CtrlParamLeaf::CtrlParamLeaf(
-        QWidget * parent,
+CtrlParamLeaf::CtrlParamLeaf(QWidget * parent,
         QWidget *enfant,
-        const BlofeldReplica *synth,
-        Parametre *param,
-        QBoxLayout::Direction direction)
-    :CtrlValueLeaf(parent,enfant,synth,param->getType(),direction),
-        _paramId(param->getID())
+        int pnum,
+        QBoxLayout::Direction direction,
+        TargetProvider* tp,
+        VAccessor accessor)
+    :CtrlValueLeaf(
+         parent,
+         enfant,
+         pnum,
+         direction,
+         tp,
+         accessor)
+    ,_paramId(pnum)
 {}
 
 
@@ -19,7 +24,7 @@ void CtrlParamLeaf::ctxMenu(const QPoint &pos)
 
     QMenu *menu = new QMenu;
 
-    ParametreReAction * pAction = new ParametreReAction(_synth->getparametre(_paramId));
+    ParametreReAction * pAction = new ParametreReAction(_target->getTarget()->getparametre(_paramId));
 
 
     connect(pAction->getContext(), SIGNAL(setPropriete(int,bool,ParamContext*)),
@@ -80,7 +85,8 @@ void CtrlParamLeaf::AfterConstructor(){
 void CtrlParamLeaf::ValueChanged(int p){
 
     try {
-        int v = _valueMgr->getValueOfElement(p);
+        //love arrows ... NOT
+        int v = _target->getTarget()->getparametre(_pid)->getType()->getValueOfElement(p);
         emit(UpdateParametre( _paramId,v ));
     } catch (...){
     }
@@ -90,7 +96,7 @@ void CtrlParamLeaf::ValueChanged(bool p)
 {
     try {
         int v;
-        v = _valueMgr->getValueOfElement((int)p);
+        v = _target->getTarget()->getparametre(_pid)->getType()->getValueOfElement((int)p);
         emit(UpdateParametre( _paramId,v ));
     } catch (...) {
     }
@@ -116,5 +122,5 @@ void CtrlParamLeaf::forMulti(){
 }
 
 void CtrlParamLeaf::synchronise(){    
-    UpdatedValueDirect(_valueMgr->getValue());
+    UpdatedValueDirect(_target->getTarget()->getparametre(_pid)->getType()->getValue());
 }

@@ -13,15 +13,15 @@
 
 class Parametre
 {
-    ValueEnum * _type;
+    ValueMgr * _type;
     int _id;
     Contrainte _contrainte;
     bool _isProp;
 public:
     Parametre();
     Parametre(const Parametre &p);
-    Parametre(ValueEnum *w ,int i);
-    Parametre(ValueEnum *w ,int i,int mi, int ma);
+    Parametre(ValueMgr *w ,int i);
+    Parametre(ValueMgr *w ,int i,int mi, int ma);
 
     Contrainte * editContrainte();
     const Contrainte * getContrainte() const;
@@ -54,7 +54,9 @@ private:
     friend class DumpInstrument;
     friend class Instrument;
 
-};
-
+    friend QDataStream & operator << (QDataStream &, const Parametre &);
+    friend QDataStream & operator >> (QDataStream &, Parametre &);
+ };
+ Q_DECLARE_METATYPE(Parametre)
 
 #endif // PARAMETRE_H

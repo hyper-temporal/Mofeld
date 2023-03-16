@@ -1,32 +1,31 @@
 #include "frmfx.h"
-#include "blofeldreplica.h"
 #include "frmsynthctrl_rotary.h"
 #include "frmsynthctrl_combobox.h"
-#include "combotool.h"
+
 int Mix,fxp1, fxp2,fxp3,fxp4,fxp5,fxp6,fxp7,fxp8, fxp9,fxp10,fxp11,fxp12,fxp13,fxp14,fxType;
 
-frmFX::frmFX(const BlofeldReplica *synth,Instrument *instru,int fxNum, QString n, QWidget *parent)
+frmFX::frmFX(TargetProvider *synth, int fxNum, QString n, QWidget *parent)
     :ctrlSection(n, parent, QBoxLayout::LeftToRight )
 {
     initFX(fxNum);
 
-/*00*/    addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(fxType)));
-/*01*/    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(Mix)));
+/*00*/    addCtrl(new frmSynthCtrl_combobox( parent ,synth, (fxType),VAccessor::accessInstrument));
+/*01*/    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (Mix),VAccessor::accessInstrument));
 
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp1)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp2)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp3)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp4)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp5)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp6)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp7)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp8)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp9)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp10)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp11)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp12)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp13)));
-    addCtrl(new frmSynthCtrl_rotary( parent ,synth, instru->editParametre(fxp14)));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp1),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp2),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp3),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp4),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp5),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp6),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp7),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp8),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp9),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp10),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp11),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp12),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp13),VAccessor::accessInstrument));
+    addCtrl(new frmSynthCtrl_rotary( parent ,synth, (fxp14),VAccessor::accessInstrument));
 
     _leaves = getLeafs();
 

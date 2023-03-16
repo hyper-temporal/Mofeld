@@ -7,7 +7,9 @@ void WordChecksum::writeBytes(){
 
 void  WordChecksum::parseBytes(){
     WordWriter::parseBytes();
-    if (_valueMgr->getValue() != getChecksum()) throw("La checkSum est invalide");
+    if (_valueMgr->getValue() != getChecksum()){
+         qDebug() << ("La checkSum est invalide") ;
+    }
 }
 
 int WordChecksum::getChecksum()const

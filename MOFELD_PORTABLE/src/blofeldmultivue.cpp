@@ -3,16 +3,20 @@
 #include "frmsynthctrl_rotary.h"
 #include "frmsynthctrl_combobox.h"
 #include "combotool.h"
-BlofeldMultiVue::BlofeldMultiVue(QWidget *parent,const BlofeldReplica *synth)
+BlofeldMultiVue::BlofeldMultiVue(
+        QWidget *parent,
+        TargetProvider *synth
+        )
 {
-    _multiblob  = synth->getDumpMulti();
+
+    _multiblob  = synth->getTarget()->getDumpMulti();
 
     int pGlobalVol=23;
     int pTempo=24;
 
     ctrlComposite * block1 = new ctrlComposite(parent, QBoxLayout::LeftToRight );
-    block1->addCtrl(new frmSynthCtrl_rotary( parent, synth ,_multiblob->getParametre(pGlobalVol),0,QBoxLayout::LeftToRight));
-    block1->addCtrl(new frmSynthCtrl_combobox( parent, synth ,_multiblob->getParametre(pTempo),QBoxLayout::LeftToRight));
+    block1->addCtrl(new frmSynthCtrl_rotary( parent, synth ,(pGlobalVol),VAccessor::accessMulti,QBoxLayout::LeftToRight));
+    block1->addCtrl(new frmSynthCtrl_combobox( parent, synth ,(pTempo), VAccessor::accessMulti,QBoxLayout::LeftToRight));
 
     ctrlComposite * block2 = new ctrlComposite(parent, QBoxLayout::LeftToRight );
     for(int i(0);i<16;i++){
@@ -74,7 +78,10 @@ void BlofeldMultiVue::SetCBBMultiNum(){
 
     _cbbMultiNum = new QComboBox(this);
 //    disconnect(_cbbMultiNum,SIGNAL(currentIndexChanged(int)),0,0);
-    _cbbMultiNum->setModel( new ComboTool( BlofeldTypesEnum::getInstance().GetEnum(BLOT_STANDARD)));
+    _cbbMultiNum->setModel(
+                new ComboTool(
+                    BlofeldTypesEnum::getInstance()
+                    .GetEnum(BLOT_STANDARD)));
 }
 
 void BlofeldMultiVue::connection( QWidget * parent)
@@ -112,4 +119,7 @@ void BlofeldMultiVue::synchronise(){
     foreach(CtrlParamLeaf *cpl, _controles){
         cpl->synchronise();
     }
+}
+ValueMgr* BlofeldMultiVue::accessor(TargetProvider *, int pid) {
+    return _multiblob->getParametre(pid)->getType();
 }

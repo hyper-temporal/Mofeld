@@ -2,7 +2,7 @@
 #define ARPEGGIOSLICE_H
 
 #include "ctrlcomposite.h"
-class BlofeldReplica;
+class TargetProvider;
 class Instrument;
 
 class ArpeggioSlice
@@ -10,9 +10,8 @@ class ArpeggioSlice
         public ctrlSection
 {
 public:
-    ArpeggioSlice(const BlofeldReplica *synth,
-                  Instrument * instru,
-                  int slicenum,
+    ArpeggioSlice( TargetProvider *synth,
+                   int slicenum,
                   QString n,
                   QWidget * parent);
 };

@@ -20,8 +20,6 @@ public:
     ProprieteVue( ProprieteModel * m,QWidget *parent )
         :EasyList("PROPRIETE",m,parent), _model(m)
     {
-        setupModel();
-        setLayout(_layout);
     }
     void connectAll(QWidget * parent);
 
@@ -31,7 +29,7 @@ public slots:
     void effacerPropriete();
     void envoyerPropriete(QModelIndex index );
 signals:
-    void envoyerPropriete(const Propriete * a);
+    void sendPropriete(const Propriete * a);
 
 };
 

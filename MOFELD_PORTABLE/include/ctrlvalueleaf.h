@@ -4,11 +4,8 @@
 
 #include <QMenu>
 #include "ctrlleaf.h"
-#include "valuemgr.h"
-#include "parametre.h"
+#include "targetprovider.h"
 
-
-class BlofeldReplica;
 
 class CtrlValueLeaf
         :public ctrlleaf
@@ -16,16 +13,17 @@ class CtrlValueLeaf
     Q_OBJECT
 
 protected:
-    ValueMgr * _valueMgr;
-    const BlofeldReplica *_synth;
-
+    int _pid;
+    VAccessor _accessor ;
+    TargetProvider* _target;
  public:
 
-    CtrlValueLeaf(   QWidget * parent,
+    CtrlValueLeaf(QWidget * parent,
                 QWidget * enfant,
-                const BlofeldReplica *synth,
-                ValueMgr *value,
-                QBoxLayout::Direction direction);
+                int pid,
+                QBoxLayout::Direction direction,
+                TargetProvider * prov,
+                VAccessor accessor);
 
     void addCtrl(ctrlComponent * ){}
     virtual void setLayout() =0;

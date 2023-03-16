@@ -5,14 +5,17 @@
 #include <QAbstractTableModel>
 #include <QDirIterator>
 
-class ICategorizable: public QAbstractTableModel
+class ICategorizable
+        : public QAbstractTableModel
 {
 protected:
      QString _path;
      QStringList _catsName;
      QString _typeName;
 public:
-    ICategorizable(QString path,QString typeName);
+    ICategorizable(
+            QString path,
+            QString typeName);
 
     const QString * getTypeName(){return &_typeName;}
     QStringList getCatsName();

@@ -1,6 +1,5 @@
 #include "instrument.h"
-#include "operationModel.h"
-using namespace OperationProps;
+
 
 Instrument::Instrument()
 {
@@ -88,15 +87,15 @@ void Instrument::updateParametre(const Parametre *p, const MixPropParams *mps)
         int id = p->getID();
         switch(mps->_meth_flex)
         {
-            case meth_Force :
+            case Meth_flexibility::meth_Force :
                 updateParametre(p,mps->_modify_Contr,mps->_modify_Val);
                 setPropriete(id,true);
                 break;
-            case meth_Replace :
+            case Meth_flexibility::meth_Replace :
                 updateParametre(p,mps->_modify_Contr,mps->_modify_Val);
                 setPropriete(id,true);
                 break;
-            case meth_Weak :
+            case Meth_flexibility::meth_Weak :
                 if(!paramBelongsToProp(id)){
                     updateParametre(p,mps->_modify_Contr,mps->_modify_Val);
                     setPropriete(id,true);
@@ -171,5 +170,24 @@ void Instrument::setPropriete(int id, bool isprop){
     editParametre(id)->_isProp = isprop;
 }
 
+
+QDataStream & operator << (QDataStream & out, const Instrument & Valeur)
+{
+    out << Valeur._id
+        << Valeur._name
+        << Valeur._datecreation
+        << Valeur._parametre
+           ;
+    return out;
+}
+QDataStream & operator >> (QDataStream & in, Instrument & Valeur)
+{
+    in  >> Valeur._id
+        >> Valeur._name
+        >> Valeur._datecreation
+        >> Valeur._parametre
+           ;
+    return in;
+}
 
 

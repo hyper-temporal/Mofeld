@@ -9,7 +9,7 @@ class frmFXs:
 {
     frmFX *frmFX1,*frmFX2;
 public:
-    frmFXs(const BlofeldReplica *synth,Instrument *instru,QWidget * parent);
+    frmFXs(TargetProvider *synth,QWidget * parent);
     void updateForm( int fxNum, int fxType);
 };
 

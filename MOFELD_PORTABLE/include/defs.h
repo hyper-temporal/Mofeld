@@ -365,10 +365,15 @@ Drive Curves
 #define METHOD_EXTEND   1
 #define METHOD_FIX      2
 
-namespace OperationProps{
-    enum OperationLayer { prop_channel=0, prop_Instru=1, instruOnly=2 };
-    enum Meth_flexibility { meth_Replace=0, meth_Force=1, meth_Weak=2};
-}
+
+
+ enum class Meth_flexibility
+ {
+    meth_Replace=0,
+    meth_Force=1,
+    meth_Weak=2
+};
+
 
 
 #endif //DEFS_H

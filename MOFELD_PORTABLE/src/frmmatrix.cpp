@@ -2,7 +2,7 @@
 
 
 
-frmMatrix::frmMatrix(const BlofeldReplica *synth,Instrument *instru, QWidget *parent)
+frmMatrix::frmMatrix(TargetProvider *synth, QWidget *parent)
     :ctrlComposite(parent, QBoxLayout::TopToBottom )
 {
     ctrlComposite *gen;
@@ -12,10 +12,10 @@ frmMatrix::frmMatrix(const BlofeldReplica *synth,Instrument *instru, QWidget *pa
         for(int i(0);i<4;i++)
         {
             QString s=QString("MODULATOR %0d").arg(m*4+i+1);
-            gen->addCtrl(new frmMatrixSlice(synth,instru,m*4+i,s,parent));
+            gen->addCtrl(new frmMatrixSlice(synth,m*4+i,s,parent));
         }
         QString s=QString("MODIFIER %2d").arg(m+1);
-        gen->addCtrl(new frmModifier(synth,instru,m,s,parent));
+        gen->addCtrl(new frmModifier(synth,m,s,parent));
         addCtrl(gen);
     }
     setLayout();

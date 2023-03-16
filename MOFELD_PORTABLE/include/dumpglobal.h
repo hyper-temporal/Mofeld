@@ -14,15 +14,23 @@ class DumpGlobal
 
 public:
     DumpGlobal();
+    std::vector<uchar> * getMessage(int macid){
+        return Blofable::getMessage(macid);
+    }
 
-    std::vector<uchar> * getMessage(int macid){return Blofable::getMessage(macid);}
+    ValueMgr* getParametre(int pid){return _Parametres[pid]->getType();}
+
+    void debug();
+    void setParamValue(int pid, int value){
+        _Parametres[pid]->setValue(value);
+    }
 
 private:
-    void setAdressContent(){;}
+    void setAdressContent();
     void setDataContent();
     void setChecksum();
     //pour construire une interface sur les mots d'un message
-    void addParametre(WordWriter *w);
+    void addParametre(WordEnum *w);
 
 
 

@@ -10,11 +10,11 @@
 
 #include "blofchannel.h"
 #include "itagable.h"
-#include "entitydao.h"
 #include "dumpmulti.h"
 
 class Arrangement
-        :public ITagable,public Entity
+        :public ITagable
+        ,public Entity
 {
     QVector<BlofChannel> _BlofChannel;
 public:
@@ -51,7 +51,12 @@ private:
     friend class ArrangementModel;
     friend class DumpMulti;
 
+    friend QDataStream & operator << (QDataStream &, const Arrangement &);
+    friend QDataStream & operator >> (QDataStream &, Arrangement &);
+
 };
+
+Q_DECLARE_METATYPE(Arrangement)
 
 
 

@@ -2,8 +2,11 @@
 
 
 
-ICategorizable::ICategorizable(QString path, QString typeName)
-    :_path(path), _typeName(typeName)
+ICategorizable::ICategorizable(
+        QString path,
+        QString typeName)
+    :_path(path),
+    _typeName(typeName)
 {
     QDirIterator directories( _path,  QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
     while(directories.hasNext()){

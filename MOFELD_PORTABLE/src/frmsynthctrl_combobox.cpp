@@ -1,12 +1,19 @@
 #include "frmsynthctrl_combobox.h"
 
-frmSynthCtrl_combobox::frmSynthCtrl_combobox(
-        QWidget * parent,
-        const BlofeldReplica *_synth,
-        Parametre *param,
+frmSynthCtrl_combobox::frmSynthCtrl_combobox(QWidget * parent,
+        TargetProvider *_synth,
+        int pnum,
+        VAccessor accessor,
         QBoxLayout::Direction d
         )
-    :CtrlParamLeaf(parent, new QComboBox(parent), _synth,param,d)
+    :CtrlParamLeaf(
+         parent,
+         new QComboBox(parent),
+         pnum,
+         d,
+         _synth,
+         accessor
+         )
 {
     InitData();
 }
@@ -15,18 +22,19 @@ frmSynthCtrl_combobox::frmSynthCtrl_combobox(
 
 void frmSynthCtrl_combobox::InitData()
 {
+    auto tgt = _target->getTarget();
+    if(tgt == nullptr)
+        return;
     QComboBox *cbb = (QComboBox*)_controle;
-    const ValueEnum * ve = dynamic_cast<const ValueEnum*>(_valueMgr);
+    auto valuemanag = tgt->getparametre(_pid)->getType();
+    const ValueEnum * ve = dynamic_cast<const ValueEnum*>(valuemanag);
     if(ve != NULL){
         foreach(SynthEnumElement * see, ve->getType()->getElements())
         {
             cbb->addItem(see->LaChaine,see->Lentier);
         }
     }
-
     QStandardItem *_itm_ctrl;
-
-
 }
 
 void frmSynthCtrl_combobox::directConnect(){

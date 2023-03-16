@@ -9,7 +9,7 @@ class frmLFO:
         public ctrlSection
 {
 public:
-    frmLFO(const BlofeldReplica *synth, Instrument *instru , int lfonum, QString n, QWidget *parent);
+    frmLFO(TargetProvider *synth, int lfonum, QString n, QWidget *parent);
 };
 
 

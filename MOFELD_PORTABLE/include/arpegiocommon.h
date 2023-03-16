@@ -11,8 +11,7 @@ class ArpegioCommon
         public ctrlSection
 {
 public:
-    ArpegioCommon(const BlofeldReplica *synth,
-                  Instrument * instru,
+    ArpegioCommon( TargetProvider *synth,
                   QString n,
                   QWidget * parent);
 };

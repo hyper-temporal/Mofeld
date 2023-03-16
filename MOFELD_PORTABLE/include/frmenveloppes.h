@@ -10,7 +10,8 @@ class frmEnveloppes:
 {
     QVector<CtrlParamLeaf*> _ctrls;
 public:
-    frmEnveloppes(const BlofeldReplica *synth,Instrument * instru,QWidget * parent);
+    frmEnveloppes(TargetProvider *synth,
+                  QWidget * parent);
  };
 
 #endif // FRMENVELOPPES_H

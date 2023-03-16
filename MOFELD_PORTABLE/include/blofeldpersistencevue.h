@@ -1,7 +1,7 @@
 #ifndef BLOFELDPERSISTENCEVUE_H
 #define BLOFELDPERSISTENCEVUE_H
 
-#include "blofeldreplica.h"
+#include "targetprovider.h"
 #include "operationvue.h"
 #include "arrangementvue.h"
 #include "instrumentvue.h"
@@ -11,6 +11,8 @@
 #include "operationModel.h"
 #include "wtmodel.h"
 #include "wavetableselectvue.h"
+
+
 
 class BlofeldPersistenceVue
         :public QWidget
@@ -24,16 +26,14 @@ class BlofeldPersistenceVue
     OperationModel  * _OperationModel;
     WaveTableSelectVue *_wtVue;
     WTModel *_wtModel;
-    BlofeldReplica *_synth;
+    TargetProvider *_synth;
     ArrangementVue *_arrVue;
     InstrumentVue *_instruVue;
     ProprieteVue *_propsVue;
     ProprieteElementsVue *_propsElementVue;
 public:
-    BlofeldPersistenceVue(BlofeldReplica *blofeld);
-private slots:
-    void updateView(const Arrangement * a);
-    void updateView(const Instrument * i);
+    BlofeldPersistenceVue(TargetProvider *blofeld);
+
     void updateView(const Parametre * p);
     void updateView(int pid);
     void updateView(const Propriete * p);

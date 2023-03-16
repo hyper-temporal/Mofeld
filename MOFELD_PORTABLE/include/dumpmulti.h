@@ -8,6 +8,8 @@ class BlofChannel;
 class DumpMulti
         :public Blofable
 {
+    QVector<Parametre*> _Parametres;
+
 public:
     DumpMulti();
     std::vector<uchar> * getMessage(int macid, int multid){
@@ -29,6 +31,9 @@ public:
 
     int getMultiVolume();
     void setMultiVolume(int);
+    Parametre *getParametre(int id)const{
+        return _Parametres[id];
+    }
 
 
 private:
@@ -37,9 +42,6 @@ private:
     void setChecksum();
     //pour construire une interface sur les mots d'un message
     void addParametre(WordWriter *w );
-    Parametre *getParametre(int id)const{
-        return new Parametre((ValueEnum*)_mots.at(id)->getValueMgr(),id);
-    }
 
     friend class BlofeldMultiSlice;
     friend class BlofeldMultiVue;

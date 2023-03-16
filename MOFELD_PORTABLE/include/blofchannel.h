@@ -44,7 +44,6 @@ public:
 
     void setMixPars(const MixPropParams *mpars){ _mixPars= *mpars;}
     void setMultiPars(const QVector<Parametre> *pars);
-    void PrepareForProp();
     void setPropriete(int id, bool state);
 
 private:
@@ -59,8 +58,11 @@ private:
     }
 
 
+    friend QDataStream & operator << (QDataStream &, const BlofChannel &);
+    friend QDataStream & operator >> (QDataStream &, BlofChannel &);
+
     friend class DumpMulti;
 
 };
-
+Q_DECLARE_METATYPE(BlofChannel)
 #endif // BLOFCHANNEL_H

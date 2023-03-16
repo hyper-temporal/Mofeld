@@ -1,6 +1,8 @@
 #include "frmmodifiers.h"
 
-frmModifiers::frmModifiers(const BlofeldReplica *synth,Instrument *instru,QWidget *parent)
+frmModifiers::frmModifiers(
+        TargetProvider *synth,
+        QWidget *parent)
     :ctrlComposite(parent, QBoxLayout::TopToBottom )
 {
     ctrlComposite * gen;
@@ -13,7 +15,7 @@ frmModifiers::frmModifiers(const BlofeldReplica *synth,Instrument *instru,QWidge
             int offset=cnt1*2+cnt2;
             int cnt =cnt1+cnt2;
             QString s = QString("MODIFIER %2d").arg(cnt+1);
-            gen->addCtrl( new frmModifier(synth,instru,offset,s,parent));
+            gen->addCtrl( new frmModifier(synth,offset,s,parent));
         }
         addCtrl(gen);
     }

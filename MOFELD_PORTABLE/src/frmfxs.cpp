@@ -2,14 +2,14 @@
 #include "frmsynthctrl_latchbutton.h"
 
 
-frmFXs::frmFXs(const BlofeldReplica *synth, Instrument *instru,QWidget * parent)
+frmFXs::frmFXs(TargetProvider *synth, QWidget * parent)
     :ctrlComposite(parent, QBoxLayout::TopToBottom )
 {
-    addCtrl(new frmFilter(synth,instru,0,"FILTER1",parent));
-    addCtrl(new frmSynthCtrl_button( parent ,synth, instru->editParametre(88)));
-    addCtrl(new frmFilter(synth,instru,1,"FILTER2",parent));
-    frmFX1 = new frmFX(synth,instru,0,"FX 01",parent);
-    frmFX2 = new frmFX(synth,instru,1,"FX 02",parent);
+    addCtrl(new frmFilter(synth,0,"FILTER1",parent));
+    addCtrl(new frmSynthCtrl_button( parent ,synth, (88),VAccessor::accessInstrument));
+    addCtrl(new frmFilter(synth,1,"FILTER2",parent));
+    frmFX1 = new frmFX(synth,0,"FX 01",parent);
+    frmFX2 = new frmFX(synth,1,"FX 02",parent);
 
     addCtrl(frmFX1);
     addCtrl(frmFX2);

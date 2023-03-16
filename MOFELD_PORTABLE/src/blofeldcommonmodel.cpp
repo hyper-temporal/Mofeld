@@ -1,9 +1,8 @@
 #include "operationModel.h"
 
-using namespace OperationProps;
 
-OperationModel::OperationModel(BlofeldReplica *sy)
-    :_synth(sy)
+OperationModel::OperationModel(TargetProvider* target)
+    :_target(target)
 {
     _bank = 0;
     _program = 0;

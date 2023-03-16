@@ -3,7 +3,11 @@
 #include "frmsynthctrl_combobox.h"
 #include "frmsynthctrl_sliderh.h"
 
-frmEnveloppe::frmEnveloppe(const BlofeldReplica *synth, Instrument *instru, int envnum, QString n, QWidget *parent)
+frmEnveloppe::frmEnveloppe(TargetProvider *synth,
+        int envnum,
+        QString n,
+        QWidget *parent
+        )
     :ctrlSection(n,parent, QBoxLayout::LeftToRight )
 {
 
@@ -36,20 +40,20 @@ frmEnveloppe::frmEnveloppe(const BlofeldReplica *synth, Instrument *instru, int 
     }
 
     ctrlComposite * fsc1 = new ctrlComposite(parent,QBoxLayout::TopToBottom);
-    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(envtrigg)));
-    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(envmod)));
+    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (envtrigg),VAccessor::accessInstrument));
+    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (envmod), VAccessor::accessInstrument));
 
 
     ctrlComposite * fsc2 = new ctrlSection("ADSR1",parent,QBoxLayout::LeftToRight);
-    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, instru->editParametre(envatt)));
-    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, instru->editParametre(envdec)));
-    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, instru->editParametre(envsust)));
-    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, instru->editParametre(envrel)));
+    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, (envatt),VAccessor::accessInstrument));
+    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, (envdec),VAccessor::accessInstrument));
+    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, (envsust),VAccessor::accessInstrument));
+    fsc2->addCtrl(new frmSynthCtrl_Slider( parent, synth, (envrel),VAccessor::accessInstrument));
 
     ctrlSection * fsc3 = new ctrlSection("ADSR2",parent,QBoxLayout::LeftToRight);
-    fsc3->addCtrl(new frmSynthCtrl_Slider( parent, synth, instru->editParametre(envattLev)));
-    fsc3->addCtrl(new frmSynthCtrl_Slider( parent, synth, instru->editParametre(envdec2)));
-    fsc3->addCtrl(new frmSynthCtrl_Slider( parent, synth, instru->editParametre(envsust2)));
+    fsc3->addCtrl(new frmSynthCtrl_Slider( parent, synth, (envattLev),VAccessor::accessInstrument));
+    fsc3->addCtrl(new frmSynthCtrl_Slider( parent, synth, (envdec2),VAccessor::accessInstrument));
+    fsc3->addCtrl(new frmSynthCtrl_Slider( parent, synth, (envsust2),VAccessor::accessInstrument));
 
 
     ctrlComposite * fsc4 = new ctrlComposite(parent,QBoxLayout::LeftToRight);

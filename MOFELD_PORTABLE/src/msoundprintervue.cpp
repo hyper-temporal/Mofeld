@@ -12,16 +12,6 @@ void MSoundPrinterVue::mousePressEvent(QMouseEvent *me){
 void MSoundPrinterVue::mouseMoveEvent(QMouseEvent *me){
 
     MGeometry::mouseMoveEvent(me);
-
-    //si on a une wave et une frequence de selectionnées
-        //on actualise les données de déplacement
-        //on calcule la nouvelle valeur de phase et de magnitude
-        //on envoie le signal au model qui actualise les données et envoie les différents signaux d'update
-    //sinon on selectionne la forme d'onde et la frequence
-    //on actualise la position actuelle
-    int wnum= _model.countWaves()*getPropTrimmed(width(),me->x());
-    int fnum= _model.countAnalysis()*getPropTrimmed(height(),me->y());
-
 }
 
 void MSoundPrinterVue::mouseReleaseEvent(QMouseEvent *me){

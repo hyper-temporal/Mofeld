@@ -4,7 +4,7 @@
 #include <QFile>
 #include <QSettings>
 #include "arrangement.h"
-#include "blofeldreplica.h"
+#include "targetprovider.h"
 #include <defs.h>
 
 class ArrangementModel
@@ -12,9 +12,9 @@ class ArrangementModel
 {
     Q_OBJECT
 
-    BlofeldReplica *_synth;
+    TargetProvider *_synth;
 public:
-    ArrangementModel(BlofeldReplica *r);
+    ArrangementModel(TargetProvider *r);
     void ajouter(QString nom );
 private:
 

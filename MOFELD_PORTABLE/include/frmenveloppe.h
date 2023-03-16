@@ -9,7 +9,11 @@ class frmEnveloppe :
         public ctrlSection
 {
 public:
-    frmEnveloppe(const BlofeldReplica *synth,Instrument *instru,int envnum,QString n, QWidget *parent);
+    frmEnveloppe(
+            TargetProvider *synth,
+            int envnum,
+            QString n,
+            QWidget *parent);
 };
 
 #endif // FRMENVELOPPE_H

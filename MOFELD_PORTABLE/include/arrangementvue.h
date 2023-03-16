@@ -4,7 +4,7 @@
 #include "arrangement.h"
 #include "arrangementmodel.h"
 #include "easylist.h"
-#include "blofeldreplica.h"
+
 class ArrangementVue
         :public EasyList
 {
@@ -15,11 +15,9 @@ public:
     ArrangementVue(ArrangementModel * m,QWidget *parent )
         :EasyList("ARRANGEMENT",m,parent), _model(m)
     {
-        setupModel();
-        setLayout(_layout);
+
     }
     void connectAll(QWidget *p);
-    QLayout * getLayout(){return _layout;}
 public slots:
     void ajouterArrangement();
     void envoyerArrangement(QModelIndex index );

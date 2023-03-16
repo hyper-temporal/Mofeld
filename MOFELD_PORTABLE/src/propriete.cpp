@@ -108,3 +108,23 @@ bool  Propriete::contains(int id ){
 }
 
 
+QDataStream & operator << (QDataStream & out, const Propriete & Valeur)
+{
+    out << Valeur._id
+        << Valeur._name
+        << Valeur._datecreation
+        << Valeur._elements
+        ;
+    return out;
+}
+
+QDataStream & operator >> (QDataStream & in, Propriete & Valeur)
+{
+    in >> Valeur._id
+        >> Valeur._name
+        >> Valeur._datecreation
+        >> Valeur._elements
+           ;
+
+    return in;
+}

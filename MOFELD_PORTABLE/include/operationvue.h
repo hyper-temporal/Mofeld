@@ -20,7 +20,8 @@ class OperationVue:
 
     QBoxLayout *   _layout;
 
-    QComboBox   *cbb_channel,
+    QComboBox   *cbb_bids,
+                *cbb_channel,
                 *cbb_Bank,
                 *cbb_Program;
     QLineEdit *le_instrumentName;
@@ -40,9 +41,7 @@ class OperationVue:
                     *rb_replace,
                     *rb_weak;
 
-    QLineEdit *le_qssPath;
-    QPushButton *btn_layoutUpdate;
-    //TODO a implementer
+
     QLabel * lb_InstrumentName;
     QLineEdit *le_InstrumentNameEdit;
     QPushButton *pb_reImport,
@@ -52,20 +51,23 @@ class OperationVue:
     OperationModel *_model;
 public:
 
-    OperationVue(OperationModel *opMod,BlofeldReplica *_synth, QWidget *parent);
+    OperationVue(
+            OperationModel *opMod,
+            QWidget *parent,
+            std::vector<std::pair<QString,int>> &);
     ~OperationVue();
     void UpdateInstruName(QString s){le_instrumentName->setText(s);}
-
     void UpdateChannel();
 
 
 private:
+
+    void SetCbbBlofeldIds(std::vector<std::pair<QString,int>> &ids);
     void SetCbbBank();
     void SetCbbChannel();
     void SetCbbProgram();
 
 private slots:
-    void on_pbStyle_clicked();
     void on_cbBank_currentIndexChanged(int index);
     void on_cbPrgm_currentIndexChanged(int index);
 
@@ -79,13 +81,13 @@ private slots:
     void setAuthContrainte();
 
  signals:
-    void updateStyle(QString s);
     void setPropriete_Channel();
     void setPropriete_Instrument();
     void Reimport();
     void Regenerate();
     void setChannel(int ch);
     void importInstrument(int bk,int pg);
+    void synthSelectChanged(int);
 };
 
 #endif // OPERATIONVUE_H

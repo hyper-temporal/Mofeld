@@ -148,26 +148,28 @@ void DSPControl::fillSignal(QVector<double> sig,int f)
 void DSPControl::updateAllT()
 {
     _signal->idft();
-    emit everythingHasChanged();
+    everythingHasChanged();
+    emit  updateAndJump();
 
 }
 void DSPControl::updateAllF()
 {
     _signal->dft();
-    emit everythingHasChanged();
+    everythingHasChanged();
+    emit  updateAndJump();
 }
 
 
 void DSPControl::stopFollowT(int pos, double v )
 {
     valueDesintegration();
-    emit  updateAndJump();
+//    emit  updateAndJump();
 }
 
 void DSPControl::stopFollowF(int pos, double v )
 {
     valueDesintegration();
-    emit  updateAndJump();
+//    emit  updateAndJump();
 }
 
 

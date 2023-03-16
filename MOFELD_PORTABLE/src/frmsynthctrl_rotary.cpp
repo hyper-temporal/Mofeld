@@ -1,13 +1,12 @@
 #include "frmsynthctrl_rotary.h"
 
 
-frmSynthCtrl_rotary::frmSynthCtrl_rotary(
-        QWidget * parent,
-        const BlofeldReplica *synth,
-        Parametre *param,
+frmSynthCtrl_rotary::frmSynthCtrl_rotary(QWidget * parent,
+        TargetProvider* tp,
+        int pnum, VAccessor accessor,
         int offset, QBoxLayout::Direction d
         )
-    :CtrlParamLeaf(parent,new QDial(parent),synth,param, d ),_offset(offset)
+    :CtrlParamLeaf(parent,new QDial(parent),pnum, d ,tp, accessor),_offset(offset)
 {
     InitData();
 }

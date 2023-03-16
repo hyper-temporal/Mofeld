@@ -23,34 +23,38 @@ protected:
 //    Ui::frmCollectionMgnt ui;
     ICategorizable * _modelEntity;
 //    QWidget * _parent;
-    QSortFilterProxyModel * _proxy;
-    QLabel *lbCollecMgrTitle;
-    QVBoxLayout *   _layout;
+    QSortFilterProxyModel _proxy;
+    QLabel lbCollecMgrTitle;
+    QVBoxLayout _layout;
 
 
-    QTableView  *   _tvEntity;
-    QPushButton *   _btnEntityAdd;
-    QPushButton *   _btnEntityRemove;
-    QLineEdit   *   _leEntity;
+    QTableView  _tvEntity;
+    QPushButton _btnEntityAdd;
+    QPushButton _btnEntityRemove;
+    QLineEdit  _leEntity;
 
-    QLineEdit * _leNewCatName;
-    QComboBox * _cbCurrentCategory;
-    QPushButton * _btnCleanCats;
+    QLineEdit _leNewCatName;
+    QComboBox _cbCurrentCategory;
+    QPushButton _btnCleanCats;
 
+    void setupModel();
 
+    void disconnectEList();
     void connectEList();
-    void disconnectAll();
+//    void disconnectAll();
 public:
     EasyList(QString wname, ICategorizable * m, QWidget *parent);
-    void setupModel();
     int getId();
     int getSelectedRow();
     void resetCategory();
-    virtual QLayout * getLayout(){return _layout;}
+    virtual QLayout * getLayout(){return &_layout;}
 
 private slots:
     void setCategory(int id);
-    void addCategory(){ _modelEntity->addCategory(_leNewCatName->text()); resetCategory();}
+    void addCategory(){
+        _modelEntity->addCategory(_leNewCatName.text());
+        resetCategory();
+    }
 
 };
 

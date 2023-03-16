@@ -7,7 +7,7 @@ class frmFilters:
         public ctrlComposite
 {
 public:
-    frmFilters(const BlofeldReplica *synth,Instrument *instru,QWidget * parent);
+    frmFilters(TargetProvider *synth, QWidget * parent);
 };
 
 #endif // FRMFILTERS_H

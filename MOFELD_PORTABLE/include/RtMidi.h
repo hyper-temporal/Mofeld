@@ -313,7 +313,7 @@ class RTMIDI_DLL_PUBLIC RtMidiIn : public RtMidi
   */
   void setCallback( RtMidiCallback callback, void *userData = 0 );
 
-  //! Cancel use of the current callback function (if one exists).
+  //! cancel use of the current callback function (if one exists).
   /*!
     Subsequent incoming MIDI messages will be written to the queue
     and can be retrieved with the \e getMessage function.
@@ -348,7 +348,7 @@ class RTMIDI_DLL_PUBLIC RtMidiIn : public RtMidi
   /*!
     By default, MIDI timing and active sensing messages are ignored
     during message input because of their relative high data rates.
-    MIDI sysex messages are ignored by default as well.  Variable
+    MIDI sysex messages are ignored by default as well.  IOVariable<>
     values of "true" imply that the respective message type will be
     ignored.
   */

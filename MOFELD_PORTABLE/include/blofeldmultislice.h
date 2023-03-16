@@ -3,7 +3,6 @@
 
 #include "ctrlcomposite.h"
 
-class BlofeldReplica;
 class DumpMulti;
 
 class BlofeldMultiSlice
@@ -11,7 +10,7 @@ class BlofeldMultiSlice
 {
 public:
     BlofeldMultiSlice(
-            const BlofeldReplica *synth,
+             TargetProvider *synth,
             const DumpMulti * multimess,
             int sclicenum,
             QString n,

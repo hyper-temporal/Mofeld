@@ -45,9 +45,11 @@ private:
     int getTallestMax(const Contrainte * co,const Contrainte * cn)const;
 
     friend class Parametre;
-
+    friend QDataStream & operator << (QDataStream &, const Contrainte &);
+    friend QDataStream & operator >> (QDataStream &, Contrainte &);
 };
 
+Q_DECLARE_METATYPE(Contrainte)
 
 
 #endif // CONTRAINTEPARAMETRE_H

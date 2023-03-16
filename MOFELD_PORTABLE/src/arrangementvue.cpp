@@ -2,17 +2,17 @@
 
 void ArrangementVue::ajouterArrangement()
 {
-    _model->ajouter(_leEntity->text());
+    _model->ajouter(_leEntity.text());
 }
 
 void ArrangementVue::connectAll(QWidget * parent){
-    connect(_btnEntityAdd, SIGNAL(clicked()),
+    connect(&_btnEntityAdd, SIGNAL(clicked()),
             this, SLOT(ajouterArrangement()));
 
-    connect(_btnEntityRemove, SIGNAL(clicked()),
+    connect(&_btnEntityRemove, SIGNAL(clicked()),
             this, SLOT(effacerArrangement()));
 
-    connect(_tvEntity,SIGNAL(doubleClicked(QModelIndex)),
+    connect(&_tvEntity,SIGNAL(doubleClicked(QModelIndex)),
         this,SLOT (envoyerArrangement(QModelIndex)));
 
     connect(this,SIGNAL(envoyerArrangement(const Arrangement*)),
@@ -25,7 +25,7 @@ void ArrangementVue::envoyerArrangement(QModelIndex index ){
     int id = getId();
     const Arrangement * a = _model->getEntity(id);
     if(a!=NULL){
-        _leEntity->setText(a->getName());
+        _leEntity.setText(a->getName());
         emit envoyerArrangement(a);
     }
 }

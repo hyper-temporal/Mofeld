@@ -9,7 +9,7 @@ class frmCommon:
     public ctrlComposite
 {
 public:
-    frmCommon(const BlofeldReplica *synth,Instrument *instru, QWidget * parent);
+    frmCommon(TargetProvider *synth, QWidget * parent);
 };
 
 #endif // FRMCOMMON_H

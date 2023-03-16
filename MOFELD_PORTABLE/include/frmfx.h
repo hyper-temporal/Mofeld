@@ -2,7 +2,6 @@
 #define FRMFX_H
 
 #include "ctrlcomposite.h"
-#include "blofeldreplica.h"
 #include "instrument.h"
 
 class frmFX:
@@ -10,7 +9,7 @@ class frmFX:
 {
     QVector<CtrlParamLeaf*> _leaves;
 public:
-    frmFX(const BlofeldReplica *synth, Instrument *instru,int fxNum, QString n, QWidget *parent);
+    frmFX(TargetProvider *synth,int fxNum, QString n, QWidget *parent);
     void setFX( int fxNum, int fxType);
     void hideAll();
 private:

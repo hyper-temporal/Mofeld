@@ -11,10 +11,11 @@ class frmSynthCtrl_combobox
 
 public:
     frmSynthCtrl_combobox( QWidget * parent,
-                           const BlofeldReplica *_synth,
-                           Parametre * param,
+                           TargetProvider *_synth,
+                           int pnum,
+                           VAccessor accessor,
                            QBoxLayout::Direction d = QBoxLayout::TopToBottom
-                           );
+            );
     void setLayout();
 
     void UpdatedValueDirect(int value);

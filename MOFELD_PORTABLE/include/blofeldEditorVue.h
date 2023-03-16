@@ -44,15 +44,11 @@
 #include <QMainWindow>
 #include <QDialog>
 #include <QQueue>
-#include "ctrlcomposite.h"
 #include "frmgenerators.h"
 #include "frmenveloppes.h"
 #include "frmmatrix.h"
 #include "frmfxs.h"
 #include "arpeggio.h"
-
-#include "uiwavetablemgrvue.h"
-
 #include "ctrlparamleaf.h"
 
 class Parametre;
@@ -66,15 +62,14 @@ class BlofeldEditorVue
     QLayout * mainLayout;
     QVector<CtrlParamLeaf *> _controles;
 
-    frmGenerators *lyOscillators;
-    frmEnveloppes *lyEnveloppes;
-    frmMatrix *lyMatrix;
-    frmFXs *lyFiltersFXs;
-    Arpeggio *lyArpeggio;
+    frmGenerators lyOscillators;
+    frmEnveloppes lyEnveloppes;
+    frmMatrix lyMatrix;
+    frmFXs lyFiltersFXs;
+    Arpeggio lyArpeggio;
 
-    Instrument * _dump;
 public:
-    BlofeldEditorVue(QWidget *parent,const BlofeldReplica *synth, Instrument *dump);
+    BlofeldEditorVue(QWidget *parent,TargetProvider *synth);
     ~BlofeldEditorVue();
     CtrlParamLeaf * GetCtrl(int id);
 

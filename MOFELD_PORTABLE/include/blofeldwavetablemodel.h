@@ -6,7 +6,6 @@
 #include <QVector>
 
 #include "signalreal.h"
-#include "DefsWT.h"
 
 
 class BlofeldWaveTableModel
@@ -29,6 +28,7 @@ public:
 
 
 };
+
 
 
 

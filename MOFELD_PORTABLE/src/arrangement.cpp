@@ -49,3 +49,23 @@ void Arrangement::Regenerate(int ch){
     _BlofChannel[ch].Regenerate();
 }
 
+QDataStream & operator << (QDataStream & out, const Arrangement & Valeur)
+{
+    out << Valeur._id
+        << Valeur._name
+        << Valeur._datecreation
+        << Valeur._BlofChannel
+           ;
+    return out;
+}
+
+QDataStream & operator >> (QDataStream & in, Arrangement & Valeur)
+{
+
+    in  >> Valeur._id
+        >> Valeur._name
+        >> Valeur._datecreation
+        >> Valeur._BlofChannel
+           ;
+    return in;
+}

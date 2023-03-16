@@ -10,8 +10,9 @@ class frmSynthCtrl_Slider
 public:
     frmSynthCtrl_Slider(
                         QWidget * parent,
-                        const BlofeldReplica *synth,
-                        Parametre *param,
+                        TargetProvider *synth,
+                         int pnum,
+                        VAccessor accessor,
                         Qt::Orientation o = Qt::Vertical,
                         QBoxLayout::Direction d= QBoxLayout::TopToBottom
                           );

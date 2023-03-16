@@ -43,15 +43,15 @@ resulte de ces parametre et leur soumet une réponse(modification de leur etats 
 
 };
 
-
 class frmSynthCtrl_rotary
     :public CtrlParamLeaf
 {
     int _offset;
 public:
     frmSynthCtrl_rotary(QWidget * parent,
-                        const BlofeldReplica *synth,
-                        Parametre *param,
+                        TargetProvider* tp,
+                         int pnum,
+                        VAccessor accessorid,
                         int offset =0,
                         QBoxLayout::Direction d = QBoxLayout::TopToBottom
                         );

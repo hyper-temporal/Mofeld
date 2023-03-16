@@ -1,10 +1,13 @@
 #include "frmmatrixslice.h"
 
-#include "blofeldreplica.h"
 #include "frmsynthctrl_rotary.h"
 #include "frmsynthctrl_combobox.h"
 
-frmMatrixSlice::frmMatrixSlice(const BlofeldReplica *synth, Instrument *instru,int slicenum, QString n, QWidget *parent)
+frmMatrixSlice::frmMatrixSlice(
+        TargetProvider *synth,
+        int slicenum,
+        QString n,
+        QWidget *parent)
     :ctrlSection(n,parent, QBoxLayout::LeftToRight )
 {
     int offset;
@@ -15,11 +18,11 @@ frmMatrixSlice::frmMatrixSlice(const BlofeldReplica *synth, Instrument *instru,i
         throw ("bad matrix slice number");
     }
     ctrlComposite * fsc1 = new ctrlComposite(parent,QBoxLayout::TopToBottom);
-    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(201+offset)));
-    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, instru->editParametre(202+offset)));
+    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (201+offset),VAccessor::accessInstrument));
+    fsc1->addCtrl(new frmSynthCtrl_combobox( parent ,synth, (202+offset),VAccessor::accessInstrument));
 
     ctrlComposite * fsc2 = new ctrlComposite(parent,QBoxLayout::TopToBottom);
-    fsc2->addCtrl(new frmSynthCtrl_rotary( parent, synth, instru->editParametre(203+offset),-64));
+    fsc2->addCtrl(new frmSynthCtrl_rotary( parent, synth, (203+offset),VAccessor::accessInstrument,-64));
 
     addCtrl(fsc1);
     addCtrl(fsc2);

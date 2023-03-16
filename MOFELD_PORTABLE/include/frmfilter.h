@@ -8,7 +8,7 @@ class frmFilter:
         public ctrlSection
 {
 public:
-    frmFilter(const BlofeldReplica *synth,Instrument *instru,int filternum,QString n,QWidget * parent);
+    frmFilter(TargetProvider *synth,int filternum,QString n,QWidget * parent);
 };
 
 

@@ -19,7 +19,9 @@ protected:
 public:
 
     //pour ajouter des ctrl en ligne H ou V
-    ctrlComponent(QWidget * parent, QBoxLayout::Direction d)
+    ctrlComponent(
+            QWidget * parent,
+            QBoxLayout::Direction d)
         :QWidget(parent), _direction(d)
     {}
     virtual void addCtrl( ctrlComponent * l)=0;

@@ -3,12 +3,15 @@
 
 #include <QMenu>
 #include "ctrlvalueleaf.h"
-//Type
+
+// tp->getTarget()->getparametre(pnum)->getType()
+
 class CtrlParamLeaf
     :public CtrlValueLeaf
 {
     Q_OBJECT
 protected:
+    const int _paramId;
 
     bool _isProp;
     bool _floatBased;
@@ -16,17 +19,18 @@ protected:
     int _frameNo;
     int _pixH, _pixV;
 
-    const int _paramId;
     void paintEvent(QPaintEvent *event);
     void addCtrl(ctrlComponent * l){}
 
  public:
 
-    CtrlParamLeaf(   QWidget * parent,
+    CtrlParamLeaf(QWidget * parent,
                 QWidget * enfant,
-                const BlofeldReplica *synth,
-                Parametre *param,
-                QBoxLayout::Direction direction);
+                int pnum,
+                QBoxLayout::Direction direction,
+                TargetProvider * tp,
+                VAccessor accessor
+                  );
 
     virtual void setLayout() =0;
     void AfterConstructor();

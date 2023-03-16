@@ -8,7 +8,7 @@ class frmLFOs:
         public ctrlComposite
 {
 public:
-    frmLFOs(const BlofeldReplica *synth,Instrument *instru, QWidget *parent);
+    frmLFOs(TargetProvider *synth, QWidget *parent);
 };
 
 #endif // FRMLFOS_H
