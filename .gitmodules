@@ -9,7 +9,7 @@
 	url = https://github.com/thestk/rtmidi
 [submodule "third_party/rtmidi"]
 	path = third_party/rtmidi
-	url = https://github.com/thestk/rtmidi
+	url = https://github.com/hyper-temporal/rtmidi
 [submodule "third_party/rtaudio"]
 	path = third_party/rtaudio
-	url = https://github.com/thestk/rtaudio
+	url = https://github.com/hyper-temporal/rtaudio
