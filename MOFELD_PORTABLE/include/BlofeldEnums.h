@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QMessageBox>
 
-#include <midiutility.h>
+#include "midiutility.h"
 
 enum  class VAccessor
 {

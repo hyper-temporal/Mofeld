@@ -15,120 +15,26 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-add_subdirectory(rtmidi)
-add_subdirectory(rtaudio)
+
+include(FetchContent)
+FetchContent_Declare(rtmidi
+  GIT_REPOSITORY "https://github.com/hyper-temporal/rtmidi.git"
+  GIT_TAG "origin/main"   # it's much better to use a specific Git revision or Git tag for reproducibility
+  SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../rtmidi"
+)
+FetchContent_MakeAvailable(rtmidi)
+FetchContent_Declare(rtaudio
+  GIT_REPOSITORY "https://github.com/hyper-temporal/rtaudio.git"
+  GIT_TAG "origin/main"   # it's much better to use a specific Git revision or Git tag for reproducibility
+  SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../rtaudio"
+)
+FetchContent_MakeAvailable(rtaudio)
 
 include_directories(
     MOFELD_PORTABLE/include
 )
 
-
 set(PROJECT_SOURCES
-
-    MOFELD_PORTABLE/src/main.cpp
-    MOFELD_PORTABLE/src/arpeggio.cpp
-    MOFELD_PORTABLE/src/arpeggioslice.cpp
-    MOFELD_PORTABLE/src/arpegiocommon.cpp
-    MOFELD_PORTABLE/src/arrangement.cpp
-    MOFELD_PORTABLE/src/arrangementmodel.cpp
-    MOFELD_PORTABLE/src/arrangementvue.cpp
-    MOFELD_PORTABLE/src/blofable.cpp
-    MOFELD_PORTABLE/src/blofchannel.cpp
-    MOFELD_PORTABLE/src/blofeldcommonmodel.cpp
-    MOFELD_PORTABLE/src/blofeldEditorVue.cpp
-    MOFELD_PORTABLE/src/BlofeldEnums.cpp
-    MOFELD_PORTABLE/src/blofeldmultislice.cpp
-    MOFELD_PORTABLE/src/blofeldmultivue.cpp
-    MOFELD_PORTABLE/src/blofeldpersistencevue.cpp
-    MOFELD_PORTABLE/src/blofeldreplica.cpp
-    MOFELD_PORTABLE/src/blofeldwavetablemgrmodel.cpp
-    MOFELD_PORTABLE/src/blofeldwavetablemodel.cpp
-    MOFELD_PORTABLE/src/blofeldwindows.cpp
-    MOFELD_PORTABLE/src/bufferspec.cpp
-    MOFELD_PORTABLE/src/bytemanager.cpp
-    MOFELD_PORTABLE/src/consequence.cpp
-    MOFELD_PORTABLE/src/contrainteparametre.cpp
-    MOFELD_PORTABLE/src/ctrlcomponent.cpp
-    MOFELD_PORTABLE/src/ctrlcomposite.cpp
-    MOFELD_PORTABLE/src/ctrlparamleaf.cpp
-    MOFELD_PORTABLE/src/ctrlvalueleaf.cpp
-    MOFELD_PORTABLE/src/draggable.cpp
-    MOFELD_PORTABLE/src/dspcontrol.cpp
-    MOFELD_PORTABLE/src/dsphelper.cpp
-    MOFELD_PORTABLE/src/dumpglobal.cpp
-    MOFELD_PORTABLE/src/dumpinstrument.cpp
-    MOFELD_PORTABLE/src/dumpmulti.cpp
-    MOFELD_PORTABLE/src/dumpwave.cpp
-    MOFELD_PORTABLE/src/easylist.cpp
-    MOFELD_PORTABLE/src/entity.cpp
-    MOFELD_PORTABLE/src/frmcommon.cpp
-    MOFELD_PORTABLE/src/frmenveloppe.cpp
-    MOFELD_PORTABLE/src/frmenveloppes.cpp
-    MOFELD_PORTABLE/src/frmfilter.cpp
-    MOFELD_PORTABLE/src/frmfilters.cpp
-    MOFELD_PORTABLE/src/frmfx.cpp
-    MOFELD_PORTABLE/src/frmfxs.cpp
-    MOFELD_PORTABLE/src/frmgenerators.cpp
-    MOFELD_PORTABLE/src/frmlfo.cpp
-    MOFELD_PORTABLE/src/frmlfos.cpp
-    MOFELD_PORTABLE/src/frmmatrix.cpp
-    MOFELD_PORTABLE/src/frmmatrixslice.cpp
-    MOFELD_PORTABLE/src/frmmodifier.cpp
-    MOFELD_PORTABLE/src/frmmodifiers.cpp
-    MOFELD_PORTABLE/src/frmosc.cpp
-    MOFELD_PORTABLE/src/frmsynthctrl_combobox.cpp
-    MOFELD_PORTABLE/src/frmsynthctrl_latchbutton.cpp
-    MOFELD_PORTABLE/src/frmsynthctrl_rotary.cpp
-    MOFELD_PORTABLE/src/frmsynthctrl_sliderh.cpp
-    MOFELD_PORTABLE/src/guiBlofMainwindow.cpp
-    MOFELD_PORTABLE/src/icategorizable.cpp
-    MOFELD_PORTABLE/src/imageprovider.cpp
-    MOFELD_PORTABLE/src/instrument.cpp
-    MOFELD_PORTABLE/src/instrumentmodel.cpp
-    MOFELD_PORTABLE/src/instrumentvue.cpp
-    MOFELD_PORTABLE/src/irealsignal.cpp
-    MOFELD_PORTABLE/src/itagable.cpp
-    MOFELD_PORTABLE/src/keybordobs.cpp
-    MOFELD_PORTABLE/src/mcolorhelper.cpp
-    MOFELD_PORTABLE/src/mdrawer.cpp
-    MOFELD_PORTABLE/src/mdrawerfrequency.cpp
-    MOFELD_PORTABLE/src/mdrawertime.cpp
-    MOFELD_PORTABLE/src/messagewriter.cpp
-    MOFELD_PORTABLE/src/mgeometry.cpp
-    MOFELD_PORTABLE/src/midiutility.cpp
-    MOFELD_PORTABLE/src/miomgr.cpp
-    MOFELD_PORTABLE/src/mixpropparams.cpp
-    MOFELD_PORTABLE/src/msoundprintervue.cpp
-    MOFELD_PORTABLE/src/operationvue.cpp
-    MOFELD_PORTABLE/src/paramcontext.cpp
-    MOFELD_PORTABLE/src/parametre.cpp
-    MOFELD_PORTABLE/src/parametrecom.cpp
-    MOFELD_PORTABLE/src/patienteur.cpp
-    MOFELD_PORTABLE/src/propriete.cpp
-    MOFELD_PORTABLE/src/proprieteelementsvue.cpp
-    MOFELD_PORTABLE/src/proprietemodel.cpp
-    MOFELD_PORTABLE/src/proprietevue.cpp
-    MOFELD_PORTABLE/src/replacer.cpp
-    MOFELD_PORTABLE/src/requestglobal.cpp
-    MOFELD_PORTABLE/src/requestinstrument.cpp
-    MOFELD_PORTABLE/src/requestmulti.cpp
-    MOFELD_PORTABLE/src/requestwave.cpp
-    MOFELD_PORTABLE/src/runguard.cpp
-    MOFELD_PORTABLE/src/signalreal.cpp
-    MOFELD_PORTABLE/src/synthenum.cpp
-    MOFELD_PORTABLE/src/synthenumelement.cpp
-    MOFELD_PORTABLE/src/synthtransaction.cpp
-    MOFELD_PORTABLE/src/sysexable.cpp
-    MOFELD_PORTABLE/src/tagvue.cpp
-    MOFELD_PORTABLE/src/timemaster.cpp
-    MOFELD_PORTABLE/src/transaction.cpp
-    MOFELD_PORTABLE/src/uiwavetablemgrvue.cpp
-    MOFELD_PORTABLE/src/valuemgr.cpp
-    MOFELD_PORTABLE/src/valuerange.cpp
-    MOFELD_PORTABLE/src/wavetableselectvue.cpp
-    MOFELD_PORTABLE/src/wordchecksum.cpp
-    MOFELD_PORTABLE/src/wordwriter.cpp
-    MOFELD_PORTABLE/src/wtmodel.cpp
 
     MOFELD_PORTABLE/include/arpeggio.h
     MOFELD_PORTABLE/include/arpeggioslice.h
@@ -243,6 +149,114 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/include/wtmodel.h
 
 
+
+
+    MOFELD_PORTABLE/src/main.cpp
+    MOFELD_PORTABLE/src/arpeggio.cpp
+    MOFELD_PORTABLE/src/arpeggioslice.cpp
+    MOFELD_PORTABLE/src/arpegiocommon.cpp
+    MOFELD_PORTABLE/src/arrangement.cpp
+    MOFELD_PORTABLE/src/arrangementmodel.cpp
+    MOFELD_PORTABLE/src/arrangementvue.cpp
+    MOFELD_PORTABLE/src/blofable.cpp
+    MOFELD_PORTABLE/src/blofchannel.cpp
+    MOFELD_PORTABLE/src/blofeldcommonmodel.cpp
+    MOFELD_PORTABLE/src/blofeldEditorVue.cpp
+    MOFELD_PORTABLE/src/BlofeldEnums.cpp
+    MOFELD_PORTABLE/src/blofeldmultislice.cpp
+    MOFELD_PORTABLE/src/blofeldmultivue.cpp
+    MOFELD_PORTABLE/src/blofeldpersistencevue.cpp
+    MOFELD_PORTABLE/src/blofeldreplica.cpp
+    MOFELD_PORTABLE/src/blofeldwavetablemgrmodel.cpp
+    MOFELD_PORTABLE/src/blofeldwavetablemodel.cpp
+    MOFELD_PORTABLE/src/blofeldwindows.cpp
+    MOFELD_PORTABLE/src/bufferspec.cpp
+    MOFELD_PORTABLE/src/bytemanager.cpp
+    MOFELD_PORTABLE/src/consequence.cpp
+    MOFELD_PORTABLE/src/contrainteparametre.cpp
+    MOFELD_PORTABLE/src/ctrlcomponent.cpp
+    MOFELD_PORTABLE/src/ctrlcomposite.cpp
+    MOFELD_PORTABLE/src/ctrlparamleaf.cpp
+    MOFELD_PORTABLE/src/ctrlvalueleaf.cpp
+    MOFELD_PORTABLE/src/draggable.cpp
+    MOFELD_PORTABLE/src/dspcontrol.cpp
+    MOFELD_PORTABLE/src/dsphelper.cpp
+    MOFELD_PORTABLE/src/dumpglobal.cpp
+    MOFELD_PORTABLE/src/dumpinstrument.cpp
+    MOFELD_PORTABLE/src/dumpmulti.cpp
+    MOFELD_PORTABLE/src/dumpwave.cpp
+    MOFELD_PORTABLE/src/easylist.cpp
+    MOFELD_PORTABLE/src/entity.cpp
+    MOFELD_PORTABLE/src/frmcommon.cpp
+    MOFELD_PORTABLE/src/frmenveloppe.cpp
+    MOFELD_PORTABLE/src/frmenveloppes.cpp
+    MOFELD_PORTABLE/src/frmfilter.cpp
+    MOFELD_PORTABLE/src/frmfilters.cpp
+    MOFELD_PORTABLE/src/frmfx.cpp
+    MOFELD_PORTABLE/src/frmfxs.cpp
+    MOFELD_PORTABLE/src/frmgenerators.cpp
+    MOFELD_PORTABLE/src/frmlfo.cpp
+    MOFELD_PORTABLE/src/frmlfos.cpp
+    MOFELD_PORTABLE/src/frmmatrix.cpp
+    MOFELD_PORTABLE/src/frmmatrixslice.cpp
+    MOFELD_PORTABLE/src/frmmodifier.cpp
+    MOFELD_PORTABLE/src/frmmodifiers.cpp
+    MOFELD_PORTABLE/src/frmosc.cpp
+    MOFELD_PORTABLE/src/frmsynthctrl_combobox.cpp
+    MOFELD_PORTABLE/src/frmsynthctrl_latchbutton.cpp
+    MOFELD_PORTABLE/src/frmsynthctrl_rotary.cpp
+    MOFELD_PORTABLE/src/frmsynthctrl_sliderh.cpp
+    MOFELD_PORTABLE/src/guiBlofMainwindow.cpp
+    MOFELD_PORTABLE/src/icategorizable.cpp
+    MOFELD_PORTABLE/src/imageprovider.cpp
+    MOFELD_PORTABLE/src/instrument.cpp
+    MOFELD_PORTABLE/src/instrumentmodel.cpp
+    MOFELD_PORTABLE/src/instrumentvue.cpp
+    MOFELD_PORTABLE/src/irealsignal.cpp
+    MOFELD_PORTABLE/src/itagable.cpp
+    MOFELD_PORTABLE/src/keybordobs.cpp
+    MOFELD_PORTABLE/src/mcolorhelper.cpp
+    MOFELD_PORTABLE/src/mdrawer.cpp
+    MOFELD_PORTABLE/src/mdrawerfrequency.cpp
+    MOFELD_PORTABLE/src/mdrawertime.cpp
+    MOFELD_PORTABLE/src/messagewriter.cpp
+    MOFELD_PORTABLE/src/mgeometry.cpp
+    MOFELD_PORTABLE/src/midiutility.cpp
+    MOFELD_PORTABLE/src/miomgr.cpp
+    MOFELD_PORTABLE/src/mixpropparams.cpp
+    MOFELD_PORTABLE/src/msoundprintervue.cpp
+    MOFELD_PORTABLE/src/operationvue.cpp
+    MOFELD_PORTABLE/src/paramcontext.cpp
+    MOFELD_PORTABLE/src/parametre.cpp
+    MOFELD_PORTABLE/src/parametrecom.cpp
+    MOFELD_PORTABLE/src/patienteur.cpp
+    MOFELD_PORTABLE/src/propriete.cpp
+    MOFELD_PORTABLE/src/proprieteelementsvue.cpp
+    MOFELD_PORTABLE/src/proprietemodel.cpp
+    MOFELD_PORTABLE/src/proprietevue.cpp
+    MOFELD_PORTABLE/src/replacer.cpp
+    MOFELD_PORTABLE/src/requestglobal.cpp
+    MOFELD_PORTABLE/src/requestinstrument.cpp
+    MOFELD_PORTABLE/src/requestmulti.cpp
+    MOFELD_PORTABLE/src/requestwave.cpp
+    MOFELD_PORTABLE/src/runguard.cpp
+    MOFELD_PORTABLE/src/signalreal.cpp
+    MOFELD_PORTABLE/src/synthenum.cpp
+    MOFELD_PORTABLE/src/synthenumelement.cpp
+    MOFELD_PORTABLE/src/synthtransaction.cpp
+    MOFELD_PORTABLE/src/sysexable.cpp
+    MOFELD_PORTABLE/src/tagvue.cpp
+    MOFELD_PORTABLE/src/timemaster.cpp
+    MOFELD_PORTABLE/src/transaction.cpp
+    MOFELD_PORTABLE/src/uiwavetablemgrvue.cpp
+    MOFELD_PORTABLE/src/valuemgr.cpp
+    MOFELD_PORTABLE/src/valuerange.cpp
+    MOFELD_PORTABLE/src/wavetableselectvue.cpp
+    MOFELD_PORTABLE/src/wordchecksum.cpp
+    MOFELD_PORTABLE/src/wordwriter.cpp
+    MOFELD_PORTABLE/src/wtmodel.cpp
+
+
 )
 
 
@@ -270,13 +284,13 @@ else()
     endif()
 endif()
 
+
+
 target_link_libraries(MofeldApp PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
-    rtmidi
     rtaudio
+    rtmidi
 )
-
-
 
 set_target_properties(MofeldApp PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER coucou.com
