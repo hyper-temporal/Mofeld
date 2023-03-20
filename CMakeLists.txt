@@ -20,13 +20,13 @@ include(FetchContent)
 FetchContent_Declare(rtmidi
   GIT_REPOSITORY "https://github.com/hyper-temporal/rtmidi.git"
   GIT_TAG "origin/main"   # it's much better to use a specific Git revision or Git tag for reproducibility
-  SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../rtmidi"
+  SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/rtmidi"
 )
 FetchContent_MakeAvailable(rtmidi)
 FetchContent_Declare(rtaudio
   GIT_REPOSITORY "https://github.com/hyper-temporal/rtaudio.git"
   GIT_TAG "origin/main"   # it's much better to use a specific Git revision or Git tag for reproducibility
-  SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/../rtaudio"
+  SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}/rtaudio"
 )
 FetchContent_MakeAvailable(rtaudio)
 
