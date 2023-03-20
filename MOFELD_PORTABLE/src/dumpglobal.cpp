@@ -1,4 +1,5 @@
 #include "dumpglobal.h"
+#include <QDebug>
 
 DumpGlobal::DumpGlobal()
     :Blofable(80,0x14)
@@ -63,7 +64,6 @@ void DumpGlobal::setDataContent()
 //    addParametre(new WordEnum("Free Button "   ,&_message[64], BLOT_GLOB_FREEBUTTON));
 //    addParametre(new WordEnum("Pedal       "   ,&_message[65], BLOT_SWITCH));
 }
-#include <QDebug>
 
 void DumpGlobal::debug(){
     int cnt = 0;

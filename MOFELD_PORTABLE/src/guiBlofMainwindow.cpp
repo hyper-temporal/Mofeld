@@ -190,12 +190,10 @@ bool ctrlMainSynthaware::eventFilter(QObject * obj, QEvent * event)
            if (event->type() == QEvent::KeyPress) {
                QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
                keyPressEvent(keyEvent);
-               qDebug() << "_-_" << keyEvent->key();
                return true;
            } else if (event->type() == QEvent::KeyRelease){
                QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
                keyReleaseEvent(keyEvent);
-               qDebug() << "___" << keyEvent->key();
                return true;
            }
             else {
