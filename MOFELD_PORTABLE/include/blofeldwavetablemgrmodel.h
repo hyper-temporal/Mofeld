@@ -41,5 +41,6 @@ private:
 
 };
 
+Q_DECLARE_METATYPE(BlofeldWaveTableMgrModel)
 
 #endif // BLOFELDWAVETABLEMGR_H
