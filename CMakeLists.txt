@@ -130,7 +130,6 @@ set(PROJECT_SOURCES
     MOFELD_PORTABLE/src/wordwriter.cpp
     MOFELD_PORTABLE/src/wtmodel.cpp
 
-
     MOFELD_PORTABLE/include/arpeggio.h
     MOFELD_PORTABLE/include/arpeggioslice.h
     MOFELD_PORTABLE/include/arpegiocommon.h
@@ -280,7 +279,7 @@ target_link_libraries(MofeldApp PRIVATE
 
 
 set_target_properties(MofeldApp PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_GUI_IDENTIFIER coucou.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
