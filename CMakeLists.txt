@@ -58,7 +58,6 @@ if(UNIX AND NOT APPLE)
 
 endif()
 
-
 include_directories(
     MOFELD_PORTABLE/include
 )
