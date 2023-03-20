@@ -30,6 +30,12 @@ FetchContent_Declare(rtaudio
 )
 FetchContent_MakeAvailable(rtaudio)
 
+if(LINUX)
+  include(FindAlsa)
+  FindAlsa()
+endif()
+
+
 include_directories(
     MOFELD_PORTABLE/include
 )
