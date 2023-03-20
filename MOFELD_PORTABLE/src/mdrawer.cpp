@@ -101,10 +101,10 @@ double MDrawer::getSampleValue(const QPoint &p)
 int MDrawer::getSampleNumber(QMouseEvent *me)
 {
     int SamplesCount = getSampleCount();
-    if(me->x() < 0  ) {
+    if(me->position().x() < 0  ) {
         return 0;
     }
-    else if( me->x() >=width() ){
+    else if( me->position().x() >=width() ){
         return SamplesCount-1;
     }
 
@@ -112,7 +112,7 @@ int MDrawer::getSampleNumber(QMouseEvent *me)
 
     if(sliceWidth==0)return 0;
     else{
-        int ret = SamplesCount *(double)me->x()/width();
+        int ret = SamplesCount *(double)me->position().x()/width();
         if(ret>SamplesCount-1)return SamplesCount-1;
         if(ret < 0 )return 0;
         return ret;
