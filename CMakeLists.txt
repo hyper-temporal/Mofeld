@@ -30,7 +30,6 @@ FetchContent_Declare(rtaudio
 )
 FetchContent_MakeAvailable(rtaudio)
 
-if(UNIX AND NOT APPLE) 
   include(FindAlsa)
   FindAlsa()
   find_path(ALSA_INCLUDE_DIR NAMES asoundlib.h
@@ -55,7 +54,6 @@ if(UNIX AND NOT APPLE)
   mark_as_advanced(ALSA_INCLUDE_DIR ALSA_LIBRARY)
 
 
-endif()
 
 
 include_directories(
