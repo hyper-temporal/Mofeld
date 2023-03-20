@@ -21,8 +21,7 @@ class IBlofeldView;
 
 //design smell: don't make useless QObjet they are non copyable by design
 class BlofeldReplica
-        :public Entity
-        ,public MidiReceiver
+        :public MidiReceiver
 {
 protected:
     IBlofeldView* _view;
