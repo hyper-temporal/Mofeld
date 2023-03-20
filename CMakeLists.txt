@@ -30,12 +30,9 @@ FetchContent_Declare(rtaudio
 )
 FetchContent_MakeAvailable(rtaudio)
 
-
-if(LINUX)
+if(UNIX AND NOT APPLE) 
   include(FindAlsa)
   FindAlsa()
-
-
   find_path(ALSA_INCLUDE_DIR NAMES asoundlib.h
             PATH_SUFFIXES alsa
             DOC "The ALSA (asound) include directory"
@@ -59,6 +56,7 @@ if(LINUX)
 
 
 endif()
+
 
 include_directories(
     MOFELD_PORTABLE/include
