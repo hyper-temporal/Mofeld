@@ -47,3 +47,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 CMakeLists.txt.autosave
+rtaudio/
+rtmidi/
