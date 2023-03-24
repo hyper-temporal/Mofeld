@@ -1,7 +1,6 @@
 #ifndef WORDWRITER_H
 #define WORDWRITER_H
 
-#include "BlofeldEnums.h"
 #include "bytemanager.h"
 #include "valuemgr.h"
 #include <valuerange.h>

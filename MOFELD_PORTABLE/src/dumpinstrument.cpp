@@ -736,19 +736,23 @@ Parametre DumpInstrument::createParametre(int i){
     return p;
 }
 
+//wooow this code is multiple jewels... as usual some configured instance should had been passed.
+//if-s are a potential a code smell : the runtime verification about the validty of the context .
+//here it would be
+//
 void DumpInstrument::setInstrument(const Instrument* i) const{
 
-    if(         ! i->count() == _Parametres.count()
-            ||  ! i->count())
+    if(     i->count() == 0 ||
+            i->count() != _Parametres.count()
+            )
     return;
 
     foreach(ParametreCom * p ,_Parametres){
-        try{
+
+
             int value = i->getValue(p->getId());
             p->setParamValue(value);
-        }catch(...){
 
-        }
     }
 }
 

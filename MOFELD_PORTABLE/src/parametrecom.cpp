@@ -20,12 +20,7 @@ ParametreCom::ParametreCom(int id,int ad1,int ad2,  WordWriter * w ):
 
 
 void ParametreCom::setParamValue(int v){
-    try {
         _word->setValue(v);
-//        WordWriter * w = getWord(8);
-//        w->setValue(_word->getValue());
-    } catch (...) {
-    }
 }
 
 void ParametreCom::setParamChannel(int ch){
