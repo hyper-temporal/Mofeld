@@ -5,6 +5,7 @@
 class MidiUtility
 {
 public:
+    MidiUtility();
     static QString getNoteName(int notnum12)
     {
         switch(notnum12)
@@ -22,7 +23,7 @@ public:
         case 10: return "A#"; break;
         case 11: return "B"; break;
         default:
-            return "";
+            return "NAN";
             break;
         }
     }

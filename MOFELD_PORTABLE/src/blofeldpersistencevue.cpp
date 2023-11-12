@@ -44,25 +44,18 @@ void BlofeldPersistenceVue::updateView(const Parametre * p)
 }
 void BlofeldPersistenceVue::updatePElements(){
     const Propriete * prpch = _synth->getTarget()->getChannel()->getProprieteChannel();
-//    _propsVue->editThat(prpch);
     _propsElementVue->setModel(prpch);
 }
 
 void BlofeldPersistenceVue::updateView(const Propriete * p)
 {
-//    foreach (Parametre par, *p->getParametres()) {
-//       updateView(par.getID());
-//    }
-//    updatePElements();
     updateInstrumentView();
-
 }
+
 
 
 void BlofeldPersistenceVue::updateInstrumentView()
 {
-//    _instruVue->editThat(_synth->getInstrument());
     updatePElements();
-
 }
 

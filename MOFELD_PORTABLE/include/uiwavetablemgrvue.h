@@ -60,23 +60,13 @@ public slots:
 private slots:
 
     void draw();
-//    void setNormalise();
     void updateAndJump();
     void everythingHasChanged();
     void waveSelect(int wn);
     void tableSelect(int tn);
     void sendWaveTable();
     void sendAllWaveTables();
-
     int getpos(int wavenum);
-
-
-//    void opUser();
-//    void opSine();
-//    void opSquare();
-//    void opTriangle();
-//    void opRamp();
-//    void opRandom();
 private:
     void setNames();
     void arrangeLayout();

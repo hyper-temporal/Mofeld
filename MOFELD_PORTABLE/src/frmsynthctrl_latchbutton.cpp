@@ -24,10 +24,8 @@ void frmSynthCtrl_button::InitData()
     QPushButton * pb = dynamic_cast<QPushButton *>(_controle);
     if(pb!=NULL){
         pb->setCheckable(_toggleIfTrue);
-//        pb->setText(_valueMgr->getNameOfElement(_valueMgr->getValue()));
         pb->setText(*tgt->vaccessor(_pid,_accessor)->getName());
     }
-//    setLayout(getLayout());
 }
 
 void frmSynthCtrl_button::directConnect(){
@@ -49,11 +47,8 @@ void frmSynthCtrl_button::setLayout(){
     QBoxLayout * layout = new QBoxLayout(_direction);
     layout->setSizeConstraint(QLayout::SetMinimumSize);
     layout->addWidget(_controle,0,Qt::AlignCenter );
-//    layout->addWidget(&_lbTitre,0 ,Qt::AlignCenter );
-//    layout->addWidget(&_lbValeur,0 ,Qt::AlignCenter );
     CompactLayout(layout);
     QWidget::setLayout(layout);
-//    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
 }
 
 void frmSynthCtrl_button::UpdatedValueDirect(int value)
@@ -62,11 +57,9 @@ void frmSynthCtrl_button::UpdatedValueDirect(int value)
 }
 
 void frmSynthCtrl_button::show(){
-//    _lbTitre.show();
     _controle->show();
 }
 
 void frmSynthCtrl_button::hide(){
-//    _lbTitre.hide();
     _controle->hide();
 }

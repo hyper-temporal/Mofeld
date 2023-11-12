@@ -32,7 +32,6 @@ private:
     bool _rotatePH,_rotateMG,_rotateT;
     int _lastSample, _currentSample;
     DrawMode _mode;
-//    bool _normalise;
     MDrawerTime *_timeDomain;
     MDrawerFrequency *_frequencyDomain;
     SignalReal *_signal;
@@ -58,9 +57,6 @@ private slots:
     void FollowT(int pos, double v);
     void stopFollowT(int pos, double v );
     void stopFollowF(int pos, double v );
-//    void copyMagnitude(int f,int t);
-//    void copyPhase(int f,int t);
-//    void copySamples(int f,int t);
 private:
     void updateFromTo();
     QVector<double>  getSine(){return _signal->getSinus();}

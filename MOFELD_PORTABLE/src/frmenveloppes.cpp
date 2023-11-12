@@ -9,9 +9,6 @@ frmEnveloppes::frmEnveloppes(
     ctrlComposite * enveloppes1= new ctrlComposite(parent,QBoxLayout::LeftToRight);
     enveloppes1->addCtrl(new frmEnveloppe(synth,0,"ENV1",parent));
     enveloppes1->addCtrl(new frmEnveloppe(synth,1,"ENV2",parent));
-//    enveloppes1->addCtrl(new frmEnveloppe(instru,2,accessor,"ENV3",parent));
-//    enveloppes1->addCtrl(new frmEnveloppe(instru,3,accessor,"ENV4",parent));
-
     ctrlComposite * enveloppes2= new ctrlComposite(parent,QBoxLayout::LeftToRight);
     enveloppes2->addCtrl(new frmEnveloppe(synth,2,"ENV3",parent));
     enveloppes2->addCtrl(new frmEnveloppe(synth,3,"ENV4",parent));

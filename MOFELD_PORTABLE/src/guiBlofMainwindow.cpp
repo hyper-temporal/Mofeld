@@ -11,7 +11,6 @@ ctrlMainSynthaware::ctrlMainSynthaware()
     initMetaTypeSystem();
     QToolBar *channelToolBar;
     channelToolBar = addToolBar(tr("Blofeld Toolbar"));
-//    channelToolBar->setFloatable(false);
     channelToolBar->setMovable(false);
     channelToolBar->addWidget(_editor_global.geOperationView());
 
@@ -21,7 +20,6 @@ ctrlMainSynthaware::ctrlMainSynthaware()
     dockWidget2->setWidget(_editor_global.getEditorWidget());
     dockWidget2->layout()->setSizeConstraint(QLayout::SetMinimumSize);
     addDockWidget(Qt::LeftDockWidgetArea ,  dockWidget2 );
-//    dockWidget2->hide();
 
     QDockWidget *dockWidget1 = new QDockWidget("Total Recall") ;
     dockWidget1->setWidget(&_editor_global);
@@ -34,12 +32,6 @@ ctrlMainSynthaware::ctrlMainSynthaware()
     dockWidget3->layout()->setSizeConstraint(QLayout::SetMinimumSize);
     dockWidget3->hide();
     addDockWidget(Qt::LeftDockWidgetArea,  dockWidget3 );
-//not working yet
-//    QDockWidget *dockWidget4 = new QDockWidget("Multi  Editor") ;
-//    dockWidget4->setWidget(_editor_global.getMultiEditor());
-//    dockWidget4->layout()->setSizeConstraint(QLayout::SetMinimumSize);
-//    dockWidget4->hide();
-//    addDockWidget(Qt::LeftDockWidgetArea,  dockWidget4 );
 
     tabifyDockWidget(dockWidget2,dockWidget3);
     QList<QDockWidget*> lw =this->tabifiedDockWidgets(dockWidget3);
@@ -58,17 +50,6 @@ ctrlMainSynthaware::ctrlMainSynthaware()
 
     _editor_global.setFocus();
 }
-
-
-
-//void  ctrlMainSynthaware::updateStyle(QString s){
-//    if(s==""){
-//        loadStyleSheet(":/qss/pagefold.qss");
-//    }
-//    else{
-//        loadStyleSheet(s);
-//    }
-//}
 
 void ctrlMainSynthaware::loadStyleSheet(const QString &sheetName){
     QFile file( sheetName );
@@ -89,11 +70,8 @@ void ctrlMainSynthaware::keyPressEvent(QKeyEvent *e)
         emit k_generate();
     }
     else if (sgsg >= Qt::Key_0 && sgsg <= Qt::Key_9 ){
-//        _editor_global.callActionN(sgsg-Qt::Key_0);
     }
-    //ça pourrai aller jusqua f32!
     else if (sgsg >= Qt::Key_F1 && sgsg <= Qt::Key_F12 ){
-//        _editor_global.callActionF(sgsg-Qt::Key_F1);
     }
     else if (sgsg == Qt::Key_Control){
 
@@ -190,10 +168,12 @@ bool ctrlMainSynthaware::eventFilter(QObject * obj, QEvent * event)
            if (event->type() == QEvent::KeyPress) {
                QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
                keyPressEvent(keyEvent);
+               qDebug() << "_-_" << keyEvent->key();
                return true;
            } else if (event->type() == QEvent::KeyRelease){
                QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
                keyReleaseEvent(keyEvent);
+               qDebug() << "___" << keyEvent->key();
                return true;
            }
             else {

@@ -72,17 +72,10 @@ private:
     void updatePElements();
     void updateInstrumentView();
     void recevoirInstrument(Instrument * i,int ch);
-//signals:
-//    void  updateStyle(QString s);
-
 private slots:
     void closeEvent(QCloseEvent *);
-
 public slots:
     void setSynthId(int bid);
-
-
-
     void setMinimum(int,int,ParamContext*);
     void setMaximum(int,int,ParamContext*);
     void setPropriete(int,bool,ParamContext*);
@@ -94,10 +87,8 @@ public slots:
     void recevoirPropriete(const Propriete * p);
     void setParametre(int pid, int v);
 
-
-
-   void k_generate(){ }
-   void k_onModifyStretch(){ }
+    void k_generate(){ }
+    void k_onModifyStretch(){ }
     void k_onModifyRestrict(){ }
     void k_CopyWave(){ }
     void k_PasteWave(){ }

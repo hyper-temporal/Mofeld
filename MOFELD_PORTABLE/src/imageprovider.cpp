@@ -9,9 +9,7 @@ void ImageProvider::setupImages(QString path){
     QDirIterator it( path,QDirIterator::Subdirectories);
     while (it.hasNext())
     {
-//            QString s;
-//            s.sprintf( "ROTARY_%2d.jpg",cnt);
-//            s= it.next()+"/"+ s;
+
         QFileInfo qif = it.fileInfo();
         QString fileName = qif.absoluteFilePath();
                 it.next();

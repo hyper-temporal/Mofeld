@@ -3,34 +3,19 @@
 
 #include <QWidget>
 #include <QMouseEvent>
-/*
 
-Classe dont la responsabilitée est de donner des informations
-sur les evenements qui ont lieu a partir des clics et deplacement par rapport a la surface du widget
-cellule selectionnée
-
-*/
-
-///TODO ajouter les constructeur et methodes necessaire pour que cette classe soit un prototype pour des implementation differentes de comportement d'une surface seravant a modifier des valeurs dans une matrice
-//dimension,
 class MGeometry
         :public QWidget
 {
     Q_OBJECT
 
-    //position actuelle
     int _X,_Y,
-    //deplacement instantane
     _dX,_dY,
-    //position d'origine(click)
     _frstX, _frstY;
 protected:
     const int _divX,_divY;
-    //case actuelle
     int _ColSelected, _LineSelected,
-    //case avant deplacement
     _ColLast,_LineLast,
-    //case d'origine (click)
     _ColOrig,_LineOrig;
 public:
     MGeometry(const int x, const int y, QWidget *p);

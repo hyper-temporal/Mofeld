@@ -4,11 +4,13 @@
 
 MIOMgr::MIOMgr()
 {
+
     RtMidiIn mis ;
     for(int i = 0; i< mis.getPortCount(); ++i){
         minputs.push_back(new Minput(i));
     }
     RtMidiOut mos ;
+
     for(int i = 0; i< mos.getPortCount(); ++i){
         moutputs.push_back(new Moutput(i));
     }
@@ -23,6 +25,7 @@ MIOMgr::~MIOMgr(){
     }
     moutputs.clear();
     minputs.clear();
+
 }
 
 

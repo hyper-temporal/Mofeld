@@ -194,14 +194,18 @@ void BlofeldViews::deleteProprietes(QVector<int> propIdsChannel)
 void BlofeldViews::UpdateChannel(int ch)
 {
     _tp.getTarget()->ChangeEditedChannel(ch);
-    _CommonVue.UpdateChannel();
     updateInstrumentView();
     _patienteur.usleep(50000);
 }
 
 void BlofeldViews::Reimport(){
-    _tp.getTarget()->importInstrument();
-}
+    auto& instru = _tp.getTarget()->getIMessage();
+    auto m = instru.getMessage(0,0);
+    QFile f( "./SYX/"+ _CommonVue.getInstruName()+".syx" );
+    f.open( QIODevice::WriteOnly );
+    f.write( (char *)m->data(),m->size()  );
+    f.close();
+ }
 
 
 void BlofeldViews::ImportInstrument(int bank, int pgm)

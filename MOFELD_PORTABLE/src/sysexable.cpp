@@ -1,6 +1,5 @@
 #include "sysexable.h"
 
-//Chaque class implementant sysexable devra lui transmettre ces info
 Sysexable::Sysexable(const int size)
     :MessageWriter(size)
 {
@@ -9,7 +8,6 @@ Sysexable::Sysexable(const int size)
 
 std::vector<uchar> * Sysexable::writeMessage(){
      sysexEndCheck();
-     //octet de terminaison
      foreach(WordWriter * ww,_mots){
          ww->writeBytes();
      }
@@ -29,9 +27,6 @@ void Sysexable::parseMessage(std::vector<uchar> * vc){
     foreach(WordWriter * w,_mots){
         w->parseBytes();
     }
-//
-//    //une fois que le parsing
-//    checkWReplacers();
  }
 
 

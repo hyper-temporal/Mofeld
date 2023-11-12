@@ -18,12 +18,10 @@ EasyList::EasyList(
     ,_btnCleanCats(QIcon(),"+")
 
 {
-//    ui.setupUi(this);
     lbCollecMgrTitle.setText(wname);
     setWindowFlags(  Qt::WindowStaysOnTopHint);
     setupModel();
     setLayout(&_layout);
-//    setWindowFlags(Qt::CustomizeWindowHint |  Qt::WindowStaysOnTopHint);
 }
 
 int EasyList::getSelectedRow(){
@@ -50,7 +48,6 @@ int EasyList::getId()
         i = _modelEntity->index(row, 2, QModelIndex());
         QVariant varName = _modelEntity->data(i, Qt::DisplayRole);
         id = varName.toInt();
-        //retourner le premier trouvé
         return id;
     }
     return (-1);
@@ -65,7 +62,6 @@ void EasyList::setupModel()
     _tvEntity.setModel(&_proxy);
     _tvEntity.setSelectionBehavior(QAbstractItemView::SelectRows);
     _tvEntity.horizontalHeader()->setStretchLastSection(true);
-//        _tvEntity->horizontalHeader()->hide();
     _tvEntity.verticalHeader()->hide();
     _tvEntity.setEditTriggers(QAbstractItemView::NoEditTriggers);
     _tvEntity.setSelectionMode(QAbstractItemView::SingleSelection);
@@ -125,8 +121,4 @@ void EasyList::connectEList(){
             this,SLOT(setCategory(int)));
 }
 
-//void EasyList::disconnectAll(){
-//    disconnect(_btnCleanCats,SIGNAL(clicked()), 0,0);
-//    disconnect(_cbCurrentCategory,SIGNAL(currentIndexChanged(int)),0,0);
-//}
 

@@ -2,14 +2,11 @@
 #define DEFS_H
 #include <QStandardItemModel>
 
-//Structure de persistance dans le synthe
 #define _BLOFELD_BANKNUM 8
 #define _BLOFELD_PGMNUM 128
 #define _BLOFELD_WT_NUM 38
 #define _BLOFELD_WT_USEROFFSET 80
-//l'enumeration des wavetable est dynamique: on a des wavetable en lecture seule et d'autres editable
-//
-/* TYPE d'objets gui */
+
 #define BLO_GUI_COMBO 0
 #define BLO_GUI_HSLIDER 1
 #define BLO_GUI_VSLIDER   2
@@ -26,10 +23,7 @@ const QColor color_Prog(0x8b,0xef,0x67,255);        // vert clair
 const QColor color_RANGE(0xff,0x8f,0x8f,255);        // vert clair
 const QColor color_ENUM(0x8b,0xef,0x67,255);        // vert clair
 
-/*
-Allocation and Unisono Modes
-*****************************************************************************
-*/
+
 
 #define		UNISONO_0_POLY		0x00
 #define		UNISONO_1_POLY        	0x10
@@ -45,19 +39,11 @@ Allocation and Unisono Modes
 #define		UNISONO_6_MONO          0x51
 
 
-
-/*
-Glide Modes
-*****************************************************************************
-*/
 #define		GLIDEMODE_Portamento	0
 #define		GLIDEMODE_fingeredP     1
 #define		GLIDEMODE_Glissando     2
 #define		GLIDEMODE_fingeredG     3
-/*
-TUNING
-*****************************************************************************
-*/
+
 #define		KEYTRACK_196 	0x7f
 #define		KEYTRACK_150 	0x70
 #define		KEYTRACK_100 	0x60
@@ -86,10 +72,7 @@ TUNING
 #define	OCTAVE_1 	0x64
 #define	OCTAVE_12 	0x70
 
-/*
-SHAPING
-*****************************************************************************
-*/
+
 #define	SHAPE_OFF 		0x00
 #define	SHAPE_SQUARE 		0x01
 #define	SHAPE_RAMP 		0x02
@@ -101,13 +84,6 @@ SHAPING
 
 #define	LIMITWT_ON 		0x00
 #define	LIMITWT_OFF 		0x01
-
-
-
-/*
-Filter Types
-*****************************************************************************
-*/
 
 #define		FLTRCUTOFF_0          41
 #define		FLTRRESO_HIGH          0x2f
@@ -128,10 +104,6 @@ Filter Types
 
 #define		FLTRROUTE_SERIAL          2
 #define		FLTRROUTE_PARALLEL          1
-/*
-Envelope Modes and Triggers
-*****************************************************************************
-*/
 
 #define		ENVTYPE_NORMAL_ADSR		0x00
 #define		ENVTYPE_NORMAL_ADS1DS2R    	0x01
@@ -144,11 +116,6 @@ Envelope Modes and Triggers
 #define		ENVTYPE_SINGLE_LoopS1S2   	0x23
 #define		ENVTYPE_SINGLE_LoopAll    	0x24
 
-/*
-LFO Shapes
-*****************************************************************************
-
-*/
 #define		LFOSHAPE_Sine        0
 #define		LFOSHAPE_Triangle    1
 #define		LFOSHAPE_Square      2
@@ -168,12 +135,6 @@ LFO Shapes
 #define		LFOPHASE_180         0x41
 #define		LFOPHASE_270         0x61
 
-
-/*
-
-FM Sources
-*****************************************************************************
-*/
 #define		FMSOURCE_OFF		0
 #define		FMSOURCE_Osc1           1
 #define		FMSOURCE_Osc2           2
@@ -187,10 +148,7 @@ FM Sources
 #define		FMSOURCE_Env3           10
 #define		FMSOURCE_Env4           11
 
-/*
-Modulation Sources
-*****************************************************************************
-*/
+
 #define		MODSOURCE_off		0
 #define		MODSOURCE_LFO1           1
 #define		MODSOURCE_LFO1MW         2
@@ -223,11 +181,6 @@ Modulation Sources
 #define		MODSOURCE_minimum         29
 #define		MODSOURCE_MAXIMUM         30
 
-
-/*
-Modulation Destinations
-*****************************************************************************
-*/
 #define		MODDEST_Pitch			0
 #define		MODDEST_O1_Pitch        1
 #define		MODDEST_O1_FM           2
@@ -283,10 +236,6 @@ Modulation Destinations
 #define		MODDEST_M3_Amount       52
 #define		MODDEST_M4_Amount       53
 
-/*
-Modifier Operators
-*****************************************************************************
-*/
 #define		MODIFIEROPP_ADD			0
 #define		MODIFIEROPP_REM           1
 #define		MODIFIEROPP_MUL           2
@@ -298,20 +247,9 @@ Modifier Operators
 
 #define		MODIFIERCONSTANTEVALUE_0         0x40
 
-
-
-/*
-Arpeggiator Clocks
-*****************************************************************************
-*/
 #define		ARP_CLOCK_196	0
 #define		ARP_CLOCK_64    42
 
-
-/*
-Arpeggiator Sort Orders
-*****************************************************************************
-*/
 #define		ARP_SORT_asplayed	0
 #define		ARP_SORT_reversed    1
 #define		ARP_SORT_KeyLoHi   2
@@ -319,13 +257,6 @@ Arpeggiator Sort Orders
 #define		ARP_SORT_VelLoHi   4
 #define		ARP_SORT_VelHiLo   5
 
-
-
-
-/*
-Effect Types
-*****************************************************************************
-*/
 #define		FXTYPE_Bypass             		0
 #define		FXTYPE_Chorus    		1
 #define		FXTYPE_Flanger   		2
@@ -336,10 +267,6 @@ Effect Types
 #define		FXTYPE_ClkDelay 		7
 #define		FXTYPE_Reverb    		8
 
-/*
-Drive Curves
-*****************************************************************************
-*/
 #define		FX_DRIVECURVE_Clipping		0
 #define		FX_DRIVECURVE_Tube            1
 #define		FX_DRIVECURVE_Hard            2

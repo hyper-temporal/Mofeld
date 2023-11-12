@@ -14,19 +14,22 @@
 
 
 class IBlofeldView;
-//ugly hack
+
+struct BlofeldGlobal{
+    int devid;
+    int tune;
+    int midichannel;
+};
 
 
-
-
-//design smell: don't make useless QObjet they are non copyable by design
 class BlofeldReplica
-        :public MidiReceiver
+        :public Entity
+        ,public MidiReceiver
 {
 protected:
     IBlofeldView* _view;
 private:
-    int _id;
+    BlofeldGlobal _id;
     IMidiIn *_min;
     IMidiOut *_mout;
     Patienteur _patienteur;
@@ -46,14 +49,13 @@ public:
             IBlofeldView *view,
             IMidiIn *min,
             IMidiOut *mout,
-            int id);
+            BlofeldGlobal g);
     BlofeldReplica(const BlofeldReplica& );
     BlofeldReplica(const BlofeldReplica&& );
 
 
     ~BlofeldReplica();
 
-    //by only lookinhere one can see this code is  mess :)
     ValueMgr* vaccessor(int pid, VAccessor aid){
         switch (aid) {
         case VAccessor::accessMulti:
@@ -81,8 +83,6 @@ public:
     void ModifyInstrument(Instrument * i, bool props, bool cntrnt,  bool values);
     void setInstrumentName(QString s);
 
-    //    DumpInstrument * getDump(){return &_instruParser;}
-//    const BlofeldWaveTableMgrModel *getWaveTables(){return &_waveTables;}
     const Arrangement * getArrangement()const{ return &_Arrangement; }
     const BlofChannel * getChannel(int ch)const{ return _Arrangement.getChannel(ch); }
     const BlofChannel * getChannel()const{ return _Arrangement.getChannel(_editedChannel); }
@@ -92,8 +92,9 @@ public:
     const MixPropParams * getPropAppliance()const{ return _Arrangement.getMixPars(_editedChannel); }
     const Parametre * getparametre(int pid)const{ return _Arrangement.getParametre(_editedChannel,pid); }
     const Parametre * getparametre(int ch, int pid)const{ return _Arrangement.getParametre(ch,pid); }
-    //  TODO : une classe TRANSACTION  qui gere les sequence request/dump , et les temps de reponse et de maniere generale le synchronisme avec le hard
-    //  TODO : methodes a generaliser avec un protocole melant adresse + structure + typeprotocole(dump ,request)
+
+    DumpInstrument& getIMessage(){ return _instruParser; }
+
 
     int getChCurrent(){return _editedChannel;}
     void ChangeEditedChannel(int ch);
@@ -107,8 +108,7 @@ public:
 
     void importArrangement();
 
-    void  initReplica();
-//    BlofeldWaveTableMgrModel *editWaveTables(){return &_waveTables;}
+    void  initReplica(BlofeldGlobal g);
     BlofChannel * editChannel(int ch){return _Arrangement.editChannel(ch);}
     Instrument * editInstrument(){return _Arrangement.editInstrument(_editedChannel);}
     Instrument * editInstrument(int ch){return _Arrangement.editInstrument(ch);}
@@ -119,9 +119,7 @@ public:
     void setPropriete(int pid, bool isprop){editChannel(_editedChannel)->setPropriete(pid,isprop);}
     void MixPropriete( const Propriete *p );
     void MixPropriete( const Propriete * p , int ch);
-    //Lorsqu'on a une valeur a affecter
     void MixParametre( int ch,int pid, int val);
-    //Lorsqu'on reçoit un parametre entier(contrainte, prop, etc)
     void MixParametre(const Parametre *pr, int ch);
     void MixArrangement(const Arrangement *);
     void MixInstrument(const Instrument *instr);
@@ -137,7 +135,6 @@ public:
     const DumpMulti *getDumpMulti()const{return &_multiParser;}
     void multiRequest(int num);
     void multiSend(int num);
-    int getID()const{return _id;}
     void receive(std::vector<uchar> *) final;
     void sendTable(const BlofeldWaveTableModel *, int wtnum, QString wtName);
     void sendAllTables(const QVector<BlofeldWaveTableModel>  * tables);
@@ -145,7 +142,6 @@ public:
 private :
     void exportParametre(int ch, const Parametre *p);
     void MixParametres(const QVector<Parametre> * ps, int ch);
-//    Propriete * initPropriete(Propriete *p);
 };
 
 

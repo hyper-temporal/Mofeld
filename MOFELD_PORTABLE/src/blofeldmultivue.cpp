@@ -75,9 +75,7 @@ BlofeldMultiVue::BlofeldMultiVue(
 
 
 void BlofeldMultiVue::SetCBBMultiNum(){
-
     _cbbMultiNum = new QComboBox(this);
-//    disconnect(_cbbMultiNum,SIGNAL(currentIndexChanged(int)),0,0);
     _cbbMultiNum->setModel(
                 new ComboTool(
                     BlofeldTypesEnum::getInstance()
@@ -90,7 +88,6 @@ void BlofeldMultiVue::connection( QWidget * parent)
     connect(_pbExport,SIGNAL(clicked()),this,SLOT(multiSend()));
     connect (this,SIGNAL(multiRequest(int)),parent,SLOT(multiRequest(int)));
     connect(this,SIGNAL(multiSend(int)),parent,SLOT(multiSend(int)));
-//    connect(_cbbMultiNum,SIGNAL(currentIndexChanged(int)),parent,SLOT(ImportInstrument(int,int)));
 }
 void BlofeldMultiVue::multiRequest()
 {

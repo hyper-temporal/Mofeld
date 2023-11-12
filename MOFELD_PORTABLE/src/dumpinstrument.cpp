@@ -29,18 +29,13 @@ std::vector<uchar> * DumpInstrument::getMessage(int macid,int bank, int pgm){
 
 QVector<ParametreCom *> DumpInstrument::updateParam(std::vector<uchar> * v){
 
-    //un param
     int a1,a2;
     a1 = v->at(6);
     a2 = v->at(7);
     QVector<ParametreCom *> ps = getParams (a1,a2);
-    //si chaque channel possedait son iparser il n'y aurai pas besoins de parser les parametres:
-    //on ecrira seulement le parametre correspondant dans le message qui partage sa valeur avec le parametre parser
-    //les donnees de channel, mid, ..., seront des constantes pour les intances de ces parametres
     foreach(ParametreCom * p, ps){
         p->parseMessage(v);
     }
-
     return ps;
 }
 ParametreCom DumpInstrument::createParam(int pid){
@@ -59,8 +54,6 @@ ParametreCom * DumpInstrument::getParam(int a1,int a2){
     return NULL;
 }
 
-//TODO: typique;emt cette methode sera remplacer par une iteration de l'ensemble des param de la structure...
-//parametre etant lui meme une structure declaree la classe parametre genere les methode de transformmation de ses prm
 ParametreCom * DumpInstrument::getParam(std::vector<uchar> * v){
     int a1,a2;
     a1 = v->at(6);
@@ -324,9 +317,6 @@ static QVector<Consequence*> * getfx2List(int i,std::vector<uchar> * mess){
 }
 
 void DumpInstrument::setDataContent(){
-
-    //TODO : deplacer l'information correspondant au replacers dans un type de mot ou dans les mot
-    // l'application diposera de la liste des replacers extraits et lui donne une place permettant a l'algotythme d'agir sur une liste compacte
 
 /*0*/      addParametre(new WordEnum("Oct.",&_message[8], BLOT_OSC_OCTAVE),0,1);
 /*1*/      addParametre(new WordEnum("Semi",&_message[9], BLOT_OSC_SEMITONE),0,2);
@@ -689,10 +679,7 @@ void DumpInstrument::setDataContent(){
 /*356*/    addParametre(new WordEnum("CHAR 16",&_message[385], BLOT_CHARZ),2,122);
 /*357*/    addParametre(new WordEnum("Category",&_message[386], BLOT_CATEGORIES),2,123);
 
-    //DESIGNATION DES MOTS QUI
-        //FX 1 STATES
-        //chargement des liste de mots modifiés pour chaque etat des mots 93 et 109
-        QVector<WordMutation*> * vConsequences1 = new QVector<WordMutation*>();
+         QVector<WordMutation*> * vConsequences1 = new QVector<WordMutation*>();
         QVector<WordMutation*> * vConsequences2 = new QVector<WordMutation*>();
         for(int i(0);i<9;i++){
             QVector<Consequence*> * f1 =getfx1List(i,&_message) ;
@@ -736,23 +723,19 @@ Parametre DumpInstrument::createParametre(int i){
     return p;
 }
 
-//wooow this code is multiple jewels... as usual some configured instance should had been passed.
-//if-s are a potential a code smell : the runtime verification about the validty of the context .
-//here it would be
-//
 void DumpInstrument::setInstrument(const Instrument* i) const{
 
-    if(     i->count() == 0 ||
-            i->count() != _Parametres.count()
-            )
+    if(         ! i->count() == _Parametres.count()
+            ||  ! i->count())
     return;
 
     foreach(ParametreCom * p ,_Parametres){
-
-
+        try{
             int value = i->getValue(p->getId());
             p->setParamValue(value);
+        }catch(...){
 
+        }
     }
 }
 

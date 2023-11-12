@@ -8,8 +8,6 @@
 class InstrumentVue:public EasyList
 {
     Q_OBJECT
-
-//    Instrument _edition;
     InstrumentModel * _model;
 public:
     InstrumentVue( InstrumentModel * m ,QWidget *parent)

@@ -61,9 +61,7 @@ void MSoundPrinterVue::drawWave(int wn,QPainter &painter)
 
     for(int i(1);i<height();i++)
     {
-        //calcul brillance
         brillance =  vMg.at(height()-i);
-        //calcul couleur
         vp =  vph.at(height()-i)/(2*M_PI);
 
         QColor c = scaleColor(_clr_White,getColorPhase(vp),vm);

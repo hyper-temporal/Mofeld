@@ -12,8 +12,6 @@ public:
     QVector<double> *editSamples();
 private:
 
-//    double getSampleValue(int pos);
-//    double getSampleValue(const QPoint &p);
     void drawBars(QPainter &painter);
     void drawLanczos(QPainter &painter);
 

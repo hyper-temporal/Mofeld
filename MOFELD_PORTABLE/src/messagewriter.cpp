@@ -12,21 +12,14 @@ int MessageWriter::getWordValue(int p ){
     return _mots.at(p)->getValue();
 }
 
-
-//cette methode est appelée avant le parsing definitif
-//chaque mot
 QVector<WordWriter *> MessageWriter::checkWReplacers()
 {
     QVector<WordWriter *> vws;
-    //pour chaque groupe variable/etat/consequence
     foreach(WReplacer * wrp, *(_replacers) ){
         foreach(WordMutation * wrs, *(wrp->_mutation) ){
-        //Si le mot correspondant correspond a un etat
             if(wrp->getValue() == wrs->_state){
-                //on applique chacune des consequences
                 foreach(Consequence * c,*(wrs->_consequences)){
                     vws.append(c->doIt(this));
-                    //replaceWord(c->_position,c->_mot);
                 }
             }
         }

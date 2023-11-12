@@ -14,15 +14,14 @@ public:
 
     static ImageProvider& getInstance()
     {
-        static ImageProvider    instance; // Guaranteed to be destroyed.
-                                        // Instantiated on first use.
+        static ImageProvider    instance;
         return instance;
     }
     QImage *getImageFromMIDIValue(int value);
     void update(int vW,int vH);
 private:
     ImageProvider();
-    ImageProvider(ImageProvider const&);// Don't Implement
+    ImageProvider(ImageProvider const&);
     void operator=(ImageProvider const&);
     void setupImages(QString path);
 };

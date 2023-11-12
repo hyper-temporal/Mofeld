@@ -1,6 +1,8 @@
 #include "dspcontrol.h"
 
+#define _USE_MATH_DEFINES
 #include <math.h>
+
 DSPControl::DSPControl(QWidget *parent, SignalReal *sig)
     : QWidget(parent)
     ,_rotatePH(false)
@@ -8,7 +10,6 @@ DSPControl::DSPControl(QWidget *parent, SignalReal *sig)
     ,_rotateT(false)
 {
     _signal = sig;
-//    _normalise=false;
     _lastSample = -1;
     _currentSample = -1;
 
@@ -31,13 +32,6 @@ DSPControl::DSPControl(QWidget *parent, SignalReal *sig)
     connect( _frequencyDomain, SIGNAL(stopFollow(int,double)),
              this, SLOT(stopFollowF(int,double)));
 
-
-
-//    QGroupBox *gbTimeD = new QGroupBox("Time Domain");
-//    gbTimeD->setLayout(_timeDomain->layout());
-//    QGroupBox *gbFreqD = new QGroupBox("Frequency Domain");
-//    gbFreqD->setLayout(_frequencyDomain->layout());
-
     QVBoxLayout *lyDrawingPanel  = new QVBoxLayout;
     lyDrawingPanel->addWidget(_timeDomain);
     lyDrawingPanel->addWidget(_frequencyDomain);
@@ -56,34 +50,15 @@ void DSPControl::setSignal(SignalReal * sig){
 
 void DSPControl::setSample(int pos,double v){
     _signal->setSample(pos,transposeValueSample(v));
-//    _signal->dft();
-//    _timeDomain->UpdateOne(pos);
-//    _frequencyDomain->UpdateAll();
-//    emit everythingHasChanged();
-
 }
 
 void DSPControl::setPhase(int pos,double v)
 {
     _signal->setPhase(pos,transposeValuePhase(v));
-//    _signal->idft();
-//    _signal->normalisePeaks();
-//    _signal->dft();
-//    _frequencyDomain->UpdateOne(pos);
-//    _timeDomain->UpdateAll();
-//    emit everythingHasChanged();
-
 }
 void DSPControl::setMagnitude(int pos,double v)
 {
     _signal->setMagnitude(pos,transposeValueMag(v));
-//    _signal->idft();
-//    _signal->normalisePeaks();
-//    _signal->dft();
-//    _frequencyDomain->UpdateOne(pos);
-//    _timeDomain->UpdateAll();
-//    emit everythingHasChanged();
-
 }
 
 QVector<double> *DSPControl::getEditedValues(DrawMode type){
@@ -163,13 +138,11 @@ void DSPControl::updateAllF()
 void DSPControl::stopFollowT(int pos, double v )
 {
     valueDesintegration();
-//    emit  updateAndJump();
 }
 
 void DSPControl::stopFollowF(int pos, double v )
 {
     valueDesintegration();
-//    emit  updateAndJump();
 }
 
 
@@ -177,8 +150,6 @@ double DSPControl::transposeValueSample(double value){
 
     return  -1.0+2*value;
 }
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 double DSPControl::transposeValuePhase(double value){
     return 2*M_PI*(value);

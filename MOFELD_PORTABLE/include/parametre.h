@@ -25,7 +25,6 @@ public:
 
     Contrainte * editContrainte();
     const Contrainte * getContrainte() const;
-//    void copyContrainte(const Contrainte *c);
     void setContrainte(const Contrainte *c);
     void setMethode(int m);
     void setProp(bool isprop){_isProp=isprop;}

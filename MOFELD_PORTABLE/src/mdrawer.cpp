@@ -58,53 +58,15 @@ double MDrawer::getSampleValue(const QPoint &p)
         return fvalue;
 }
 
-//double MDrawer::getSampleValue(const QPoint &p)
-//{
-//    double ret;
 
-//    if(height()<2) return 0.0;
-//    if(p.y()<0){
-//        return 1.0;
-//    }
-//    else if(p.y()>height())
-//    {
-//        return -1.0;
-//    }
-//    else
-//    {
-//        int offset = height()/2;
-//        int sansOffset;
-
-//        if(p.y()==offset)
-//        {
-//            return 0.0;
-//        }
-//        else if(p.y() > offset)
-//        {
-//            sansOffset = offset -p.y();
-//        }else{
-//            sansOffset = - (p.y()- offset);
-//        }
-//        ret = (double)2*sansOffset/height();
-//    }
-//    if(ret<-1.0){
-//        ret= -1.0;
-//    }
-//    else if(ret>1.0)
-//    {
-//        ret= 1.0;
-//    }
-//    else if(ret < 0.001 && ret>-0.001)return 0.0;
-//    return transposeValue( ret );
-//}
 
 int MDrawer::getSampleNumber(QMouseEvent *me)
 {
     int SamplesCount = getSampleCount();
-    if(me->position().x() < 0  ) {
+    if(me->x() < 0  ) {
         return 0;
     }
-    else if( me->position().x() >=width() ){
+    else if( me->x() >=width() ){
         return SamplesCount-1;
     }
 
@@ -112,7 +74,7 @@ int MDrawer::getSampleNumber(QMouseEvent *me)
 
     if(sliceWidth==0)return 0;
     else{
-        int ret = SamplesCount *(double)me->position().x()/width();
+        int ret = SamplesCount *(double)me->x()/width();
         if(ret>SamplesCount-1)return SamplesCount-1;
         if(ret < 0 )return 0;
         return ret;

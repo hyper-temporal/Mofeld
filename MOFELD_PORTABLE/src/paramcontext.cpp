@@ -49,14 +49,12 @@ ParamContext::ParamContext(const Parametre *param)
     _layout->addWidget(_wContainer3);
 
     setLayout(_layout);
-    //INITIALISATION SIGNAUX
     connect(&_cbAddToProp,SIGNAL(toggled(bool)),this,SLOT(setPropriete(bool)));
     connect(&_dmin,SIGNAL(valueChanged(int)),this,SLOT(setMin(int)));
     connect(&_dmax,SIGNAL(valueChanged(int)),this,SLOT(setMax(int)));
     connect(&_restriction,SIGNAL(clicked()),this,SLOT(restrict2Value()));
 
     updateForm(_parametre);
-//    emit updateMe(pid,this);
 }
 
 

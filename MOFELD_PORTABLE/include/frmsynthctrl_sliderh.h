@@ -3,7 +3,6 @@
 
 #include "ctrlparamleaf.h"
 
-//  -Slider
 class frmSynthCtrl_Slider
     :public CtrlParamLeaf
 {
@@ -31,8 +30,6 @@ private:
 
 protected slots:
     void ValueChanged(int v);
-//    void ValueChangedOffset(int v);
-//    void ValueChangedOffsetDirect(int v);
 };
 
 

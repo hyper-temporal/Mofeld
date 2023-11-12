@@ -2,11 +2,7 @@
 #define MESSAGESYSEX_H
 
 #include "messagewriter.h"
-//classe capable de parser un blob pour delivrer des objets a la charge de parametres
-//Le lien entre l'instrument et le parametre se constitue ainsi:
-/*
-    l'instanciation d'un dumpinstrument provoque l'instanciation de n parametreCom qui partage le ww avec le dumpinstrument
-*/
+
 class Sysexable
         : public MessageWriter
 {

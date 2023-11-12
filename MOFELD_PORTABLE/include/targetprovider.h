@@ -5,9 +5,6 @@
 #include <tuple>
 #include "blofeldreplica.h"
 
-
-
-
 //serve as a proxy
 class TargetProvider
 {
@@ -27,12 +24,17 @@ public:
         for(int i=0; i< _bids.size(); ++i ){
             auto min = _midiM.getinput(std::get<1>(_bids[i]));
             auto mout = _midiM.getoutput(std::get<1>(_bods[i]));
+            BlofeldGlobal g{
+                i,
+                64,
+                i+1
+            };
             _synths.push_back(
                         BlofeldReplica(
                             view,
                             min,
                             mout,
-                            0));    //impossible to acces (blofelds pots are crap) and 0 by default so,
+                            g));    //impossible to acces (blofelds pots are crap) and 0 by default so,
 
         }
 
@@ -42,7 +44,7 @@ public:
                             view,
                             _midiM.getMockIn(),
                             _midiM.getMockOut(),
-                            0));
+                            BlofeldGlobal{}));
         }
         setTarget(0);
     }

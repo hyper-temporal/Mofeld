@@ -6,7 +6,6 @@ class BufferSpec{
 protected:
     const int _samplebitness;
     const int _length;
-//    const int _endianness;
     const int _bitness;
 public:
 

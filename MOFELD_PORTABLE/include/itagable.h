@@ -18,7 +18,6 @@ public:
     friend class TagList;
 };
 
-//Une liste de references
 class TagList{
     QList<Tag*> _tags;
 
@@ -36,11 +35,8 @@ private:
 };
 
 
-//la classe contient les identifiants des tags de la liste qu'elle utilise
-//On peut associer la classe a
 class ITagable
 {
-    //la class fournissant les données de tag devra etre instanciée au préalable et passé à la construction
 protected :
     TagList * _tagsCommon;
     QList<Tag*> _tagsCollect;

@@ -17,8 +17,6 @@
 #include <QKeyEvent>
 #include "blofeldwindows.h"
 
-//etat synchrone: arrangement - instrument = parametre
-// persistance
 class ctrlMainSynthaware
         : public QMainWindow
 {
@@ -56,8 +54,6 @@ signals:
 private slots:
     void closeEvent(QCloseEvent *);
 
-//public slots:
-//    void updateStyle(QString s="");
 private:
     void loadStyleSheet(const QString &sheetName);
 

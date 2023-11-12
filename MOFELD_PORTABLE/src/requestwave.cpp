@@ -1,11 +1,7 @@
 #include "requestwave.h"
 
-//dumptype 3 MSB
-//messagetype 4 LSB
-
 RequestWave::RequestWave(uchar idm):
     Blofable(9, idm )
-//  Blofable(9, idm & 0b1111)
 {
     setAdressContent();
     setChecksum();
@@ -23,7 +19,6 @@ void RequestWave::setAdressContent(){
     appenWord (new WordAny("Wave n°",&_message[6]));
 }
 void RequestWave::setDataContent(){
-    //null
 }
 
 void RequestWave::setChecksum(){

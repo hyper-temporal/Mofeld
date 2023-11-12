@@ -20,7 +20,6 @@ public:
     ProprieteModel(TargetProvider * r);
     void ajouter(QString nom );
 private:
-//    QStringList GetTags(Propriete a);
  };
 
 

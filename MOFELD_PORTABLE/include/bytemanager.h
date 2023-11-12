@@ -3,8 +3,6 @@
 
 #include <qglobal.h>
 
-//classe dont la responsabilité est d'ecrire et de lire un entier depuis la reference d'un octet
-//utilisé par un WW pour ecrire ou lire 1 valeur
 class ByteManager
 {
     uchar * _octet;

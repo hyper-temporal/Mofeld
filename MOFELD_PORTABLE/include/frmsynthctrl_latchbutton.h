@@ -3,7 +3,6 @@
 
 #include "ctrlparamleaf.h"
 
-//  -Latch Button
 class frmSynthCtrl_button
     :public CtrlParamLeaf
 {

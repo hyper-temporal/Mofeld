@@ -8,7 +8,6 @@ class DSPHelper
         :public IRealSignal
 {
     int _lanczosCoreSize;
-    //LUTs
     int _ratio;
     int    _sinusPrecision;
     QVector<double> _sinus;

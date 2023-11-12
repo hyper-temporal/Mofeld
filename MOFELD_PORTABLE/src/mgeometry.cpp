@@ -88,9 +88,13 @@ int MGeometry::getMotionMin()
     {
         return _ColSelected;
     }else if (_ColLast<0){
-        if (_ColSelected >= 0) return _ColSelected;
-        else if (_ColLast >=0) return _ColLast;
-    }return -1;
+        if (_ColSelected >= 0)
+            return _ColSelected;
+        else if (_ColLast >=0)
+            return _ColLast;
+    }
+    return -1;
+
 }
 int MGeometry::getMotionMax(){
     if (_ColLast>_ColSelected)

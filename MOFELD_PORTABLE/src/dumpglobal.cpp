@@ -14,8 +14,6 @@ void DumpGlobal::setChecksum()
     appenWord(new WordChecksum (&_message ,78,5,77));
 }
 void DumpGlobal::setAdressContent(){
-//    appenWord( new WordAny ( "BB",&_message[5],0));
-//    appenWord( new WordAny  ( "NN",&_message[6],0));
 }
 
 
@@ -39,12 +37,10 @@ void DumpGlobal::setDataContent()
         addParametre(new WordEnum("BANK"   ,&_message[7+offset], BLOT_BANK));
         addParametre(new WordEnum("PRGM"   ,&_message[8+offset], BLOT_STANDARD));
     }
-///*33*/    addParametre(new WordEnum("MULTI NUM"   ,&_message[39], BLOT_STANDARD));
-/*34*/    addParametre(new WordEnum("Auto Edit"   ,&_message[40], BLOT_SWITCH));
+///*32*/    addParametre(new WordEnum("MULTI NUM"   ,&_message[39], BLOT_STANDARD));
+/*32*/    addParametre(new WordEnum("Auto Edit"   ,&_message[40], BLOT_SWITCH));
 /*35*/    addParametre(new WordEnum("Midi Channel"   ,&_message[41], BLOT_CHANNEL));
 /*36*/    addParametre(new WordEnum("Device ID"   ,&_message[42], BLOT_STANDARD));
-
-
     addParametre(new WordEnum("Popup Time  "   ,&_message[43], BLOT_STANDARD));
     addParametre(new WordEnum("Contrast    "   ,&_message[44], BLOT_STANDARD));
     addParametre(new WordEnum("Master Tune "   ,&_message[45], BLOT_OSC_SEMITONE));

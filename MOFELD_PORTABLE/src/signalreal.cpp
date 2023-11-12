@@ -20,9 +20,6 @@ SignalReal::SignalReal(int sampleNum)
 SignalReal::SignalReal(QVector<double> v)
     :DSPHelper(v.size())
 {
-//    clearAnalysis();
-//    clearTimeDomain();
-//    _timeDomain = (v);
     setSamples(&v);
     dft();
 }
@@ -89,8 +86,8 @@ void SignalReal::dft()
             _magnitude[cnt_k]= _magnitude[cnt_k] +_timeDomain[cnt_n] * cos_x(v);
             _phase[cnt_k]= _phase[cnt_k] - _timeDomain[cnt_n]*sin_x(v);
         }
-        _magnitude[cnt_k]= 2*_magnitude[cnt_k]/(tSize) ;  //Partie reelle
-        _phase[cnt_k]= -2*_phase[cnt_k]/(tSize) ; //Partie imaginaire
+        _magnitude[cnt_k]= 2*_magnitude[cnt_k]/(tSize) ;
+        _phase[cnt_k]= -2*_phase[cnt_k]/(tSize) ;
         Rect2PolInPlace(&_magnitude[cnt_k],&_phase[cnt_k] );
         NormalisePolar(&_magnitude[cnt_k],&_phase[cnt_k] );
     }
@@ -162,11 +159,7 @@ double SignalReal::polarPhase(double  real, double  imag)
     }
     else
     {phase = atanf(imag / real);}
-/*
-** settle sign ambiguity on phase. If real and imaginary are  both
-** negative the returned arctan needs 180 subtracted. If the real
-** is negative and imaginary is positive, add 180.
-*/
+
     if ((real < 0) && (imag < 0) ) {
             phase = phase - M_PI;
     }
@@ -186,40 +179,25 @@ void SignalReal::Rect2PolInPlace(double* Real2Magn, double* Imag2Phase)
     double   Realcpy= *Real2Magn;
     double   Imagcpy= *Imag2Phase;
     *Real2Magn=polarMagnitude( Realcpy, Imagcpy );
-//    if(*Real2Magn<0.00001)
-//    {*Imag2Phase=0;}
-//    else
-//    {
-        *Imag2Phase=polarPhase( Realcpy, Imagcpy );
-//    }
+    *Imag2Phase=polarPhase( Realcpy, Imagcpy );
 
 }
 
 void SignalReal::NormalisePolar(double* Magn, double* Phase)
 {
-    //*Magn= *Magn*2 -1;
-//
 #define CONSIDER0 0.001
 
-//    *Phase=  *Phase/(M_PI) ; //pour ramener entre -1 1
-//    if(*Phase>1){*Phase=1;}
-//    if(*Phase<-1){*Phase=-1;}
-//    if(*Magn>1){*Magn=1;}
-//    if(*Magn<-1){*Magn=-1;}
+
     while( *Phase < 0){
-        *Phase+=(2*M_PI) ; //pour ramener entre -1 1
+        *Phase+=(2*M_PI) ;
     }
     while( *Phase > (2*M_PI)){
-        *Phase-=(2*M_PI) ; //pour ramener entre -1 1
+        *Phase-=(2*M_PI) ;
     }
     if(*Magn<CONSIDER0)
     {
         *Magn = 0.0;
     }
-//    if(Phase<CONSIDER0){
-//        *Phase= 0.5;
-//    }
-
 }
 
 

@@ -20,9 +20,7 @@ class EasyList
     Q_OBJECT
 
 protected:
-//    Ui::frmCollectionMgnt ui;
     ICategorizable * _modelEntity;
-//    QWidget * _parent;
     QSortFilterProxyModel _proxy;
     QLabel lbCollecMgrTitle;
     QVBoxLayout _layout;
@@ -41,7 +39,6 @@ protected:
 
     void disconnectEList();
     void connectEList();
-//    void disconnectAll();
 public:
     EasyList(QString wname, ICategorizable * m, QWidget *parent);
     int getId();

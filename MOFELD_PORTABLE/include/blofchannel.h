@@ -11,8 +11,6 @@ class BlofChannel
 private:
     int _channelNum;
     Instrument _instrument;
-//parametres communs, figés pour le canal afin de conserver les proprietes d'un type d'instrument...
-//pour modifier ces reglages on ecrasera les mods en cours
     MixPropParams _mixPars;
     QVector<Parametre> _multiPars;
 

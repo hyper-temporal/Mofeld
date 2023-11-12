@@ -2,7 +2,6 @@
 #include "wordwriter.h"
 #include "consequence.h"
 
-//retourne le mot muté
 WordWriter *Consequence::doIt(MessageWriter * mw){
     return mw->mutateWord(_position,_mot);
 }

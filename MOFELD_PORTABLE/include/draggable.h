@@ -14,8 +14,6 @@ public:
     Draggable();
 protected:
     void show();
-//    void mouseMoveEvent(QMouseEvent *event);
-//    void mousePressEvent(QMouseEvent *event);
 };
 
 

@@ -18,10 +18,6 @@ double DSPHelper::sin_x( double x) const
     int pos = (unsigned int)(resultat*_sinusPrecision/(2*M_PI));
     return _sinus[pos];
 
-//    if(resultat<0.000001 && resultat>-0.000001){
-//        resultat=0.0;
-//    }
-//    return resultat;
 }
 
 double DSPHelper::cos_x( double x) const
@@ -39,8 +35,7 @@ void DSPHelper::sinus()
     {
         _sinus[cnt] = sin(2*M_PI*cnt/_sinusPrecision);
     }
-//    _sinus[_sinusPrecision/2]=1.0;
-//    _sinus[_sinusPrecision-1]=0.0;
+
 }
 
 QVector<double> DSPHelper::getTriangle()
@@ -106,13 +101,13 @@ QVector<double> DSPHelper::getSquare(int percent)
     for (int cnt=0; cnt<_size; cnt++)
     {
 
-        if (cnt<snum)				//
-        {							//generateur PWM
-            ret[cnt] 	= 1;	// état haut
-        }							//
-        else			//
-        {							//
-            ret[cnt] 	= -1;	//état bas
+        if (cnt<snum)
+        {
+            ret[cnt] 	= 1;
+        }
+        else
+        {
+            ret[cnt] 	= -1;
         }
     }
     return ret;
@@ -135,7 +130,6 @@ void DSPHelper::fillSignal(QVector<double> srce, QVector<double> *dest, int peri
     }
 }
 
-//il sqgit de generer une courbe auùon scqlerq ensuite pour chqaue point
 QVector<double> DSPHelper::getLanczosCore(int sampleCount)const{
     QVector<double> core(sampleCount);
     double prop = (double)2*_lanczosCoreSize/sampleCount;
@@ -158,12 +152,8 @@ QVector<double> DSPHelper::getLanczosCore(int sampleCount)const{
             double mxa =sin_x(M_PI*x/_lanczosCoreSize);
             float popo = pow(M_PI,2)*pow(x,2);
             float numy= _lanczosCoreSize*mx*mxa;
-//            if(numy<0.0001){
-//                res=0.0;
-//            }
-//            else{
+
                 res =  (double)numy/popo;
-//            }
         }
         core[samplenum]=res;
     }

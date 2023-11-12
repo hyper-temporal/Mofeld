@@ -117,9 +117,6 @@ void DumpMulti::setAdressContent()
 void DumpMulti::setDataContent()
 {
 
-    //5 ad1
-    //6 ad2
-    //
     for(int i(0);i<16;i++){
         QString s= QString("CHAR%2d").arg(i);
 /*7 à 22*/    addParametre(new WordEnum(s,&_message[7+i], BLOT_CHARZ));

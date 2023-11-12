@@ -1,8 +1,6 @@
 #ifndef PROPRIETEELEMENTSVUE_H
 #define PROPRIETEELEMENTSVUE_H
 
-
-//#include "draggable.h"
 #include <QGridLayout>
 #include <QCheckBox>
 #include <QPushButton>

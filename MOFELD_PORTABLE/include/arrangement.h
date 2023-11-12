@@ -18,9 +18,7 @@ class Arrangement
 {
     QVector<BlofChannel> _BlofChannel;
 public:
-    //pour la persistance
     Arrangement();
-    //copie identifiee
     Arrangement(const Arrangement *other, int id, QString s );
 
     void Regenerate(int channel);

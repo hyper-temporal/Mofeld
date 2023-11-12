@@ -6,7 +6,7 @@
 #include <QFile>
 #include <QMessageBox>
 
-#include "midiutility.h"
+#include <midiutility.h>
 
 enum  class VAccessor
 {
@@ -94,7 +94,6 @@ public:
     static BlofeldTypesEnum& getInstance()
     {
      static BlofeldTypesEnum    instance; // Guaranteed to be destroyed.
-                           // Instantiated on first use.
      return instance;
     }
 
@@ -106,7 +105,7 @@ private:
 
 private:
     BlofeldTypesEnum();
-    BlofeldTypesEnum(BlofeldTypesEnum const&);// Don't Implement
+    BlofeldTypesEnum(BlofeldTypesEnum const&);
     void operator=(BlofeldTypesEnum const&);
 
 

@@ -11,23 +11,7 @@ class DialMaison
 public :
     DialMaison(QWidget*w):QDial(w)
     {}
-//TODO: faire des controles cool...
-    /*
-controles resistants 3d
-balles
-bumpers
-elements
-velocite
-action reponse instancié ->cycles, modulations:
-*/
 
-    /*
- dessin!
-rond triangle carrés , polygones ;.. pour donner des formes
-poussoirs aspirateur, découpeur, explosion(rerépartition )
-déplacement par liaison donnant l'éloignement mais soumises aux velocités adverses
-resulte de ces parametre et leur soumet une réponse(modification de leur etats selon )
-*/
     void paintEvent(QPaintEvent *)
     {
         int v= std::min(width(),height());

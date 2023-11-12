@@ -10,9 +10,7 @@ ctrlComposite::ctrlComposite(QWidget * p,
 
 
 ctrlComposite::~ctrlComposite(){
-//    foreach(ctrlComponent * fsc,_ctrls){
-//        delete fsc;
-//    }
+
 }
 
 
@@ -72,7 +70,6 @@ void ctrlSection::setLayout(){
     QGroupBox *gb = new QGroupBox;
     gb->setLayout(layout());
     gb->setTitle(_nom);
-//    gb->setSizePolicy(QSizePolicy::Preferred , QSizePolicy::Preferred);
     QBoxLayout * bl = new QBoxLayout(QBoxLayout::TopToBottom);
     bl->setSizeConstraint(QLayout::SetMinimumSize);
     bl->addWidget(gb);

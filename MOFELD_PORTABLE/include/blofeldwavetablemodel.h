@@ -10,7 +10,6 @@
 
 class BlofeldWaveTableModel
 {
-    //gère une table d'onde soit une succession de 64 signaux
     QVector<SignalReal> _signals;
     QString _wtName;
 public:

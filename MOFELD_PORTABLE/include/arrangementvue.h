@@ -10,13 +10,10 @@ class ArrangementVue
 {
     Q_OBJECT
     ArrangementModel * _model;
-//    QWidget * _parent;
 public:
     ArrangementVue(ArrangementModel * m,QWidget *parent )
         :EasyList("ARRANGEMENT",m,parent), _model(m)
-    {
-
-    }
+    {}
     void connectAll(QWidget *p);
 public slots:
     void ajouterArrangement();

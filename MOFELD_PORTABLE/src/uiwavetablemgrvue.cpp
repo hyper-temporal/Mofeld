@@ -21,7 +21,6 @@ UIWaveTableMgrVue::UIWaveTableMgrVue(
     setNames();
     arrangeLayout();
 
-//    connect(&_normalise,SIGNAL(clicked()),this,SLOT(setNormalise()));
     connect(&_sine,SIGNAL(clicked()),this,SLOT(draw()));
     connect(&_square,SIGNAL(clicked()),this,SLOT(draw()));
     connect(&_triangle,SIGNAL(clicked()),this,SLOT(draw()));
@@ -32,8 +31,6 @@ UIWaveTableMgrVue::UIWaveTableMgrVue(
     connect(&_waveNum,SIGNAL(valueChanged(int)),this,SLOT(waveSelect(int)));
     connect(&_tableNum,SIGNAL(valueChanged(int)),this,SLOT(tableSelect(int)));
 
-//    connect(&_normalise,SIGNAL(clicked(bool)),&_cuttingEdges,SLOT(setDisabled(bool)));
-//    connect(&_cuttingEdges,SIGNAL(clicked(bool)),&_normalise,SLOT(setDisabled(bool)));
     connect(&_normalise,SIGNAL(clicked()),this,SLOT(normalise()));
     connect(&_cuttingEdges,SIGNAL(clicked()),this,SLOT(cutEdges()));
     connect(&_send,SIGNAL(clicked()),this,SLOT(sendWaveTable()));
@@ -66,43 +63,12 @@ QVector<double> UIWaveTableMgrVue::getSignal(){
     throw ("not implemented");
  }
 
-//void UIWaveTableMgrVue::setNormalise(){
-//    _SignalCtrl->_normalise=_normalise.isChecked();
-//}
 
 void UIWaveTableMgrVue::draw(){
     QVector<double> vs = getSignal();
     int freq = _frequency.value();
     _SignalCtrl.fillSignal(vs,freq);
 }
-
-
-/*
-
-void UIWaveTableMgrVue::opUser()
-{
-   _SignalCtrl->getSine(_frequency.value());
-}
-void UIWaveTableMgrVue::opSine()
-{
-   _SignalCtrl->getSine(_frequency.value());
-}
-void UIWaveTableMgrVue::opSquare()
-{
-   _SignalCtrl->getSquare(_ratio.value(),_frequency.value());
-}
-void UIWaveTableMgrVue::opTriangle()
-{
-   _SignalCtrl->getTriangle(_frequency.value());
-}
-void UIWaveTableMgrVue::opRamp()
-{
-   _SignalCtrl->getRamp(_frequency.value());
-}
-void UIWaveTableMgrVue::opRandom()
-{
-   _SignalCtrl->getRandom(_frequency.value());
-}*/
 
 
 
@@ -149,9 +115,6 @@ void UIWaveTableMgrVue::arrangeLayout()
     QGroupBox *gbTarget = new QGroupBox("Target");
     gbTarget->setLayout(lyWavePick);
     gbTarget->setFixedWidth(220);
-//    QVBoxLayout *lyDrawingPanel  = new QVBoxLayout;
-//    lyDrawingPanel->addWidget(_SignalCtrl->_timeDomain);
-//    lyDrawingPanel->addWidget(_SignalCtrl->_frequencyDomain);
 
     QHBoxLayout *lyWaveForms1  = new QHBoxLayout;
     lyWaveForms1->addWidget(&_sine);
@@ -241,7 +204,6 @@ void UIWaveTableMgrVue::arrangeLayout()
     lyControlPanel->addWidget(gbAuto2DScroll);
     lyControlPanel->addWidget(gbScrollButs);
     lyControlPanel->addWidget(gbTarget);
-//    lyControlPanel->addWidget(&_wtName);
 
     QHBoxLayout *lyFinal  = new QHBoxLayout;
     lyFinal->addWidget(&_SignalCtrl);
@@ -456,9 +418,3 @@ void UIWaveTableMgrVue::onModify(){
 
 
 
-
-//SignalReal * UIWaveTableMgrVue::getCurrentSignal(){
-//    int tn = getpos(_tableNum.value());
-//    int wv0 =_waveNum.value();
-//    s0 = _wavetableMgr->getSignal(tn,wv0);
-//}

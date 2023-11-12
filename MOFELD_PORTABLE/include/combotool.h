@@ -4,7 +4,6 @@
 #include <QAbstractListModel>
 #include "BlofeldEnums.h"
 
-//classe dont le seull role est de facilite l'utilisation des combobox avec les enums
 class ComboTool
         : public  QAbstractListModel
 {

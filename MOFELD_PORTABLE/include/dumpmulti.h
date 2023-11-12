@@ -40,7 +40,6 @@ private:
     void setAdressContent();
     void setDataContent();
     void setChecksum();
-    //pour construire une interface sur les mots d'un message
     void addParametre(WordWriter *w );
 
     friend class BlofeldMultiSlice;

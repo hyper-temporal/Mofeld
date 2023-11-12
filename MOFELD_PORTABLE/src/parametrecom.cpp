@@ -20,7 +20,10 @@ ParametreCom::ParametreCom(int id,int ad1,int ad2,  WordWriter * w ):
 
 
 void ParametreCom::setParamValue(int v){
+    try {
         _word->setValue(v);
+    } catch (...) {
+    }
 }
 
 void ParametreCom::setParamChannel(int ch){
@@ -58,13 +61,10 @@ std::vector<uchar> * ParametreCom::getMessage(int macid,int chid, int v){
     return getMessage(macid,chid);
 }
 
-
-//Danns le protocole, le type de valeur depend des deux valeurs precedentes
 void ParametreCom::setDataContent(){
     appenWord(new WordConstante ("HH",&_message[6],_ad1));
     appenWord(new WordConstante ("PP",&_message[7],_ad2));
     appenWord(new WordWriter (_word ,&_message[8]));
-//    appenWord(_word);
 }
 
 

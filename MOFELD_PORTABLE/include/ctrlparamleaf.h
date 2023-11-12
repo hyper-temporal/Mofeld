@@ -4,8 +4,6 @@
 #include <QMenu>
 #include "ctrlvalueleaf.h"
 
-// tp->getTarget()->getparametre(pnum)->getType()
-
 class CtrlParamLeaf
     :public CtrlValueLeaf
 {

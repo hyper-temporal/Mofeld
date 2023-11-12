@@ -12,21 +12,20 @@ static void saveRawData(QString fileName, std::vector<uchar> * sx){
     f.close();
 }
 
-BlofeldReplica::BlofeldReplica(
-        IBlofeldView* view,
+BlofeldReplica::BlofeldReplica(IBlofeldView* view,
         IMidiIn *min,
         IMidiOut *mout,
-        int id)
+        BlofeldGlobal g)
     : _view(view)
-    ,_id(id)
+    ,_id(g)
     ,_min(min)
     ,_mout(mout)
 {
     _min->openPort(this);
     _mout->openPort();
 
-    _editedChannel = 0;
-    initReplica();
+    _editedChannel = g.midichannel;
+    initReplica(g);
 }
 
 BlofeldReplica::BlofeldReplica(const BlofeldReplica& o)
@@ -61,7 +60,7 @@ void BlofeldReplica::setInstrumentName(QString s )
     _instruParser.setEmbeddedName(s);
     for(int i(0);i<16;i++){
         ParametreCom *p= _instruParser.getParam(341 +i);
-        std::vector<uchar> * vec = p->getMessage(_id,_editedChannel);
+        std::vector<uchar> * vec = p->getMessage(_id.devid,_editedChannel);
         _mout->send(vec);
     }
 }
@@ -94,17 +93,11 @@ void BlofeldReplica::receive(std::vector< uchar > * sxMess)
             QVector<ParametreCom *> ps =_instruParser.updateParam(sxMess);
             foreach(ParametreCom * p,ps){
                 MixParametre(p->getChannel(),p->getId(),p->getValue());
-//                if(p->getChannel() == _editedChannel)
-//                {
-//                    const Parametre * par = _Arrangement.getParametre(p->getChannel(),p->getId());
-//                    _view->updateView(par);
-//                }
             }
         }
         break;
         case(392):{
             _instruParser.parseMessage(sxMess);
-//            QVector<WordWriter *> vws = _instruParser.checkWReplacers();
             Instrument i = _instruParser.createInstrument();
             const auto  props = *(getProprieteChannel());
             auto  mixprops = getPropAppliance();
@@ -121,7 +114,6 @@ void BlofeldReplica::receive(std::vector< uchar > * sxMess)
         break;
         case(80):{
 
-//            _patienteur.usleep(300000);
         }
         break;
         case(425):
@@ -134,15 +126,12 @@ void BlofeldReplica::receive(std::vector< uchar > * sxMess)
             for(int i(0);i<16;i++){
                 _multiParser.toChannel(_Arrangement.editChannel(i),i);
             }
-//            _view->updateMulti();
         }
         break;
         case(15):{
-//        saveRawData("ID1.txt", sxMess);
         }
         break;
         default:
-//            saveRawData(QString::number(sxMess->at(0))+ "__.txt", sxMess);
 
         break;
     }
@@ -154,7 +143,7 @@ void BlofeldReplica::importArrangement(){
     }
 }
 
-void   BlofeldReplica::initReplica()
+void   BlofeldReplica::initReplica(BlofeldGlobal g)
 {
 
     /*
@@ -212,84 +201,88 @@ void   BlofeldReplica::initReplica()
     */
     _globalParser.debug();
     _globalParser.setParamValue(0,0);
-    _globalParser.setParamValue(34,1);
-    _globalParser.setParamValue(38,52);
-    _globalParser.setParamValue(48,127);
+    _globalParser.setParamValue(34,g.midichannel);
+    _globalParser.setParamValue(35,g.devid);
+    //tune 440 :/
+    _globalParser.setParamValue(38,64);
+    //no transposition
     _globalParser.setParamValue(39,64);
+
+    _globalParser.setParamValue(40,0);
+    _globalParser.setParamValue(41,0);
+    _globalParser.setParamValue(42,0);
+    _globalParser.setParamValue(43,0);
+    //wxyz
+    _globalParser.setParamValue(44,70);
+    _globalParser.setParamValue(45,71);
+    _globalParser.setParamValue(46,72);
+    _globalParser.setParamValue(47,73);
+    //volume
+    _globalParser.setParamValue(48,127);
     std::vector<uchar> messm = *_globalParser.getMessage(0);
     _mout->send(&messm);
 
     for (int i(0);i<16;i++){
         Instrument inst = _instruParser.createInstrument();
         _Arrangement.setInstrument(inst,i);
-        _multiParser.initChannel(_Arrangement.editChannel(i),i);
-    }    
+    }
+//    _multiParser.initChannel(_Arrangement.editChannel(i),i);
+
 }
 
 
 void BlofeldReplica::importInstrument(int ch){
     RequestInstrument rqi;
-    _mout->send(rqi.getMessage(_id,ch));
+    _mout->send(rqi.getMessage(_id.devid,ch));
     _patienteur.usleep(300000);
-
 }
 
 void BlofeldReplica::importInstrument(int bank,int pgm){
     RequestInstrument rqi;
-    std::vector<uchar> * v = rqi.getMessage(_id,bank,pgm);
+    std::vector<uchar> * v = rqi.getMessage(_id.devid,bank,pgm);
     _mout->send(v);
     _patienteur.usleep(300000);
-
 }
 
 
 
-void BlofeldReplica::exportParametre(int chid ,const Parametre * par)
-{
-    _mout->send(_instruParser.getPMessage(par,_id,chid));
+void BlofeldReplica::exportParametre(int chid ,const Parametre * par){
+    _mout->send(_instruParser.getPMessage(par,_id.devid,chid));
 }
 
 //method appelee par la vue pour synchroniser l'action (envoyer au device + eventuellement attacher a la propriete)
-void BlofeldReplica::syncParametre(int ch, int pid)
-{
+void BlofeldReplica::syncParametre(int ch, int pid){
     exportParametre(ch,getparametre(ch,pid));
 }
-void BlofeldReplica::ChangeEditedChannel(int ch)
-{
+void BlofeldReplica::ChangeEditedChannel(int ch){
     if(ch >=0 && ch <16){
         _editedChannel=ch;
     }
 }
 
-void BlofeldReplica::MixArrangement(const Arrangement *a)
-{
+void BlofeldReplica::MixArrangement(const Arrangement *a){
     for(int i(0);i<16;i++){
         _Arrangement.setMultiPars(i,a->getMultiPars(i));
         MixInstrument(a->getInstrument(i),i);
     }
 }
-void BlofeldReplica::MixInstrument(const Instrument *instr)
-{
+void BlofeldReplica::MixInstrument(const Instrument *instr){
     MixParametres(instr->getParametres(),_editedChannel);
 }
 
-void BlofeldReplica::MixInstrument(const Instrument *instr, int ch)
-{
+void BlofeldReplica::MixInstrument(const Instrument *instr, int ch){
     MixParametres(instr->getParametres(),ch);
 }
 
-void BlofeldReplica::MixPropriete(const Propriete * pr )
-{
+void BlofeldReplica::MixPropriete(const Propriete * pr ){
     MixPropriete( pr, _editedChannel);
 }
-void BlofeldReplica::MixPropriete(const Propriete * pr, int ch )
-{
+void BlofeldReplica::MixPropriete(const Propriete * pr, int ch ){
 //    editChannel(ch)->PrepareForProp();
     MixParametres( pr->getParametres(), ch);
 }
 
-void BlofeldReplica::MixParametres(const QVector<Parametre> * ps, int ch)
-{
+void BlofeldReplica::MixParametres(const QVector<Parametre> * ps, int ch){
     foreach(Parametre p, *ps )
     {
         MixParametre(&p,ch);
@@ -330,7 +323,7 @@ void BlofeldReplica::setInstrument(Instrument i,int ch ){
         _view->updateView(_Arrangement.getInstrument(ch));
     }
     _instruParser.setInstrument(_Arrangement.editInstrument(ch));
-    _mout->send(_instruParser.getMessage(_id,ch));
+    _mout->send(_instruParser.getMessage(_id.devid,ch));
 
 }
 
@@ -352,13 +345,13 @@ QStringList BlofeldReplica::getParamNames()
 
 void BlofeldReplica::multiRequest(int num)
 {
-    auto v= _multiRequest.getMessage(_id,num);
+    auto v= _multiRequest.getMessage(_id.devid,num);
     _mout->send(v);
 }
 
 void BlofeldReplica::multiSend(int num)
 {
-    auto v= _multiParser.getMessage(_id,num);
+    auto v= _multiParser.getMessage(_id.devid,num);
     _mout->send(v);
 }
 
@@ -374,7 +367,7 @@ void BlofeldReplica::sendTable(const BlofeldWaveTableModel *table, int wtnum, QS
         const SignalReal *s = table->getSignal(cnt);
         _waveTableSender.setMessage(s);
         _waveTableSender.setEmbeddedName(wtName);
-        auto v =_waveTableSender.getMessage(_id,wtnum,cnt);
+        auto v =_waveTableSender.getMessage(_id.devid,wtnum,cnt);
         _mout->send(v);
     }
 }
@@ -392,7 +385,7 @@ void BlofeldReplica::sendAllTables(const QVector<BlofeldWaveTableModel>  * table
 void BlofeldReplica::importGlobal()
 {
     RequestGlobal rqg;
-    auto pmessage = rqg.getMessage(_id);
+    auto pmessage = rqg.getMessage(_id.devid);
     _mout->send(pmessage);
     _patienteur.usleep(300000);
 

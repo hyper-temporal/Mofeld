@@ -26,10 +26,12 @@ public:
     }
 
     void setName(QString n){ _name=n;}
-
+    friend QDataStream & operator << (QDataStream & out, const Entity & Valeur);
+    friend QDataStream & operator >> (QDataStream & in, Entity & Valeur);
 
 };
 
+Q_DECLARE_METATYPE(Entity)
 
 
 

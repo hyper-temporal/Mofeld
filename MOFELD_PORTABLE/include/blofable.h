@@ -3,8 +3,6 @@
 
 #include "sysexable.h"
 
-
-//ce sera plutot synthable : getStructure + setStructure
 class Blofable
         :public Sysexable
 {
@@ -17,11 +15,8 @@ public:
     std::vector<uchar> * getMessage(int macid);
 protected:
 private:
-    //gerer par marque...
     void setManufacturer();
-    //gerer par model...
     void setDeviceModel();
-    //gerer par device...
     void setDevice();
     void setType(const int t);
 };

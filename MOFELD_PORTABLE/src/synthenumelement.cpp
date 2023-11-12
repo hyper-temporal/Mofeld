@@ -1,8 +1,6 @@
 #include "synthenumelement.h"
 #include "QString"
 
-//SynthEnumElement::SynthEnumElement(){
-//}
 
 SynthEnumElement::SynthEnumElement(QString s, int i )
     :

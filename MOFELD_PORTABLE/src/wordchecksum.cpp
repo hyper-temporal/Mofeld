@@ -1,6 +1,5 @@
 #include "wordchecksum.h"
 
-#include <QDebug>
 void WordChecksum::writeBytes(){
     _valueMgr ->setValue(getChecksum());
     WordWriter::writeBytes();
@@ -8,6 +7,9 @@ void WordChecksum::writeBytes(){
 
 void  WordChecksum::parseBytes(){
     WordWriter::parseBytes();
+    if (_valueMgr->getValue() != getChecksum()){
+         qDebug() << ("La checkSum est invalide") ;
+    }
 }
 
 int WordChecksum::getChecksum()const

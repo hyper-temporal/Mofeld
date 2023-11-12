@@ -20,9 +20,6 @@ DrawMode _mode;
     QVector<double> *editMag();
 
 private:
-//    double getSampleValue(int p);
-//    double getSampleValue(const QPoint &p);
-//    QColor getColorPhase(double phase);
 
 protected:
     void paintDomain(QPainter &painter);

@@ -14,9 +14,6 @@
 #include "entity.h"
 #include "icategorizable.h"
 
-
-
-//persistance et gestion des collection generique
 template<class T>
 class EntityDAO
         : public ICategorizable
@@ -275,7 +272,6 @@ protected:
 
             const T * e = _objects.at(row);
             if (index.column() == 0){
-                //                e->_name = value.toString();
                 return false;
             }
             _objects.replace(row,e);
